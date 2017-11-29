@@ -1,13 +1,13 @@
 <template>
 	<div class="scroll-view-wrapper cart-view">
 		<div class="cart_tit">
-			<h5>我的购物车<i>（12）</i></h5>
-			<span>删除</span>
+			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
+			<span v-show="isDelete" @click="deleteItem">删除</span>
 		</div>
 		<template v-if="list && list.length">
 		<div class="cart_list">
-				<div class="cart_list_item" v-for="item in list">
-					<div class="list_item_checked">
+				<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
+					<div class="list_item_checked" :class="{'active': cartList[item.id]}">
 						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
 							<use xlink:href="#icon-gou"></use>
 						</svg>
@@ -19,13 +19,13 @@
 						<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
 						<span>25公斤/包 （小计:25公斤）</span>
 						<div class="cart_info_txt">
-							<strong>￥568</strong>
+							<strong>￥{{item.price}}</strong>
 							<div class="cart_num">
-								<div class="cart_reduce">
+								<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 									<i></i>
 								</div>
-								<input type="tel" class="cart_num_input" value="1"/>
-								<div class="cart_add">
+								<input type="tel" class="cart_num_input" v-model="numList[index]"/>
+								<div class="cart_add" @click.stop="changeCart(index,1)">
 									<i class="ico1"></i>
 									<i class="ico2"></i>
 								</div>
@@ -45,8 +45,8 @@
 		<div class="bottom-placeholder"></div>
 		<div class="settlement">
 			<div class="sett_item">
-				<div class="sett_item_select">
-					<div class="list_item_checked active">
+				<div class="sett_item_select" @click="selectAll">
+					<div class="list_item_checked" :class="{'active':isAllSelect}">
 						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
 							<use xlink:href="#icon-gou"></use>
 						</svg>
@@ -55,11 +55,11 @@
 				</div>
 				<div class="sett_total">
 					<span>合计：</span>
-					<strong>￥900.00</strong>
+					<strong>￥{{totalPrice}}</strong>
 				</div>
 			</div>
 			<div class="sett_computed">
-				<span>结算<i>(5)</i></span>
+				<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 			</div>
 		</div>
 	</div>
@@ -73,11 +73,288 @@
 			
 			return {
 				
-				list: [undefined,undefined,undefined,undefined,undefined,undefined]
+				cartList:{},
+				
+				list: [{
+					price: 100,
+					id: 12,
+					number: 1
+				},{
+					price: 200,
+					id: 15,
+					number: 2
+				},{
+					price: 400,
+					id: 18,
+					number: 3
+				},{
+					price: 500,
+					id: 20,
+					number: 4
+				},{
+					price: 400,
+					id: 22,
+					number: 6
+				},{
+					price: 600,
+					id: 33,
+					number: 7
+				}],
+				numList:[]
 				
 			}
 			
 		},
+		
+		methods: {
+			
+			/**
+			 * 页面URL路由跳转
+			 *
+			 *  @param {String} url
+			 *
+			 */
+
+			pageAction (url) {
+				
+				this.$router.push(url)
+				
+			},
+			/**
+			 * 选中购物车中的一项
+			 * @param id
+			 *
+			 */
+
+			selectItem ({id}) {
+				
+				this.cartList[id] = !this.cartList[id]
+				
+			},
+
+			/**
+			 * 购物车中的增加和减少
+			 * @param {Number} index
+			 * @param {Number} val
+			 */
+
+			changeCart (index,val) {
+				
+				let cartNum = this.numList[index]
+				
+				if (cartNum == 1 && val == -1) {
+					
+					this.$toast('购物车数量不能少于1')
+					
+					return
+					
+				}
+
+				cartNum += val
+				
+				this.numList.splice(index,1,cartNum)
+				
+			
+			},
+
+			/**
+			 * 全选或者全不选的实现
+			 *
+			 * @param null
+			 *
+			 */
+
+			selectAll () {
+				
+				const list = this.list
+				
+				const cartList = this.cartList
+				
+				if (this.isAllSelect) {
+					
+					list.forEach(({id}) => {
+
+						cartList[id] = false
+						
+					})
+					
+				} else {
+
+					list.forEach(({id}) => {
+
+						cartList[id] = true
+
+					})
+					
+				}
+				
+			},
+
+			/**
+			 * 删除购物车中的一项
+			 *
+			 * @param null
+			 */
+
+			deleteItem () {
+				
+				const cartList = this.cartList
+			
+				const list = this.list
+				
+				for(let len = list.length -1, i = len; i >=0; i--) {
+					
+					if(cartList[list[i].id]) {
+						
+						list.splice(i,1)
+						
+					}
+					
+				}
+			
+			}
+			
+		},
+		
+		computed:{
+
+			/**
+			 * 判断购物车中的商品是否全选
+			 *
+			 * @param null
+			 *
+			 * @returns {Boolean} isSelect
+			 */
+			
+			isAllSelect () {
+				
+				const list = this.list
+				
+				const carList = this.cartList
+
+				let isSelect = false
+
+				if (list && list.length) {
+
+					isSelect = list.every(({id}) => {
+
+						return carList[id]
+
+					})
+					
+				}
+				
+				return isSelect
+				
+			},
+
+			/**
+			 * 判断购物车中的商品是否有一个选中
+			 * 如有，则可以显示删除按钮
+			 *
+			 * @param null
+			 *
+			 * @returns {Boolean} isDelete
+			 */
+			
+			isDelete () {
+				
+				const list = this.list
+
+				const carList = this.cartList
+
+				const isDelete = list.some(({id}) => {
+
+					return carList[id]
+
+				})
+
+				return isDelete
+				
+			},
+
+			/**
+			 *
+			 * 选中购物车中的商品数量
+			 *
+			 * @param null
+			 *
+			 * @returns {Number} num
+			 */
+			
+			selectNum () {
+				
+				let num = 0
+				
+				const cartList = this.cartList
+				
+				this.list.forEach(({id}) => {
+
+					if(cartList[id]) {
+
+						num ++
+					
+					}
+					
+				})
+				
+				return num
+				
+			},
+
+			/**
+			 *
+			 * 购物车中的商品总价计算
+			 *
+			 * @param null
+			 *
+			 * @returns {Number} totalPrice
+			 */
+			
+			totalPrice () {
+				
+				const cartList = this.cartList
+				
+				const numList = this.numList
+				
+				let totalPrice = 0
+				
+				this.list.forEach(({price,id},index) => {
+
+					if (cartList[id]) {
+
+						totalPrice += numList[index] * price
+					
+					}
+					
+				})
+				
+				return totalPrice
+			
+			}
+		
+		},
+		
+		created () {
+			
+			const cartList = {}
+			
+			let  numList = []
+			
+			this.list.forEach((item) => {
+
+				cartList[item.id] = false
+
+				numList.push(item.number)
+			
+			})
+			
+			this.cartList = cartList
+			
+			this.numList = numList
+			
+		},
+		
 		beforeCreate () {
 
 			document.title = '用户购物车'
@@ -209,7 +486,11 @@
 	
 	.sett_item_select{
 		
+		height: 1.02rem;
+		
 		display: flex;
+		
+		padding-right: .4rem;
 		
 		align-items: center;
 		
@@ -355,7 +636,6 @@
 
 	.cart_tit{
 		
-		
 		background: #fff;
 		
 		height: .92rem;
@@ -366,11 +646,23 @@
 		
 		justify-content: space-between;
 		
-		padding: 0 .3rem;
+		padding-left: .3rem;
 		
 		font-size: .28rem;
 		
 		color:#252525;
+		
+		span{
+			
+			height: .92rem;
+			
+			line-height: .92rem;
+			
+			padding-right: .3rem;
+			
+			padding-left: 1rem;
+			
+		}
 		
 		h5{
 			font-size: .28rem;
