@@ -1,0 +1,61 @@
+@import './form.scss';
+
+#app{
+	height:100%;
+	overflow:hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+
+.scroll-view-wrapper{
+	position: relative;
+	overflow: scroll;
+	flex: 1;
+	-webkit-overflow-scrolling: touch;
+	overflow-scrolling: touch;
+}
+
+.ico{
+	fill: currentColor;
+	overflow: hidden;
+}
+
+
+body,html{
+	height:100%;
+	overflow: hidden;
+}
+
+input{
+
+	color:#a2a2a2;
+
+}
+
+body{
+	color:#a2a2a2;
+	font-size: .24rem;
+}
+
+.form-button{
+
+	height: .94rem;
+	line-height: .94rem;
+
+	font-size: .38rem;
+	color: #fff;
+	width: 100%;
+
+	border-radius: .44rem;
+
+	background: #008aec;
+
+	&[disabled] {
+
+		background: #cecece;
+
+	}
+
+}
+

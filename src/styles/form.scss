@@ -1,0 +1,57 @@
+
+.personal_button{
+
+	padding-top: .8rem;
+
+}
+
+.personal_form_item{
+
+	display: flex;
+
+	height: .98rem;
+
+	justify-content: space-between;
+
+	align-items: center;
+
+	border-bottom: 1px solid #ededed;
+
+	label{
+
+		font-size: .28rem;
+
+		color: #252525;
+
+	}
+
+
+}
+.personal_input {
+
+	display:flex;
+
+	span{
+
+		font-size: .28rem;
+
+		text-align:right;
+
+	}
+
+	.personal_input_tx{
+
+		font-size: .28rem;
+
+		text-align:right;
+
+	}
+
+
+	.arrow_right_ico{
+		width: .2rem;
+		height: .4rem;
+		color: #c1c1c1;
+		padding-left: .1rem;
+	}
+}

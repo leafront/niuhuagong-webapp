@@ -1,0 +1,22 @@
+.user_tit{
+	padding-top:.6rem;
+
+	text-align:center;
+	h5{
+		padding-bottom: .32rem;
+		font-size: .42rem;
+		color: #252525;
+
+	}
+}
+.login_line{
+	border-bottom: 1px solid #ededed;
+	display:flex;
+	justify-content: center;
+	span{
+		width: .76rem;
+		height: .08rem;
+		background: #008aec;
+		display:block;
+	}
+}

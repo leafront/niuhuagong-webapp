@@ -1,0 +1,128 @@
+@import './user_tit.scss';
+
+.login{
+	padding: 0 .4rem;
+}
+
+.user_form_item{
+
+	height: .94rem;
+
+	border: 1px solid #e8e8e8;
+
+	margin-bottom: .28rem;
+	display:flex;
+	align-items: center;
+
+	padding: 0 .28rem;
+
+	position: relative;
+
+	.user_form_code{
+
+		position:absolute;
+		right: .28rem;
+	}
+
+	.login_tel_ico{
+		width: .4rem;
+		height: .4rem;
+		color: #008aec;
+	}
+	.login_msg_ico{
+		width: .4rem;
+		height: .4rem;
+		color: #008aec;
+	}
+
+	.login_pass_ico{
+		width: .4rem;
+		height: .4rem;
+		color: #008aec;
+	}
+
+	.login_input{
+
+		width: 2.5rem;
+
+		padding: .1rem 0;
+
+		font-size: .28rem;
+
+		margin-left: .34rem;
+
+		color: #333;
+
+	}
+
+	.login_pass_input{
+
+		width: 4rem;
+
+		padding: .1rem 0;
+
+		font-size: .28rem;
+
+		margin-left: .34rem;
+
+		color: #333;
+
+	}
+
+	.login_code{
+
+		width: 1.8rem;
+		height: .6rem;
+
+		border-radius: .44rem;
+
+		border: 1px solid #fe8900;
+
+		color:#fe8900;
+
+		background: #fff;
+
+		font-size: .26rem;
+	}
+
+	span {
+		width: 1px;
+		height: .5rem;
+		background:#e3e3e3;
+		margin-left: .3rem;
+	}
+
+}
+
+.user_form_pass{
+
+	display:flex;
+
+	justify-content: space-between;
+
+	span{
+
+		font-size: .28rem;
+	}
+}
+
+.user_tips {
+
+	font-size: .28rem;
+
+	padding-top: .4rem;
+
+	display: flex;
+
+	justify-content: center;
+
+	strong {
+
+		text-decoration: underline;
+
+		padding: 0 .05rem;
+
+		color: #fe8900;
+
+	}
+}
