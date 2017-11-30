@@ -6,7 +6,7 @@
 		</div>
 		<template v-if="list && list.length">
 		<div class="cart_list">
-			<LazyLoad :options="{ele:'lazyLoad_img',scrollEle: 'appView',errorImg:'./images/default.png'}">
+			<LazyLoad :options="{ele:'lazyLoad_img'}">
 				<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
 					<div class="list_item_checked" :class="{'active': cartList[item.id]}">
 						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
@@ -25,7 +25,7 @@
 								<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 									<i></i>
 								</div>
-								<input type="tel" class="cart_num_input" v-model.trim="numList[index]"/>
+								<input type="tel" class="cart_num_input" @blur="changeNum(index)" v-model.trim="numList[index]"/>
 								<div class="cart_add" @click.stop="changeCart(index,1)">
 									<i class="ico1"></i>
 									<i class="ico2"></i>
@@ -172,7 +172,7 @@
 				
 				if (cartNum == 1 && val == -1) {
 					
-					this.$toast('购物车数量不能少于1')
+					this.$toast('单件商品数量不能少于1件')
 					
 					return
 					
@@ -238,6 +238,22 @@
 						
 					}
 					
+				}
+			
+			},
+
+			changeNum (index) {
+				
+				const cartNum = parseInt(this.numList[index])
+			
+				if (cartNum == 0 || !cartNum) {
+					
+					this.$toast('单件商品数量不能少于1件')
+
+					this.numList.splice(index,1,1)
+
+					return
+				
 				}
 			
 			}
@@ -552,9 +568,9 @@
 		
 		display:flex;
 		
-		width: .41rem;
+		width: .6rem;
 		
-		height: .42rem;
+		height: .5rem;
 		
 		justify-content: center;
 		
@@ -576,9 +592,9 @@
 	
 	.cart_add{
 		
-		width: .41rem;
+		width: .6rem;
 		
-		height: .42rem;
+		height: .5rem;
 		
 		border-left: 1px solid #cecece;
 		
@@ -632,7 +648,7 @@
 		
 		border: 1px solid #cecece;
 		
-		height: .42rem;
+		height: .5rem;
 		
 		.cart_num_input{
 			

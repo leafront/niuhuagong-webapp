@@ -155,6 +155,9 @@
 		span{
 		
 			color: #252525;
+			
+			font-size: .28rem;
+			
 		}
 		
 		.order_notice_num{

@@ -47,6 +47,8 @@
 	
 	.shop{
 		
+		padding: 0 .3rem;
+		
 		h3{
 			
 			padding:.55rem 0;
@@ -62,8 +64,6 @@
 	}
 	
 	.shop_list{
-		
-		padding: 0 .5rem;
 		
 		border-top: 1px solid #ededed;
 		
@@ -120,7 +120,7 @@
 			
 			img{
 				
-				margin: 0.2rem 0;
+				margin: 0.3rem 0;
 				
 				width: 3rem;
 				

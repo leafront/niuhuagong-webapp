@@ -79,35 +79,53 @@
 		
 		mounted () {
 			
-			const selectMenu = document.getElementById('');
-
-			const iscroll = new IScroll('#selectMenu'+this.index, {
-					scrollX: false
-			})
-			
-			const itemHeight = document.querySelectorAll('.weui-picker__item')[0].offsetHeight;
-
-			iscroll.on('scrollEnd', () => {
-
-				const result = ( -iscroll.y / itemHeight);
-
-				let index = parseInt(result, 10);
-
-				const diff = result - index;
-
-				if (diff > 0.5) index++;
-				
-				
-				this.iScollIndex = index;
-
-
-				iscroll.scrollTo(0, -index * itemHeight);
-
-			})
+			this.scrollMenu()
 			
 		},
 		
 		methods: {
+			
+			/**
+			 *
+			 * 滚动下拉选项位置进行位置滚动
+			 *
+			 */
+			
+			scrollMenu () {
+
+				const selectMenu = document.getElementById('');
+
+				const iscroll = new IScroll('#selectMenu'+this.index, {
+					scrollX: false
+				})
+
+				const itemHeight = document.querySelectorAll('.weui-picker__item')[0].offsetHeight;
+
+				iscroll.on('scrollEnd', () => {
+
+					const result = ( -iscroll.y / itemHeight);
+
+					let index = parseInt(result, 10);
+
+					const diff = result - index;
+
+					if (diff > 0.5) index++;
+
+
+					this.iScollIndex = index;
+
+
+					iscroll.scrollTo(0, -index * itemHeight);
+
+				})
+				
+			},
+			
+			/**
+			 *
+			 * 取消下拉菜单
+			 *
+			 */
 
 			cancelMenu () {
 				
@@ -117,6 +135,15 @@
 				
 				
 			},
+
+			/***
+			 *
+			 *  确认选中的下拉菜单
+			 *
+			 * @param null
+			 *
+			 *
+			 */
 
 			confirmMenu () {
 

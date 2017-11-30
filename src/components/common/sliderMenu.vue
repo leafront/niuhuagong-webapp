@@ -69,11 +69,7 @@
 		
 		mounted () {
 			
-			const headHeight = this.$el.offsetHeight
-
-			const winHeight = document.documentElement.clientHeight
-
-			this.subHeight = winHeight - headHeight + 'px'
+			this.getMenuHeight()
 
 		},
 		
@@ -81,12 +77,40 @@
 			...mapActions([
 				'updateIsMenu',
 			]),
+			
+			/**
+			 * 获取下拉菜单的高度
+			 *
+			 * @param null
+			 *
+			 */
+			
+			getMenuHeight () {
+				
+				const headHeight = this.$el.offsetHeight
+
+				const winHeight = document.documentElement.clientHeight
+
+				this.subHeight = winHeight - headHeight + 'px'
+				
+			},
+
+			/**
+			 *  页面路由跳转
+			 * @param url
+			 */
 
 			pageAction (url) {
 
 				this.$router.push(url)
 
 			},
+
+			/**
+			 *  页面路由跳转
+			 * @param url
+			 *
+			 */
 			
 			routerAction (url) {
 				
@@ -139,7 +163,7 @@
 		
 		display: flex;
 		
-		padding: 0 1.12rem;
+		padding: 0 .75rem;
 		
 		flex-direction: column;
 		
