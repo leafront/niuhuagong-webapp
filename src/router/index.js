@@ -46,10 +46,16 @@ export default new Router({
 		},{
 			path: '/user/center',
 			name: 'userCenter',
+			meta: {
+				requireAuth: true,
+			},
 			component: userCenter
 		},{
 			path: '/user/cart',
 			name: 'userCart',
+			meta: {
+				requireAuth: true,
+			},
 			component: userCart
 		},{
 			path: '/user/register',
@@ -58,26 +64,44 @@ export default new Router({
 		},{
 			path: '/user/info',
 			name: 'userInfo',
+			meta: {
+				requireAuth: true,
+			},
 			component: userInfo
 		},{
 			path: '/user/personal',
 			name: 'userPersonal',
+			meta: {
+				requireAuth: true,
+			},
 			component: userPersonal
 		},{
 			path: '/user/company',
 			name: 'userCompany',
+			meta: {
+				requireAuth: true,
+			},
 			component: userCompany
 		},{
 			path: '/auth/personal',
 			name: 'authPersonal',
+			meta: {
+				requireAuth: true,
+			},
 			component: authPersonal
 		},{
 			path: '/auth/company',
 			name: 'authCompany',
+			meta: {
+				requireAuth: true,
+			},
 			component: authCompany
 		},{
 			path: '/order',
 			name: 'order',
+			meta: {
+				requireAuth: true,
+			},
 			component: order
 		}
   ]

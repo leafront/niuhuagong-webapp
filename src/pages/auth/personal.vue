@@ -62,14 +62,7 @@
 
 <script>
 
-	import AppFooter from '@/components/common/footer'
-
 	export default {
-
-		components: {
-
-			AppFooter
-		},
 
 		beforeCreate () {
 

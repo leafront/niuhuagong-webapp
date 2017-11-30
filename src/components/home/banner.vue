@@ -64,7 +64,6 @@
 	
 	.slideshow-item img {
 		width: 100%;
-		vertical-align: top;
 	}
 	
 	.slideshow-dots {

@@ -51,25 +51,14 @@
 				</div>
 			</div>
 		</div>
-		
-		<iFooter/>
 	
 	</div>
 </template>
 
 <script>
 
-	import iFooter from '@/components/common/footer'
-
 	export default {
-
-		components: {
-
-			iFooter
-
-		},
-
-
+		
 		beforeCreate () {
 
 			document.title = '用户注册'

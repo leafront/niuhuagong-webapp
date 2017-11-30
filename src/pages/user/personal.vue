@@ -63,21 +63,16 @@
 				</div>
 			</div>
 		</div>
-		<AppFooter/>
 	</div>
 </template>
 
 <script>
-
-	import AppFooter from '@/components/common/footer'
 
 	import SelectMenu from '@/components/widget/selectMenu'
 
 	export default {
 		
 		components: {
-
-			AppFooter,
 
 			SelectMenu
 			

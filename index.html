@@ -31,7 +31,7 @@
 			  box-sizing: border-box;
 		  }
 		  
-		  button{
+		  button,h1,h2,h3,h4,h5,h6{
 			  
 			  font-size: 100%;
 			  
@@ -39,6 +39,10 @@
 		  fieldset,img,button {
 			  
 			  border: 0
+		  }
+		  
+		  img{
+			  vertical-align: top;
 		  }
 		  li{
 			  list-style: none;
@@ -201,8 +205,17 @@
 						metaEl.setAttribute('name', 'viewport');
 						doc.head.appendChild(metaEl);
 					}
+
+					var ratio = 1
+					
+					if ( document.documentElement.clientWidth <= 1080) {
+
+						ratio = document.documentElement.clientWidth / 750
+						
+					}
+					
 					metaEl.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
-					doc.documentElement.style.fontSize = normal ? '50px' : _baseFontSize / 2 * dpr * _fontscale + 'px';
+					doc.documentElement.style.fontSize = normal ? '50px' : _baseFontSize / 2 * dpr * ratio * _fontscale + 'px';
 				};
 
 				flex(false, 100, 1);

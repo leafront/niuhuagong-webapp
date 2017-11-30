@@ -188,16 +188,8 @@
 </template>
 
 <script>
-
-	import AppFooter from '@/components/common/footer'
 	
 	export default {
-		
-		components: {
-
-			AppFooter
-			
-		},
 		
 		data () {
 			
@@ -370,8 +362,6 @@
 			width: 1.5rem;
 			
 			height: 1.5rem;
-			
-			vertical-align: top;
 			
 		}
 		

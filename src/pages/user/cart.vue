@@ -20,11 +20,11 @@
 						<span>25公斤/包 （小计:25公斤）</span>
 						<div class="cart_info_txt">
 							<strong>￥{{item.price}}</strong>
-							<div class="cart_num">
+							<div class="cart_num" @click="stopEvent($event)">
 								<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 									<i></i>
 								</div>
-								<input type="tel" class="cart_num_input" v-model="numList[index]"/>
+								<input type="tel" class="cart_num_input" v-model.trim="numList[index]"/>
 								<div class="cart_add" @click.stop="changeCart(index,1)">
 									<i class="ico1"></i>
 									<i class="ico2"></i>
@@ -115,6 +115,12 @@
 		},
 		
 		methods: {
+
+			stopEvent (e) {
+				
+				e.stopPropagation()
+				
+			},
 			
 			/**
 			 * 页面URL路由跳转
@@ -148,7 +154,7 @@
 
 			changeCart (index,val) {
 				
-				let cartNum = this.numList[index]
+				let cartNum = +this.numList[index]
 				
 				if (cartNum == 1 && val == -1) {
 					
@@ -744,8 +750,6 @@
 		padding-right: .3rem;
 		
 		img{
-			
-			vertical-align: top;
 		
 			width: 1.6rem;
 			height: 1.6rem;
