@@ -21,7 +21,7 @@
 		</div>
 		
 		<div class="user_order">
-			<div class="user_order_tit" @click="pageAction('/user/order')">
+			<div class="user_order_tit" @click="pageAction('/order')">
 				<span>我的订单</span>
 				<div class="order_arrow">
 					<strong>查看全部订单</strong>

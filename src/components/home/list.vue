@@ -1,27 +1,39 @@
 <template>
 	<div class="shop clearfix">
 		<h3>—  热销榜单  —</h3>
-		<ul class="shop_list clearfix">
-			<li v-for="item in list">
-				<img src="http://files.niuhuagong.com/img/item/big_60f04603d7f57a5ca877a29f752b7716.jpg"/>
-				<p>甲基羟丙基纤维素 HK4M </p>
-				<span>赫克力士天普</span>
-				<strong><b class="shop_kilo">￥36.00</b>/公斤</strong>
-			</li>
-		</ul>
+		<LazyLoad :options="{ele:'lazyLoad_img',scrollEle: 'appView',errorImg:'./images/default.png'}">
+			<ul class="shop_list clearfix" id="lazyLoad">
+				<li v-for="item in list">
+					<img class="lazyLoad_img" data-src="http://files.niuhuagong.com/img/item/big_60f04603d7f57a5ca877a29f752b7716.jpg" :src="defaultImg"/>
+					<p>甲基羟丙基纤维素 HK4M </p>
+					<span>赫克力士天普</span>
+					<strong><b class="shop_kilo">￥36.00</b>/公斤</strong>
+				</li>
+			</ul>
+		</LazyLoad>
 	</div>
 </template>
-
-
 <script>
 	
+	import LazyLoad from '@/components/widget/lazyLoad'
+
+	import defaultImg from '@/images/default.png'
+	
 	export default {
+		
+		components: {
+
+			LazyLoad
+			
+		},
 		
 		data () {
 			
 			return {
+
+				defaultImg,
 				
-				list: [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined]
+				list: [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined]
 				
 			}
 			

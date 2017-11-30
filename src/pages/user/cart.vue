@@ -1,11 +1,12 @@
 <template>
-	<div class="scroll-view-wrapper cart-view">
+	<div class="scroll-view-wrapper cart-view" id="appView">
 		<div class="cart_tit">
 			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
 			<span v-show="isDelete" @click="deleteItem">删除</span>
 		</div>
 		<template v-if="list && list.length">
 		<div class="cart_list">
+			<LazyLoad :options="{ele:'lazyLoad_img',scrollEle: 'appView',errorImg:'./images/default.png'}">
 				<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
 					<div class="list_item_checked" :class="{'active': cartList[item.id]}">
 						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
@@ -13,7 +14,7 @@
 						</svg>
 					</div>
 					<div class="cart_img">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" />
+						<img class="lazyLoad_img" data-src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" :src="defaultImg" />
 					</div>
 					<div class="cart_info">
 						<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
@@ -33,6 +34,7 @@
 						</div>
 					</div>
 				</div>
+			</LazyLoad>
 		</div>
 		</template>
 		<template v-else>
@@ -66,12 +68,24 @@
 </template>
 
 <script>
+
+	import LazyLoad from '@/components/widget/lazyLoad'
+
+	import defaultImg from '@/images/default.png'
 	
 	export default {
+		
+		components: {
+
+			LazyLoad
+
+		},
 		
 		data () {
 			
 			return {
+
+				defaultImg,
 				
 				cartList:{},
 				

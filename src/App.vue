@@ -1,6 +1,7 @@
 <template>
   <div id="app">
 		<AppHeader/>
+	  <SliderMenu/>
     <router-view/>
   </div>
 </template>
@@ -9,9 +10,12 @@
 	
 	import AppHeader from '@/components/common/header'
 	
+	import SliderMenu from '@/components/common/sliderMenu'
+	
 	export default {
 		components: {
 			AppHeader,
+			SliderMenu
 		},
 
 		methods: {

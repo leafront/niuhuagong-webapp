@@ -1,0 +1,176 @@
+<template>
+	<div class="sub_nav" :class="{'active':isMenu}" :style="{'height':subHeight}">
+		<ul class="sub_nav_list">
+			<li v-for="(item,index) in linkList" :key="index" @click="routerAction(item.url)">
+				<span>{{item.name}}</span>
+				<svg aria-hidden="true" class="ico arrow_right_ico">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-jiantou">
+					</use>
+				</svg>
+			</li>
+		</ul>
+		<AppFooter/>
+	</div>
+</template>
+
+<script>
+
+	import { mapActions, mapGetters } from 'vuex'
+ 
+	import AppFooter from '@/components/common/footer'
+	
+	export default {
+
+		components: {
+
+			AppFooter
+
+		},
+		computed: {
+			...mapGetters({
+				isMenu: 'getIsMenu'
+			})
+		},
+		data () {
+
+			return {
+
+				subHeight: 0,
+
+				linkList:[{
+					url: '/',
+					name:'首页'
+				},{
+					url: '/',
+					name:'纤维素醚'
+				},{
+					url: '/',
+					name:'乳胶粉'
+				},{
+					url: '/',
+					name:'钛白粉'
+				},{
+					url: '/',
+					name:'色卡'
+				},{
+					url: '/',
+					name:'色浆'
+				},{
+					url: '/',
+					name:'干粉助剂'
+				},{
+					url: '/',
+					name:'涂料助剂'
+				}]
+
+			}
+			
+		},
+		
+		mounted () {
+			
+			const headHeight = this.$el.offsetHeight
+
+			const winHeight = document.documentElement.clientHeight
+
+			this.subHeight = winHeight - headHeight + 'px'
+
+		},
+		
+		methods: {
+			...mapActions([
+				'updateIsMenu',
+			]),
+
+			pageAction (url) {
+
+				this.$router.push(url)
+
+			},
+			
+			routerAction (url) {
+				
+				this.updateIsMenu(false)
+
+				this.pageAction(url)
+
+			}
+			
+		}
+		
+	}
+	
+</script>
+
+<style lang="scss">
+	
+	.sub_nav{
+		
+		position: absolute;
+		
+		background: #f2f2f2;
+		
+		transition: all .5s cubic-bezier(.4,.01,.165,.99);
+		
+		left:0;
+		
+		top:1.2rem;
+		
+		width:100%;
+		
+		max-height:0;
+		
+		overflow: hidden;
+		z-index:10;
+		
+		&.active{
+			
+			padding-bottom: .2rem;
+			
+			max-height: 2000px;
+			
+			height:100%;
+			
+		}
+		
+	}
+	
+	.sub_nav_list{
+		
+		display: flex;
+		
+		padding: 0 1.12rem;
+		
+		flex-direction: column;
+		
+		background: #fff;
+		
+		li{
+			
+			justify-content: space-between;
+			
+			align-items: center;
+			
+			display:flex;
+			
+			height: 1.1rem;
+			
+			color: #252525;
+			
+			font-size: .3rem;
+			
+			border-bottom: 1px solid #eee;
+			
+			.arrow_right_ico{
+				width: .2rem;
+				height: .4rem;
+				color: #c1c1c1;
+				padding-left: .1rem;
+			}
+			
+		}
+		
+	}
+
+
+</style>

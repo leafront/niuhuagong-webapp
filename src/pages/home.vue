@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-view-wrapper">
+  <div class="scroll-view-wrapper" id="appView">
 	  <Banner/>
 		<Service/>
 	  <div class="service_ad">
