@@ -6,6 +6,8 @@
 
 <script>
 	
+	import utils from '@/widget/utils'
+	
 	export default {
 		
 		props: ['options'],
@@ -109,7 +111,7 @@
 					}
 				}
 				
-				const scrollImg = this.throttle(() => {
+				const scrollImg = utils.throttle(() => {
 					
 					scrollLoad()
 					
@@ -157,33 +159,6 @@
 					el.src = this.default.errorImg
 					
 				}, false)
-			},
-
-			/**
-			 *  节流函数
-			 * @param func
-			 * @param wait
-			 * @param mustRun
-			 * @returns {Function}
-			 */
-			throttle (func, wait, mustRun) {
-				var timeout,
-					startTime = new Date();
-				return function() {
-					var context = this,
-						args = arguments,
-						curTime = new Date();
-	
-					clearTimeout(timeout);
-					// 如果达到了规定的e触发时间间隔，触发 handler
-					if(curTime - startTime >= mustRun){
-						func.apply(context,args);
-						startTime = curTime;
-						// 没达到触发间隔，重新设定定时器
-					}else{
-						timeout = setTimeout(func, wait);
-					}
-				}
 			}
 		}
 	

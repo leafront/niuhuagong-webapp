@@ -98,7 +98,7 @@
 					id: 15,
 					number: 2
 				},{
-					price: 400,
+					price: 40000,
 					id: 18,
 					number: 3
 				},{

@@ -17,7 +17,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="weui-mask" v-show="isMenu[index]"></div>
+		<div class="weui-mask" @click="cancelMenu" v-show="isMenu[index]"></div>
 	</div>
 </template>
 
@@ -240,9 +240,9 @@
 		position: relative;
 		text-align: center;
 		
-		font-size: .3rem;
+		font-size: .32rem;
 		
-		border-bottom: 1px solid #E5E5E5;
+		border-bottom: 1px solid #d7d7dc;
 	}
 	.weui-picker__action {
 		display: block;
@@ -284,7 +284,7 @@
 	}
 	.weui-picker__indicator {
 		width: 100%;
-		height: 34px;
+		height: .68rem;
 		position: absolute;
 		left: 0;
 		top: 2.04rem;
@@ -297,10 +297,7 @@
 		top: 0;
 		right: 0;
 		height: 1px;
-		border-top: 1px solid #E5E5E5;
-		color: #E5E5E5;
-		transform-origin: 0 0;
-		transform: scaleY(0.5);
+		border-top: 1px solid #d7d7dc;
 	}
 	.weui-picker__indicator:after {
 		content: " ";
@@ -309,10 +306,7 @@
 		bottom: 0;
 		right: 0;
 		height: 1px;
-		border-bottom: 1px solid #E5E5E5;
-		color: #E5E5E5;
-		transform-origin: 0 100%;
-		transform: scaleY(0.5);
+		border-top: 1px solid #d7d7dc;
 	}
 	.weui-picker__content {
 		position: absolute;
