@@ -42,6 +42,9 @@
 		
 		padding: 0 .3rem;
 		
+		width:100%;
+		
+		overflow:hidden;
 	}
 	
 	.search_hot_list{

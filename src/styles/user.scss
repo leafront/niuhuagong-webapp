@@ -43,9 +43,11 @@
 
 	.login_input{
 
-		width: 2.5rem;
+		width:100%;
 
-		padding: .1rem 0;
+		height: .92rem;
+
+		padding: .35rem 0;
 
 		font-size: .28rem;
 
@@ -57,9 +59,11 @@
 
 	.login_pass_input{
 
-		width: 4rem;
+		width: 100%;
 
-		padding: .1rem 0;
+		padding: .35rem 0;
+
+		height: .92rem;
 
 		font-size: .28rem;
 

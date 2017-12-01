@@ -1,5 +1,6 @@
 <template>
 	<div class="pageView">
+		<AppHeader/>
 		<div class="scroll-view-wrapper">
 			<div class="login">
 				<div class="user_tit">
@@ -64,6 +65,12 @@
 	import Popup from '@/components/user/popup'
 
 	export default {
+
+		components: {
+
+			AppHeader
+
+		},
 		
 		data () {
 			

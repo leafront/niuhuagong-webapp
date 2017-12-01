@@ -6,7 +6,7 @@
 			</svg>
 		</div>
 		<div class="search_inputBar">
-			<input class="search_input" v-model.trim="searchWord" :placeholder="defaultWord"/>
+			<input type="search" class="search_input" v-model.trim="searchWord" :placeholder="defaultWord"/>
 			<div class="search_close" @click="delKeyword">
 				<svg class="ico search_close_ico" aria-hidden="true">
 					<use xlink:href="#icon-close"></use>
@@ -93,7 +93,9 @@
 	
 	.search_inputBar{
 		
-		padding: .18rem 0 .18rem .32rem;
+		padding-left:.32rem;
+		
+		margin: .18rem 0;
 		
 		border-radius: .44rem;
 		
@@ -107,7 +109,10 @@
 			
 			width: 100%;
 			
-			height: .28rem;
+			height:.56rem;
+			
+			padding: .18rem 0;
+			
 		}
 		
 		.search_close_ico{
