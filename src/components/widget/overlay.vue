@@ -53,6 +53,7 @@
 		
 		border-bottom: .01rem solid #cecece;
 		
+		
 		h5{
 			
 			font-size: .38rem;
