@@ -1,7 +1,6 @@
 <template>
-	
 	<div class="overlay" v-show="overlayVisible">
-		<div class="overlay_cont">
+		<div class="overlay_wrapper">
 			<slot name="title"></slot>
 			<slot name="content"></slot>
 		</div>
@@ -11,7 +10,7 @@
 
 <script>
 	
-	import { mapActions, mapGetters } from 'vuex'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 	
@@ -20,6 +19,21 @@
 			...mapGetters({
 				'overlayVisible':'getOverlayVisible'
 			})
+			
+		},
+		
+		mounted () {
+
+			/**
+			 *
+			 * 阻止弹层外的元素滚动
+			 */
+
+			this.$el.addEventListener('touchmove',(e) => {
+
+				e.preventDefault();
+				
+			},false)
 			
 		}
 	
@@ -51,7 +65,7 @@
 		
 		padding-left: .35rem;
 		
-		border-bottom: .01rem solid #cecece;
+		border-bottom: 1px solid #cecece;
 		
 		
 		h5{
@@ -70,7 +84,38 @@
 		
 	}
 	
-	.overlay_cont{
+	.overlay_submit{
+		
+		display: flex;
+		
+		height: .94rem;
+		
+		line-height: .94rem;
+		
+		border-top: 1px solid #cecece;
+		
+		span{
+			
+			width:50%;
+			
+			display:block;
+			
+			color: #252525;
+			
+			font-size: .32rem;
+			
+			text-align:center;
+			
+			&:first-child {
+				
+				border-right: 1px solid #cecece;
+				
+			}
+		}
+		
+	}
+	
+	.overlay_wrapper{
 		
 		width: 6rem;
 	

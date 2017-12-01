@@ -26,6 +26,8 @@ const authCompany = r => require.ensure([], () => r(require('@/pages/auth/compan
 
 const order = r => require.ensure([], () => r(require('@/pages/order')), 'order')
 
+const search = r => require.ensure([], () => r(require('@/pages/search')), 'search')
+
 Vue.use(Router)
 
 export default new Router({
@@ -103,6 +105,10 @@ export default new Router({
 				requireAuth: true,
 			},
 			component: order
+		},{
+			path: '/search',
+			name: 'search',
+			component: search
 		}
   ]
 })

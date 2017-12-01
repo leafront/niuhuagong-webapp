@@ -1,49 +1,53 @@
 <template>
-	<div class="scroll-view-wrapper">
-		<div class="login">
-			<div class="user_tit">
-				<h5>登录帐号</h5>
-				<div class="login_line">
-					<span></span>
-				</div>
-			</div>
-			<div class="user_form">
-				<div class="user_form_item">
-					<svg class="ico login_tel_ico" aria-hidden="true">
-						<use xlink:href="#icon-shouji"></use>
-					</svg>
-					<span></span>
-					<input type="tel" class="login_input" placeholder="请输入手机号码"/>
-					<div class="user_form_code">
-						<button class="login_code">获取验证码</button>
+	<div class="pageView">
+		<div class="scroll-view-wrapper">
+			<div class="login">
+				<div class="user_tit">
+					<h5>登录帐号</h5>
+					<div class="login_line">
+						<span></span>
 					</div>
-		
 				</div>
-				<div class="user_form_item">
-					<svg class="ico login_msg_ico" aria-hidden="true">
-						<use xlink:href="#icon-yanzhengma"></use>
-					</svg>
-					<span></span>
-					<input type="tel" class="login_input" placeholder="请输入验证码"/>
-				</div>
-				<div class="user_form_pass">
-					<span @click="pageAction('/user/pass')">使用密码登录</span>
-					<span>忘了密码</span>
-				</div>
-				<div class="user_login">
-					<button class="form-button">登录</button>
-				</div>
-				<div class="user_tips">
-					<span @click="pageAction('/user/register')">还没有账户，马上去<strong>注册</strong></span>
+				<div class="user_form">
+					<div class="user_form_item">
+						<svg class="ico login_tel_ico" aria-hidden="true">
+							<use xlink:href="#icon-shouji"></use>
+						</svg>
+						<span></span>
+						<input type="tel" class="login_input" placeholder="请输入手机号码"/>
+						<div class="user_form_code">
+							<button class="login_code">获取验证码</button>
+						</div>
+					
+					</div>
+					<div class="user_form_item">
+						<svg class="ico login_msg_ico" aria-hidden="true">
+							<use xlink:href="#icon-yanzhengma"></use>
+						</svg>
+						<span></span>
+						<input type="tel" class="login_input" placeholder="请输入验证码"/>
+					</div>
+					<div class="user_form_pass">
+						<span @click="pageAction('/user/pass')">使用密码登录</span>
+						<span>忘了密码</span>
+					</div>
+					<div class="user_login">
+						<button class="form-button">登录</button>
+					</div>
+					<div class="user_tips">
+						<span @click="pageAction('/user/register')">还没有账户，马上去<strong>注册</strong></span>
+					</div>
 				</div>
 			</div>
+		
 		</div>
-
 	</div>
 </template>
 
 <script>
 	
+	
+	import AppHeader from '@/components/common/header'
 	
 	export default {
 		

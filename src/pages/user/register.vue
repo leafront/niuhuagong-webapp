@@ -1,61 +1,65 @@
 <template>
-	<div class="scroll-view-wrapper">
-		<div class="login">
-			<div class="user_tit">
-				<h5>欢迎注册为会员</h5>
-				<div class="login_line">
-					<span></span>
-				</div>
-			</div>
-			<div class="user_form">
-				<div class="user_sex">
-					<div class="user_sex_item">
-						<svg class="ico user_sex_ico" aria-hidden="true">
-							<use xlink:href="#icon-boy"></use>
-						</svg>
-						<span>先生</span>
-					</div>
-					<div class="user_sex_item active">
-						<svg class="ico user_sex_ico" aria-hidden="true">
-							<use xlink:href="#icon-girl"></use>
-						</svg>
-						<span>女士</span>
+	<div class="pageView">
+		<div class="scroll-view-wrapper">
+			<div class="login">
+				<div class="user_tit">
+					<h5>欢迎注册为会员</h5>
+					<div class="login_line">
+						<span></span>
 					</div>
 				</div>
-				<div class="user_form_item">
-					<svg class="ico login_tel_ico" aria-hidden="true">
-						<use xlink:href="#icon-shouji"></use>
-					</svg>
-					<span></span>
-					<input type="tel" class="login_input" placeholder="请输入手机号码"/>
-				</div>
-				<div class="user_form_item">
-					<svg class="ico login_pass_ico" aria-hidden="true">
-						<use xlink:href="#icon-mima"></use>
-					</svg>
-					<span></span>
-					<input type="password" class="login_pass_input" placeholder="请输入6~20位密码"/>
-				</div>
-				<div class="user_form_item">
-					<svg class="ico login_pass_ico" aria-hidden="true">
-						<use xlink:href="#icon-mima"></use>
-					</svg>
-					<span></span>
-					<input type="password" class="login_pass_input" placeholder="请再次输入密码"/>
-				</div>
-				<div class="register_login">
-					<button class="form-button">注册</button>
-				</div>
-				<div class="user_tips">
-					<span @click="pageAction('/user/login')">已有账户，马上去<strong>登录</strong></span>
+				<div class="user_form">
+					<div class="user_sex">
+						<div class="user_sex_item">
+							<svg class="ico user_sex_ico" aria-hidden="true">
+								<use xlink:href="#icon-boy"></use>
+							</svg>
+							<span>先生</span>
+						</div>
+						<div class="user_sex_item active">
+							<svg class="ico user_sex_ico" aria-hidden="true">
+								<use xlink:href="#icon-girl"></use>
+							</svg>
+							<span>女士</span>
+						</div>
+					</div>
+					<div class="user_form_item">
+						<svg class="ico login_tel_ico" aria-hidden="true">
+							<use xlink:href="#icon-shouji"></use>
+						</svg>
+						<span></span>
+						<input type="tel" class="login_input" placeholder="请输入手机号码"/>
+					</div>
+					<div class="user_form_item">
+						<svg class="ico login_pass_ico" aria-hidden="true">
+							<use xlink:href="#icon-mima"></use>
+						</svg>
+						<span></span>
+						<input type="password" class="login_pass_input" placeholder="请输入6~20位密码"/>
+					</div>
+					<div class="user_form_item">
+						<svg class="ico login_pass_ico" aria-hidden="true">
+							<use xlink:href="#icon-mima"></use>
+						</svg>
+						<span></span>
+						<input type="password" class="login_pass_input" placeholder="请再次输入密码"/>
+					</div>
+					<div class="register_login">
+						<button class="form-button">注册</button>
+					</div>
+					<div class="user_tips">
+						<span @click="pageAction('/user/login')">已有账户，马上去<strong>登录</strong></span>
+					</div>
 				</div>
 			</div>
+			<Popup :isPopup="isPopup" @closeMask="closeMask"/>
 		</div>
-		<Popup :isPopup="isPopup" @closeMask="closeMask"/>
 	</div>
 </template>
 
 <script>
+
+	import AppHeader from '@/components/common/header'
 	
 	import Popup from '@/components/user/popup'
 

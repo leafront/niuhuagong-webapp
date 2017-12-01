@@ -4,7 +4,7 @@ const state = {
 
 	isMenu: false,
 
-	overlayVisible: true
+	overlayVisible: false
 
 }
 
@@ -24,7 +24,9 @@ const actions = {
 
 	},
 	updateOverlayVisible ({commit},info) {
+
 		commit(types.UPDATE_OVERLAY_VISIBLE, info)
+
 	}
 }
 

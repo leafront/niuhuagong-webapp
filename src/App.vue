@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-		<AppHeader/>
 	  <SliderMenu/>
     <router-view/>
   </div>
@@ -8,16 +7,15 @@
 
 <script>
 	
-	import AppHeader from '@/components/common/header'
-	
 	import SliderMenu from '@/components/common/sliderMenu'
+	
+	import { mapGetters, mapActions } from 'vuex'
 	
 	export default {
 		components: {
-			AppHeader,
 			SliderMenu
 		},
-
+		
 		methods: {
 
 			pageAction (url) {

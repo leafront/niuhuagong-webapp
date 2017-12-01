@@ -1,67 +1,70 @@
 <template>
-	<div class="scroll-view-wrapper cart-view" id="appView">
-		<div class="cart_tit">
-			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
-			<span v-show="isDelete" @click="deleteItem">删除</span>
-		</div>
-		<template v-if="list && list.length">
-		<div class="cart_list">
-			<LazyLoad :options="{ele:'lazyLoad_img'}">
-				<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
-					<div class="list_item_checked" :class="{'active': cartList[item.id]}">
-						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
-							<use xlink:href="#icon-gou"></use>
-						</svg>
-					</div>
-					<div class="cart_img">
-						<img class="lazyLoad_img" data-src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" :src="defaultImg" />
-					</div>
-					<div class="cart_info">
-						<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
-						<span>25公斤/包 （小计:25公斤）</span>
-						<div class="cart_info_txt">
-							<strong>￥{{item.priced}}</strong>
-							<div class="cart_num" @click="stopEvent($event)">
-								<div class="cart_reduce" @click.stop="changeCart(index,-1)">
-									<i></i>
-								</div>
-								<input type="tel" class="cart_num_input" @blur="changeNum(index)" v-model.trim="numList[index]"/>
-								<div class="cart_add" @click.stop="changeCart(index,1)">
-									<i class="ico1"></i>
-									<i class="ico2"></i>
+	<div class="pageView">
+		<AppHeader/>
+		<div class="scroll-view-wrapper cart-view" id="appView">
+			<div class="cart_tit">
+				<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
+				<span v-show="isDelete" @click="deleteItem">删除</span>
+			</div>
+			<template v-if="list && list.length">
+			<div class="cart_list">
+				<LazyLoad :options="{ele:'lazyLoad_img'}">
+					<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
+						<div class="list_item_checked" :class="{'active': cartList[item.id]}">
+							<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+								<use xlink:href="#icon-gou"></use>
+							</svg>
+						</div>
+						<div class="cart_img">
+							<img class="lazyLoad_img" data-src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" :src="defaultImg" />
+						</div>
+						<div class="cart_info">
+							<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
+							<span>25公斤/包 （小计:25公斤）</span>
+							<div class="cart_info_txt">
+								<strong>￥{{item.priced}}</strong>
+								<div class="cart_num" @click="stopEvent($event)">
+									<div class="cart_reduce" @click.stop="changeCart(index,-1)">
+										<i></i>
+									</div>
+									<input type="tel" class="cart_num_input" @blur="changeNum(index)" v-model.trim="numList[index]"/>
+									<div class="cart_add" @click.stop="changeCart(index,1)">
+										<i class="ico1"></i>
+										<i class="ico2"></i>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</LazyLoad>
-		</div>
-		</template>
-		<template v-else>
-			<div class="cart_empty">
-				<img src="./images/cart_empty.png"/>
-				<p>购物车空空如也</p>
+				</LazyLoad>
 			</div>
-		</template>
-
-		<div class="bottom-placeholder"></div>
-		<div class="settlement">
-			<div class="sett_item">
-				<div class="sett_item_select" @click="selectAll">
-					<div class="list_item_checked" :class="{'active':isAllSelect}">
-						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
-							<use xlink:href="#icon-gou"></use>
-						</svg>
+			</template>
+			<template v-else>
+				<div class="cart_empty">
+					<img src="./images/cart_empty.png"/>
+					<p>购物车空空如也</p>
+				</div>
+			</template>
+	
+			<div class="bottom-placeholder"></div>
+			<div class="settlement">
+				<div class="sett_item">
+					<div class="sett_item_select" @click="selectAll">
+						<div class="list_item_checked" :class="{'active':isAllSelect}">
+							<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+								<use xlink:href="#icon-gou"></use>
+							</svg>
+						</div>
+						<i>全选</i>
 					</div>
-					<i>全选</i>
+					<div class="sett_total">
+						<span>合计：</span>
+						<strong>￥{{totalPrice}}</strong>
+					</div>
 				</div>
-				<div class="sett_total">
-					<span>合计：</span>
-					<strong>￥{{totalPrice}}</strong>
+				<div class="sett_computed">
+					<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 				</div>
-			</div>
-			<div class="sett_computed">
-				<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 			</div>
 		</div>
 	</div>
@@ -71,13 +74,17 @@
 
 	import LazyLoad from '@/components/widget/lazyLoad'
 
+	import AppHeader from '@/components/common/header'
+
 	import defaultImg from '@/images/default.png'
 	
 	export default {
 		
 		components: {
 
-			LazyLoad
+			LazyLoad,
+			
+			AppHeader
 
 		},
 		

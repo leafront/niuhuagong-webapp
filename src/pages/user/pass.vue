@@ -1,5 +1,6 @@
 <template>
-	<div class="scroll-view-wrapper">
+	<div class="pageView">
+		<div class="scroll-view-wrapper">
 		<div class="login">
 			<div class="user_tit">
 				<h5>登录帐号</h5>
@@ -34,11 +35,13 @@
 				</div>
 			</div>
 		</div>
-	
+	</div>
 	</div>
 </template>
 
 <script>
+
+	import AppHeader from '@/components/common/header'
 
 	export default {
 

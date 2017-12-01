@@ -15,7 +15,7 @@
 			</svg>
 		</div>
 		<div class="head_nav_link">
-			<div class="head_nav_search">
+			<div class="head_nav_search" @click="pageAction('/search')">
 				<svg class="ico head_search_ico" aria-hidden="true">
 					<use xlink:href="#icon-sousuo2"></use>
 				</svg>
@@ -99,18 +99,18 @@
 		display:flex;
 		align-items: center;
 		.head_ico{
-			padding: .35rem 0 .35rem .3rem;
+			padding: .3rem 0 .3rem .3rem;
 			color:#008aec;
-			width: .5rem;
-			height: .5rem;
+			width: .52rem;
+			height: .6rem;
 			
 		}
 		.head_user_ico{
 			
-			padding: .35rem .3rem .35rem .3rem;
+			padding:.3rem;
 			color:#008aec;
 			width: .5rem;
-			height: .5rem;
+			height: .6rem;
 			
 		}
 	}
@@ -129,7 +129,9 @@
 		
 		align-items: center;
 		
-		padding:0 .15rem;
+		padding-right:.15rem;
+		
+		padding-left: .5rem;
 		
 		.head_search_ico{
 			

@@ -1,22 +1,27 @@
 <template>
-  <div class="scroll-view-wrapper" id="appView">
-	  <Banner/>
-		<Service/>
-	  <div class="service_ad">
-			<div class="service_ad_item">
-				<img src="./images/ad_banner.png">
-			</div>
-		  <div class="service_ad_item">
-			  <img src="./images/ad_banner.png">
+	<div class="pageView">
+		<AppHeader/>
+	  <div class="scroll-view-wrapper" id="appView">
+		  <Banner/>
+			<Service/>
+		  <div class="service_ad">
+				<div class="service_ad_item">
+					<img src="./images/ad_banner.png">
+				</div>
+			  <div class="service_ad_item">
+				  <img src="./images/ad_banner.png">
+			  </div>
 		  </div>
+		  <List/>
 	  </div>
-	  <List/>
-  </div>
+</div>
 </template>
 
 <script>
 	
 	import Banner from '@/components/home/banner'
+
+	import AppHeader from '@/components/common/header'
 	
 	import Service from '@/components/home/service'
 	
@@ -25,6 +30,8 @@
 	export default {
 		
 		components: {
+
+			AppHeader,
 
 			Banner,
 

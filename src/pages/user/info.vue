@@ -1,18 +1,20 @@
 <template>
-	<div class="scroll-view-wrapper">
-		<div class="user_info">
-			<div class="user_tit">
-				<h5>继续完善我的资料</h5>
-				<div class="login_line">
-					<span></span>
+	<div class="pageView">
+		<div class="scroll-view-wrapper">
+			<div class="user_info">
+				<div class="user_tit">
+					<h5>继续完善我的资料</h5>
+					<div class="login_line">
+						<span></span>
+					</div>
 				</div>
-			</div>
-			<div class="user_types">
-				<span :class="{'active':user_type == 1}" @click="selectUser(1)">个人</span>
-				<span :class="{'active':user_type == 2}" @click="selectUser(2)">公司</span>
-			</div>
-			<div class="user_confirm">
-				<button class="form-button" @click="routerAction" :disabled="!user_type">下一步</button>
+				<div class="user_types">
+					<span :class="{'active':user_type == 1}" @click="selectUser(1)">个人</span>
+					<span :class="{'active':user_type == 2}" @click="selectUser(2)">公司</span>
+				</div>
+				<div class="user_confirm">
+					<button class="form-button" @click="routerAction" :disabled="!user_type">下一步</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,6 +76,8 @@
 </style>
 
 <script>
+
+	import AppHeader from '@/components/common/header'
 	
 	export default {
 		

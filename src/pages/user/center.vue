@@ -1,107 +1,111 @@
 <template>
-	<div class="scroll-view-wrapper center-view">
-		<div class="user_pic">
-		
-			<div class="user_pic_info" @click="pageAction('/user/info')">
+	<div class="pageView">
+		<div class="scroll-view-wrapper center-view">
+			<div class="user_pic">
 				
-				<img src="./images/user_pic.png"/>
+				<div class="user_pic_info" @click="pageAction('/user/info')">
+					
+					<img src="./images/user_pic.png"/>
+					
+					<div class="user_info_txt">
+						<span>赫克力士天普</span>
+						<button class="user_info_tips">完整度75%</button>
+					</div>
 				
-				<div class="user_info_txt">
-					<span>赫克力士天普</span>
-					<button class="user_info_tips">完整度75%</button>
+				</div>
+				<div class="user_setting">
+					<svg class="ico user_set_ico" aria-hidden="true">
+						<use xlink:href="#icon-shezhi"></use>
+					</svg>
 				</div>
 			
 			</div>
-			<div class="user_setting">
-				<svg class="ico user_set_ico" aria-hidden="true">
-					<use xlink:href="#icon-shezhi"></use>
-				</svg>
-			</div>
-		
-		</div>
-		
-		<div class="user_order">
-			<div class="user_order_tit" @click="pageAction('/order')">
-				<span>我的订单</span>
-				<div class="order_arrow">
-					<strong>查看全部订单</strong>
-					<svg class="ico order_arrow_right" aria-hidden="true">
-						<use xlink:href="#icon-jiantou"></use>
-					</svg>
+			
+			<div class="user_order">
+				<div class="user_order_tit" @click="pageAction('/order')">
+					<span>我的订单</span>
+					<div class="order_arrow">
+						<strong>查看全部订单</strong>
+						<svg class="ico order_arrow_right" aria-hidden="true">
+							<use xlink:href="#icon-jiantou"></use>
+						</svg>
+					</div>
+				</div>
+				<div class="user_menu">
+					<ul class="user_menu_list">
+						<li>
+							<div class="order_status">
+								<svg class="ico order_status_ico" aria-hidden="true">
+									<use xlink:href="#icon-daifukuan"></use>
+								</svg>
+								<i class="order_status_num">22</i>
+							</div>
+							<span>待支付</span>
+						</li>
+						<li>
+							<div class="order_status">
+								<svg class="ico order_status_ico" aria-hidden="true">
+									<use xlink:href="#icon-fahuo"></use>
+								</svg>
+								<i class="order_status_num">22</i>
+							</div>
+							<span>待发货</span>
+						</li>
+						<li>
+							<div class="order_status">
+								<svg class="ico order_status_ico" aria-hidden="true">
+									<use xlink:href="#icon-daishouhuo"></use>
+								</svg>
+								<i class="order_status_num">22</i>
+							</div>
+							<span>待收货</span>
+						</li>
+						<li>
+							<div class="order_status">
+								<svg class="ico order_status_ico" aria-hidden="true">
+									<use xlink:href="#icon-pingjia"></use>
+								</svg>
+								<i class="order_status_num">22</i>
+							</div>
+							<span>待评价</span>
+						</li>
+					</ul>
 				</div>
 			</div>
-			<div class="order_menu">
-				<ul class="order_menu_list">
-					<li>
-						<div class="order_status">
-							<svg class="ico order_status_ico" aria-hidden="true">
-								<use xlink:href="#icon-daifukuan"></use>
-							</svg>
-							<i class="order_status_num">22</i>
-						</div>
-						<span>待支付</span>
-					</li>
-					<li>
-						<div class="order_status">
-							<svg class="ico order_status_ico" aria-hidden="true">
-								<use xlink:href="#icon-fahuo"></use>
-							</svg>
-							<i class="order_status_num">22</i>
-						</div>
-						<span>待发货</span>
-					</li>
-					<li>
-						<div class="order_status">
-							<svg class="ico order_status_ico" aria-hidden="true">
-								<use xlink:href="#icon-daishouhuo"></use>
-							</svg>
-							<i class="order_status_num">22</i>
-						</div>
-						<span>待收货</span>
-					</li>
-					<li>
-						<div class="order_status">
-							<svg class="ico order_status_ico" aria-hidden="true">
-								<use xlink:href="#icon-pingjia"></use>
-							</svg>
-							<i class="order_status_num">22</i>
-						</div>
-						<span>待评价</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="order_link">
-			<div class="order_link_item">
-				<svg class="ico order_link_ico" aria-hidden="true">
-					<use xlink:href="#icon-icon-yxj-address"></use>
-				</svg>
-				<span>收货地址管理</span>
-			</div>
-			<div class="order_link_item">
-				<svg class="ico order_link_ico" aria-hidden="true">
-					<use xlink:href="#icon-fapiao"></use>
-				</svg>
-				<span>发票信息管理</span>
-			</div>
-			<div class="order_link_item">
-				<svg class="ico order_link_ico" aria-hidden="true">
-					<use xlink:href="#icon-shoucangjia"></use>
-				</svg>
-				<span>收藏夹</span>
-			</div>
-			<div class="order_link_item">
-				<svg class="ico order_link_ico" aria-hidden="true">
-					<use xlink:href="#icon-xiaoxi"></use>
-				</svg>
-				<span>消息中心</span>
-				<i class="order_notice_num"></i>
+			<div class="order_link">
+				<div class="order_link_item">
+					<svg class="ico order_link_ico" aria-hidden="true">
+						<use xlink:href="#icon-icon-yxj-address"></use>
+					</svg>
+					<span>收货地址管理</span>
+				</div>
+				<div class="order_link_item">
+					<svg class="ico order_link_ico" aria-hidden="true">
+						<use xlink:href="#icon-fapiao"></use>
+					</svg>
+					<span>发票信息管理</span>
+				</div>
+				<div class="order_link_item">
+					<svg class="ico order_link_ico" aria-hidden="true">
+						<use xlink:href="#icon-shoucangjia"></use>
+					</svg>
+					<span>收藏夹</span>
+				</div>
+				<div class="order_link_item">
+					<svg class="ico order_link_ico" aria-hidden="true">
+						<use xlink:href="#icon-xiaoxi"></use>
+					</svg>
+					<span>消息中心</span>
+					<i class="order_notice_num"></i>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+
+	import AppHeader from '@/components/common/header'
 	
 	export default {
 
@@ -308,7 +312,7 @@
 		}
 		
 	}
-	.order_menu_list{
+	.user_menu_list{
 		
 		height: 1.66rem;
 		

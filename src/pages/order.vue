@@ -1,206 +1,233 @@
 <template>
-	<div class="scroll-view-wrapper order-view">
-		<div class="order_menu">
-			<div class="order_tit">
-				<svg class="ico order_arrow_left" aria-hidden="true">
-					<use xlink:href="#icon-jiantou3"></use>
-				</svg>
-				<span>我的订单</span>
+	<div class="pageView">
+		<AppHeader/>
+		<div class="scroll-view-wrapper order-view">
+			<div class="order_menu">
+				<div class="order_tit">
+					<svg class="ico order_arrow_left" aria-hidden="true">
+						<use xlink:href="#icon-jiantou3"></use>
+					</svg>
+					<span>我的订单</span>
+				</div>
+				<ul class="order_menu_list">
+					<li v-for="(item,i) in orderTxt" :class="{'active': index == item.status}" @click="showTab(i)"><span>{{item.name}}</span></li>
+				</ul>
 			</div>
-			<ul class="order_menu_list">
-				<li v-for="(item,i) in orderTxt" :class="{'active': index == item.status}" @click="showTab(i)"><span>{{item.name}}</span></li>
-			</ul>
+			<!--全部-->
+			<template v-if="list && list.length">
+				<div class="order_tab">
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong>待发货</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费:¥1008.2+¥100.00(送货上门)</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status">提醒发货 </button>
+						</div>
+					</div>
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong>待发货</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费：¥300</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status" @click="updateOverlayVisible(true)">取消订单</button>
+							<button class="order_btn_status">我要支付</button>
+						</div>
+					</div>
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong class="order_item_status">已取消</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费:¥1008.2+¥100.00(送货上门)</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status">删除订单</button>
+						</div>
+					</div>
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong>已发货</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费:¥1008.2+¥100.00(送货上门)</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status">查看物流</button>
+							<button class="order_btn_status">确认收货</button>
+						</div>
+					</div>
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong>待评价</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费:¥1008.2+¥100.00(送货上门)</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status">我要评价</button>
+						</div>
+					</div>
+					<div class="order_item">
+						<div class="order_item_tit">
+							<span>订单号：561315641266600035</span>
+							<strong>已评价</strong>
+						</div>
+						<div class="order_info">
+							<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
+							<div class="order_info_txt">
+								<p>苏州秧浦水性色浆YP系列</p>
+								<span>YP502大红</span>
+								<span>20公斤/桶×１（小计:20公斤）</span>
+								<strong>￥185</strong>
+							</div>
+						</div>
+						<div class="order_money">
+							<span>运费:¥1008.2+¥100.00(送货上门)</span>
+							<div class="order_money_total">
+								<strong>合计:</strong>
+								<i>￥3853.2</i>
+							</div>
+						</div>
+						<div class="order_status">
+							<button class="order_btn_status">再次购买</button>
+						</div>
+					</div>
+				</div>
+			<!--全部-->
+			</template>
+			<template v-else>
+				<div class="order_empty">
+					<img src="./images/order_empty_bg.png"/>
+					<p>还没有购买商品</p>
+				</div>
+			</template>
+			<Overlay>
+				<div class="overlay_title" slot="title">
+					<h5>请选择取消订单的理由</h5>
+				</div>
+				<div class="overlay_cont" slot="content">
+					<div class="order_refund">
+						<ul class="order_refund_list">
+							<li v-for="(item,index) in refundList" @click="selectRefund(index)">
+								<span>{{item.name}}</span>
+								<div class="refund_checked" :class="{'active':refundIndex == index}">
+									<svg class="ico refund_checked_ico" aria-hidden="true">
+										<use xlink:href="#icon-gou"></use>
+									</svg>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="overlay_submit">
+						<span @click="updateOverlayVisible(false)">取消</span>
+						<span @click="submitRefund">确定</span>
+					</div>
+				</div>
+			</Overlay>
 		</div>
-		<!--全部-->
-		<template v-if="list && list.length">
-			<div class="order_tab">
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong>待发货</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费:¥1008.2+¥100.00(送货上门)</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">提醒发货 </button>
-					</div>
-				</div>
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong>待发货</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费：¥300</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">取消订单</button>
-						<button class="order_btn_status">我要支付</button>
-					</div>
-				</div>
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong class="order_item_status">已取消</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费:¥1008.2+¥100.00(送货上门)</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">删除订单</button>
-					</div>
-				</div>
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong>已发货</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费:¥1008.2+¥100.00(送货上门)</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">查看物流</button>
-						<button class="order_btn_status">确认收货</button>
-					</div>
-				</div>
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong>待评价</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费:¥1008.2+¥100.00(送货上门)</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">我要评价</button>
-					</div>
-				</div>
-				<div class="order_item">
-					<div class="order_item_tit">
-						<span>订单号：561315641266600035</span>
-						<strong>已评价</strong>
-					</div>
-					<div class="order_info">
-						<img src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg"/>
-						<div class="order_info_txt">
-							<p>苏州秧浦水性色浆YP系列</p>
-							<span>YP502大红</span>
-							<span>20公斤/桶×１（小计:20公斤）</span>
-							<strong>￥185</strong>
-						</div>
-					</div>
-					<div class="order_money">
-						<span>运费:¥1008.2+¥100.00(送货上门)</span>
-						<div class="order_money_total">
-							<strong>合计:</strong>
-							<i>￥3853.2</i>
-						</div>
-					</div>
-					<div class="order_status">
-						<button class="order_btn_status">再次购买</button>
-					</div>
-				</div>
-			</div>
-		<!--全部-->
-		</template>
-		<template v-else>
-			<div class="order_empty">
-				<img src="./images/order_empty_bg.png"/>
-				<p>还没有购买商品</p>
-			</div>
-		</template>
-		<Overlay>
-			<div class="overlay_title" slot="title">
-				<h5>请选择取消订单的理由</h5>
-			</div>
-		</Overlay>
 	</div>
 </template>
 
 <script>
 	
 	import Overlay from '@/components/widget/overlay'
+
+	import AppHeader from '@/components/common/header'
+
+	import { mapActions } from 'vuex'
 	
 	export default {
 		
 		components: {
 
-			Overlay
+			Overlay,
+			
+			AppHeader
 			
 		},
 		
@@ -211,6 +238,20 @@
 				list:[undefined],
 				
 				index: 0,
+				
+				refundIndex: 0,
+				
+				refundList:[{
+					name: '我不想买了',
+				},{
+					name: '商品缺货'
+				},{
+					name: '收货信息有误'
+				},{
+					name: '商品数量/款式有误'
+				},{
+					name: '其他原因'
+				}],
 				
 				orderTxt: [{
 					name:'全部',
@@ -234,10 +275,28 @@
 		},
 		
 		methods: {
+			
+			...mapActions([
+				
+				'updateOverlayVisible'
+				
+			]),
 
 			showTab (index) {
 				
 				this.index = index;
+				
+			},
+
+			selectRefund (index) {
+				
+				this.refundIndex = index
+				
+			},
+
+			submitRefund () {
+				
+				this.updateOverlayVisible(false)
 				
 			}
 		}
@@ -248,6 +307,73 @@
 
 <style lang="scss">
 	
+	.refund_checked{
+		
+		width: .4rem;
+		
+		height: .4rem;
+		
+		border-radius: 50%;
+		
+		margin-right: .3rem;
+		
+		display: flex;
+		
+		align-items: center;
+		
+		justify-content: center;
+		
+		background: #fff;
+		
+		border: .02rem solid #252525;
+		
+		&.active{
+			
+			background: #252525;
+			
+		}
+		.refund_checked_ico{
+			
+			width: .26rem;
+			height: .2rem;
+			color: #fff;
+			
+		}
+	}
+	
+	
+	
+	
+	.order_refund_list{
+		
+		
+		li{
+			
+			display: flex;
+			
+			justify-content: space-between;
+			
+			height: .8rem;
+			
+			align-items: center;
+			
+			span{
+				
+				font-size: .3rem;
+				
+				color: #252525;
+				
+			}
+			
+		}
+		
+	}
+	
+	.order_refund{
+		
+		padding: .32rem .35rem;
+		
+	}
 	
 	.order_empty{
 		
