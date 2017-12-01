@@ -33,8 +33,6 @@ if ('addEventListener' in document) {
 	}, false);
 }
 
-Vue.config.productionTip = true
-
 
 router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requireAuth)){ // 判断该路由是否需要登录权限

@@ -23,7 +23,6 @@ const mutations = {
 
 	[types.UPDATE_IS_MENU] ( state, info ) {
 
-
 		state.isMenu = info
 
 	}

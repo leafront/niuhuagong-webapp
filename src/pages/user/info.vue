@@ -95,6 +95,11 @@
 
 		},
 		
+		created () {
+		
+			
+		},
+		
 		methods: {
 
 			selectUser (type) {

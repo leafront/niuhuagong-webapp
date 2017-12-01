@@ -20,7 +20,7 @@
 						<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
 						<span>25公斤/包 （小计:25公斤）</span>
 						<div class="cart_info_txt">
-							<strong>￥{{item.price}}</strong>
+							<strong>￥{{item.priced}}</strong>
 							<div class="cart_num" @click="stopEvent($event)">
 								<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 									<i></i>
