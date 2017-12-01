@@ -8,7 +8,7 @@
 				<use xlink:href="#icon-daohanganniu"></use>
 			</svg>
 			<svg class="ico head_ico" @click="dropMenu" aria-hidden="true" v-show="isMenu">
-				<use xlink:href="#icon-daohangguanbi-"></use>
+				<use xlink:href="#icon-close"></use>
 			</svg>
 			<svg class="ico head_user_ico" @click="routerAction('/user/center')" aria-hidden="true">
 				<use xlink:href="#icon-yonghu"></use>

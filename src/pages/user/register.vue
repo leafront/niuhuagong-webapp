@@ -51,13 +51,37 @@
 				</div>
 			</div>
 		</div>
-	
+		<Popup :isPopup="isPopup" @closeMask="closeMask"/>
 	</div>
 </template>
 
 <script>
+	
+	import Popup from '@/components/user/popup'
 
 	export default {
+		
+		data () {
+			
+			return {
+				
+				isPopup: false
+				
+			}
+			
+		},
+		
+		components: {
+			
+			Popup
+			
+		},
+		
+		created () {
+			
+			this.isPopup = true
+			
+		},
 		
 		beforeCreate () {
 
@@ -71,6 +95,12 @@
 
 				this.$router.push(url)
 
+			},
+
+			closeMask (val) {
+				
+				this.isPopup = val
+				
 			}
 
 		}
@@ -81,9 +111,7 @@
 
 <style lang="scss">
 	
-	
 	@import '../../styles/user.scss';
-	
 	
 	.user_sex{
 		

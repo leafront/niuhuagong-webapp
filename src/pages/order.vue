@@ -184,12 +184,25 @@
 				<p>还没有购买商品</p>
 			</div>
 		</template>
+		<Overlay>
+			<div class="overlay_title" slot="title">
+				<h5>请选择取消订单的理由</h5>
+			</div>
+		</Overlay>
 	</div>
 </template>
 
 <script>
 	
+	import Overlay from '@/components/widget/overlay'
+	
 	export default {
+		
+		components: {
+
+			Overlay
+			
+		},
 		
 		data () {
 			
