@@ -15,7 +15,7 @@
 
 	align-items: center;
 
-	border-bottom: 1px solid #d7d7dc;
+	border-bottom: .01rem solid #d7d7dc;
 
 	label{
 
@@ -29,7 +29,11 @@
 }
 .personal_input {
 
+	position:relative;
+
 	display:flex;
+
+	align-items: center;
 
 	span{
 
@@ -40,6 +44,10 @@
 	}
 
 	.personal_input_tx{
+
+		height: .97rem;
+
+		padding:.3rem 0;
 
 		font-size: .28rem;
 

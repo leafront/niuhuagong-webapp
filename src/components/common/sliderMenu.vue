@@ -145,9 +145,11 @@
 		max-height:0;
 		
 		overflow: hidden;
-		z-index:10;
+		z-index:-10;
 		
 		&.active{
+			
+			z-index:10;
 			
 			padding-bottom: .2rem;
 			
@@ -183,7 +185,7 @@
 			
 			font-size: .3rem;
 			
-			border-bottom: 1px solid #eee;
+			border-bottom: .01rem solid #eee;
 			
 			.arrow_right_ico{
 				width: .2rem;

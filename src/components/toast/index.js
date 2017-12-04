@@ -16,17 +16,13 @@ Toast.install = function(Vue, options) {
 	Vue.prototype.$toast = (toast) => {
 
 		// 如果页面有toast则不继续执行
-		if(document.querySelector('.toast-container')) return;
+		if(document.querySelector('.mask-ui')) return;
 		// 1、创建构造器，定义好提示信息的模板
 		let toastTip = Vue.extend({
 			template: `
-             <div class="toast-container">
-               <div class="mask-toast"></div>
-               <div class="mask-ui">
-                <span>${toast}</span>
-               </div>
-            </div>
-            `
+				 <div class="mask-ui">
+					<span>${toast}</span>
+				 </div>       `
 		});
 		// 2、创建实例，挂载到文档以后的地方
 		let tpl = new toastTip().$mount().$el;
@@ -36,11 +32,6 @@ Toast.install = function(Vue, options) {
 		setTimeout(() => {
 			document.body.removeChild(tpl);
 		}, opt.duration);
-		//阻止遮罩滑动
-		document.querySelector(".toast-container").addEventListener("touchmove", function(e) {
-			e.stopPropagation();
-			e.preventDefault();
-		});
 
 		Toast.installed = true;
 

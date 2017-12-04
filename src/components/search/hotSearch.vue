@@ -65,7 +65,7 @@
 			
 			margin-right:.2rem;
 			
-			border:1px solid #cecece;
+			border:.01rem solid #cecece;
 			
 			border-radius: .44rem;
 			

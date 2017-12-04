@@ -9,11 +9,13 @@
 			<template v-if="list && list.length">
 			<div class="cart_list">
 				<LazyLoad :options="{ele:'lazyLoad_img'}">
-					<div class="cart_list_item" v-for="(item,index) in list" :key="index" @click="selectItem(item)">
-						<div class="list_item_checked" :class="{'active': cartList[item.id]}">
-							<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
-								<use xlink:href="#icon-gou"></use>
-							</svg>
+					<div class="cart_list_item" v-for="(item,index) in list">
+						<div class="list_checked_circle" @click="selectItem(item)">
+							<div class="list_item_checked" :class="{'active': cartList[item.id]}">
+								<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+									<use xlink:href="#icon-gou"></use>
+								</svg>
+							</div>
 						</div>
 						<div class="cart_img">
 							<img class="lazyLoad_img" data-src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" :src="defaultImg" />
@@ -45,26 +47,24 @@
 					<p>购物车空空如也</p>
 				</div>
 			</template>
-	
-			<div class="bottom-placeholder"></div>
-			<div class="settlement">
-				<div class="sett_item">
-					<div class="sett_item_select" @click="selectAll">
-						<div class="list_item_checked" :class="{'active':isAllSelect}">
-							<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
-								<use xlink:href="#icon-gou"></use>
-							</svg>
-						</div>
-						<i>全选</i>
+		</div>
+		<div class="settlement">
+			<div class="sett_item">
+				<div class="sett_item_select" @click="selectAll">
+					<div class="list_item_checked" :class="{'active':isAllSelect}">
+						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+							<use xlink:href="#icon-gou"></use>
+						</svg>
 					</div>
-					<div class="sett_total">
-						<span>合计：</span>
-						<strong>￥{{totalPrice}}</strong>
-					</div>
+					<i>全选</i>
 				</div>
-				<div class="sett_computed">
-					<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
+				<div class="sett_total">
+					<span>合计：</span>
+					<strong>￥{{totalPrice}}</strong>
 				</div>
+			</div>
+			<div class="sett_computed">
+				<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 			</div>
 		</div>
 	</div>
@@ -237,11 +237,13 @@
 			
 				const list = this.list
 				
-				for(let len = list.length -1, i = len; i >=0; i--) {
+				for (let len = list.length, i = len - 1; i >=0; i--) {
 					
-					if(cartList[list[i].id]) {
+					if (cartList[list[i].id]) {
 						
-						list.splice(i,1)
+						this.numList.splice(i,1)
+						
+						this.list.splice(i,1)
 						
 					}
 					
@@ -484,23 +486,9 @@
 	
 	}
 	
-	.bottom-placeholder{
-		
-		height: 1.02rem;
-		
-	}
-	
 	.settlement{
 	
 		height: 1.02rem;
-		
-		position: fixed;
-		
-		width: 100%;
-		
-		left: 0;
-		
-		bottom:0;
 		
 		display:flex;
 		
@@ -524,7 +512,7 @@
 		
 		justify-content: space-between;
 		
-		border-top: 1px solid #d6d6d6;
+		border-top: .01rem solid #d6d6d6;
 		
 		i{
 			
@@ -583,7 +571,7 @@
 		
 		align-items: center;
 		
-		border-right: 1px solid #cecece;
+		border-right: .01rem solid #cecece;
 		
 		i{
 			
@@ -603,7 +591,7 @@
 		
 		height: .5rem;
 		
-		border-left: 1px solid #cecece;
+		border-left: .01rem solid #cecece;
 		
 		position:relative;
 		
@@ -653,7 +641,7 @@
 		
 		align-items: center;
 		
-		border: 1px solid #cecece;
+		border: .01rem solid #cecece;
 		
 		height: .5rem;
 		
@@ -725,8 +713,6 @@
 		
 		margin-top: .24rem;
 		
-		padding-left: .3rem;
-		
 		background: #fff;
 		
 		
@@ -740,11 +726,23 @@
 		
 		align-items: center;
 		
-		border-bottom:1px solid #ededed;
+		border-bottom:.01rem solid #ededed;
 		
 		&:last-child{
 			border-bottom:0;
 		}
+		
+	}
+	
+	.list_checked_circle{
+		
+		display: flex;
+		
+		padding-left: .3rem;
+		
+		align-items: center;
+		
+		height: 1.6rem;
 		
 	}
 	
@@ -758,15 +756,15 @@
 		
 		margin-right: .3rem;
 		
+		background: #fff;
+		
+		border: .02rem solid #252525;
+		
 		display: flex;
 		
 		align-items: center;
 		
 		justify-content: center;
-		
-		background: #fff;
-		
-		border: .02rem solid #252525;
 		
 		&.active{
 			

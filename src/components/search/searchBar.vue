@@ -62,7 +62,7 @@
 	
 	.search_close{
 		
-		height: .64rem;
+		height: .58rem;
 		
 		padding: 0 .25rem;
 		
@@ -85,7 +85,7 @@
 		
 		display: flex;
 		
-		border-bottom: 1px solid #f1f1f1;
+		border-bottom: .01rem solid #f1f1f1;
 		
 		align-items: center;
 		

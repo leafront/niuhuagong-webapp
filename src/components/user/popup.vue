@@ -72,7 +72,7 @@
 			
 			border-radius: 50%;
 		
-			border: .03rem solid #a2a2a2;
+			border: .02rem solid #a2a2a2;
 		}
 	}
 	

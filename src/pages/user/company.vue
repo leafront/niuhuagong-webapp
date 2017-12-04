@@ -1,5 +1,6 @@
 <template>
 	<div class="pageView">
+		<AppHeader/>
 		<div class="scroll-view-wrapper">
 			<div class="personal">
 				<div class="user_tit">
@@ -93,6 +94,12 @@
 	import AppHeader from '@/components/common/header'
 
 	export default {
+		
+		components: {
+
+			AppHeader
+			
+		},
 
 		data () {
 

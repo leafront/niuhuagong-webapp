@@ -24,7 +24,13 @@
 			HotSearch
 			
 		},
-		
+
+		beforeCreate () {
+
+			document.title = '用户搜索'
+
+		},
+
 		methods: {
 			
 			...mapActions([

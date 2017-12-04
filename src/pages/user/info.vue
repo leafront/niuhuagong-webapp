@@ -54,7 +54,7 @@
 			
 			border-radius: 50%;
 			
-			border:1px solid #d2d2d2;
+			border:.01rem solid #d2d2d2;
 			
 			font-size: .28rem;
 			

@@ -15,7 +15,7 @@
 							<use xlink:href="#icon-shouji"></use>
 						</svg>
 						<span></span>
-						<input type="tel" class="login_input" placeholder="请输入手机号码"/>
+						<input type="tel"  class="login_input" placeholder="请输入手机号码"/>
 						<div class="user_form_code">
 							<button class="login_code">获取验证码</button>
 						</div>

@@ -27,13 +27,6 @@ Vue.use(Toast,{    //支持全局配置
 
 Vue.use(pageLoading)
 
-if ('addEventListener' in document) {
-	document.addEventListener('DOMContentLoaded', function() {
-		FastClick.attach(document.body);
-	}, false);
-}
-
-
 router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requireAuth)){ // 判断该路由是否需要登录权限
 		if (true) {// 判断当前的是否登录
@@ -52,6 +45,12 @@ router.beforeEach((to, from, next) => {
 		next()
 	}
 })
+
+if ('addEventListener' in document) {
+	document.addEventListener('DOMContentLoaded', function() {
+		FastClick.attach(document.body);
+	}, false);
+}
 
 new Vue({
   el: '#app',

@@ -68,7 +68,8 @@
 
 		components: {
 
-			AppHeader
+			AppHeader,
+			Popup
 
 		},
 		
@@ -79,12 +80,6 @@
 				isPopup: false
 				
 			}
-			
-		},
-		
-		components: {
-			
-			Popup
 			
 		},
 		
