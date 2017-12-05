@@ -12,7 +12,7 @@
 					<div class="cart_list_item" v-for="(item,index) in list">
 						<div class="list_checked_circle" @click="selectItem(item)">
 							<div class="list_item_checked" :class="{'active': cartList[item.id]}">
-								<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+								<svg class="ico cart_checked_ico"  aria-hidden="true">
 									<use xlink:href="#icon-gou"></use>
 								</svg>
 							</div>
@@ -25,7 +25,7 @@
 							<span>25公斤/包 （小计:25公斤）</span>
 							<div class="cart_info_txt">
 								<strong>￥{{item.priced}}</strong>
-								<div class="cart_num" @click="stopEvent($event)">
+								<div class="cart_num">
 									<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 										<i></i>
 									</div>
@@ -52,7 +52,7 @@
 			<div class="sett_item">
 				<div class="sett_item_select" @click="selectAll">
 					<div class="list_item_checked" :class="{'active':isAllSelect}">
-						<svg class="ico cart_checked_ico" @click="pageAction('/user/cart')" aria-hidden="true">
+						<svg class="ico cart_checked_ico" aria-hidden="true">
 							<use xlink:href="#icon-gou"></use>
 						</svg>
 					</div>
@@ -136,25 +136,7 @@
 		},
 		
 		methods: {
-
-			stopEvent (e) {
-				
-				e.stopPropagation()
-				
-			},
 			
-			/**
-			 * 页面URL路由跳转
-			 *
-			 *  @param {String} url
-			 *
-			 */
-
-			pageAction (url) {
-				
-				this.$router.push(url)
-				
-			},
 			/**
 			 * 选中购物车中的一项
 			 * @param id
@@ -314,11 +296,11 @@
 				
 				const list = this.list
 
-				const carList = this.cartList
+				const cartList = this.cartList
 
 				const isDelete = list.some(({id}) => {
 
-					return carList[id]
+					return cartList[id]
 
 				})
 

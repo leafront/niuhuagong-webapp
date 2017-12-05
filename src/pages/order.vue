@@ -640,7 +640,5 @@
 			color: #c1c1c1;
 			margin-right: .2rem;
 		}
-		
-		
 	}
 </style>

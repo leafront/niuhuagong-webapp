@@ -169,7 +169,8 @@
 		position:absolute;
 		
 		left: 50%;
-		margin-left: -0.95rem;
+		top:50%;
+		transform: translate(-50%,-50%);
 		img{
 			width: 1.9rem;
 			height: .6rem;
