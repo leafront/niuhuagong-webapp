@@ -62,7 +62,7 @@
 	
 	.search_close{
 		
-		height: .58rem;
+		height: .7rem;
 		
 		padding: 0 .25rem;
 		
@@ -81,7 +81,9 @@
 	
 	.search{
 		
-		height: .94rem;
+		height: 1.2rem;
+		
+		padding: .18rem 0;
 		
 		display: flex;
 		
@@ -95,11 +97,11 @@
 		
 		padding-left:.32rem;
 		
-		margin: .18rem 0;
-		
 		border-radius: .44rem;
 		
 		width: 76%;
+		
+		height: .7rem;
 		
 		background: #ededed;
 		
@@ -109,9 +111,9 @@
 			
 			width: 100%;
 			
-			height:.56rem;
+			height:.7rem;
 			
-			padding: .18rem 0;
+			padding: .2rem 0;
 			
 		}
 		
