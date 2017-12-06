@@ -5,6 +5,7 @@
   "author": "叶亮 <yeliang@83chedai.com>",
   "private": true,
   "scripts": {
+    "release": "node release.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",

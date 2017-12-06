@@ -1,18 +1,18 @@
 <template>
 	<div class="pageView">
 		<AppHeader/>
-		<div class="scroll-view-wrapper order-view">
-			<div class="order_menu">
-				<div class="order_tit">
-					<svg class="ico order_arrow_left" aria-hidden="true">
-						<use xlink:href="#icon-jiantou3"></use>
-					</svg>
-					<span>我的订单</span>
-				</div>
-				<ul class="order_menu_list">
-					<li v-for="(item,i) in orderTxt" :class="{'active': index == item.status}" @click="showTab(i)"><span>{{item.name}}</span></li>
-				</ul>
+		<div class="order_menu">
+			<div class="order_tit">
+				<svg class="ico order_arrow_left" aria-hidden="true">
+					<use xlink:href="#icon-jiantou3"></use>
+				</svg>
+				<span>我的订单</span>
 			</div>
+			<ul class="order_menu_list">
+				<li v-for="(item,i) in orderTxt" :class="{'active': index == item.status}" @click="showTab(i)"><span>{{item.name}}</span></li>
+			</ul>
+		</div>
+		<div class="scroll-view-wrapper order-view">
 			<!--全部-->
 			<template v-if="list && list.length">
 				<div class="order_tab">

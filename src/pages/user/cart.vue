@@ -162,13 +162,11 @@
 				if (cartNum == 1 && val == -1) {
 					
 					this.$toast('单件商品数量不能少于1件')
-					
 					return
 					
 				}
 
 				cartNum += val
-				
 				this.numList.splice(index,1,cartNum)
 				
 			
@@ -184,27 +182,21 @@
 			selectAll () {
 				
 				const list = this.list
-				
 				const cartList = this.cartList
 				
 				if (this.isAllSelect) {
 					
 					list.forEach(({id}) => {
-
 						cartList[id] = false
-						
 					})
 					
 				} else {
-
+					
 					list.forEach(({id}) => {
-
 						cartList[id] = true
-
 					})
 					
 				}
-				
 			},
 
 			/**
@@ -216,7 +208,6 @@
 			deleteItem () {
 				
 				const cartList = this.cartList
-			
 				const list = this.list
 				
 				for (let len = list.length, i = len - 1; i >=0; i--) {
@@ -224,7 +215,6 @@
 					if (cartList[list[i].id]) {
 						
 						this.numList.splice(i,1)
-						
 						this.list.splice(i,1)
 						
 					}
@@ -240,9 +230,7 @@
 				if (cartNum == 0 || !cartNum) {
 					
 					this.$toast('单件商品数量不能少于1件')
-
 					this.numList.splice(index,1,1)
-
 					return
 				
 				}
@@ -264,17 +252,13 @@
 			isAllSelect () {
 				
 				const list = this.list
-				
 				const carList = this.cartList
-
 				let isSelect = false
 
 				if (list && list.length) {
 
 					isSelect = list.every(({id}) => {
-
 						return carList[id]
-
 					})
 					
 				}
@@ -295,13 +279,10 @@
 			isDelete () {
 				
 				const list = this.list
-
 				const cartList = this.cartList
-
+				
 				const isDelete = list.some(({id}) => {
-
 					return cartList[id]
-
 				})
 
 				return isDelete
@@ -320,17 +301,13 @@
 			selectNum () {
 				
 				let num = 0
-				
 				const cartList = this.cartList
 				
 				this.list.forEach(({id}) => {
 
 					if(cartList[id]) {
-
 						num ++
-					
 					}
-					
 				})
 				
 				return num
@@ -349,17 +326,13 @@
 			totalPrice () {
 				
 				const cartList = this.cartList
-				
 				const numList = this.numList
-				
 				let totalPrice = 0
 				
 				this.list.forEach(({price,id},index) => {
 
 					if (cartList[id]) {
-
 						totalPrice += numList[index] * price
-					
 					}
 					
 				})
@@ -373,19 +346,16 @@
 		created () {
 			
 			const cartList = {}
-			
 			let  numList = []
 			
 			this.list.forEach((item) => {
 
 				cartList[item.id] = false
-
 				numList.push(item.number)
 			
 			})
 			
 			this.cartList = cartList
-			
 			this.numList = numList
 			
 		},
