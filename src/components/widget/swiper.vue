@@ -127,7 +127,7 @@
 
 				lastElement.insertAdjacentElement('afterend',firstEleClone);
 
-				this.itemWidth = this.$el.offsetWidth;
+				this.itemWidth = document.documentElement.clientWidth;
 
 				this.setWrapperPos(-this.index * this.itemWidth);
 

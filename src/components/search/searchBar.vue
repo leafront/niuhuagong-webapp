@@ -138,7 +138,7 @@
 		
 		justify-content: center;
 		
-		height: .94rem;
+		height: .7rem;
 		
 		
 		.search_ico{
@@ -159,16 +159,18 @@
 		
 		display: flex;
 		
-		height: .94rem;
+		height: .7rem;
 		
 		justify-content: center;
+		
+		align-items: center;
 		
 		
 		.back_ico{
 			
-			width: .48rem;
+			width: .5rem;
 			
-			height: .94rem;
+			height: .5rem;
 			
 			color: #008aec;
 			

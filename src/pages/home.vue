@@ -1,7 +1,7 @@
 <template>
 	<div class="pageView">
 		<AppHeader/>
-	  <div class="scroll-view-wrapper" id="appView">
+	  <div class="scroll-view-wrapper" id="appView" v-show="pageView">
 		  <Banner/>
 			<Service/>
 		  <div class="service_ad">
@@ -26,6 +26,8 @@
 	import Service from '@/components/home/service'
 	
 	import List from '@/components/home/list'
+
+	import { mapActions, mapGetters } from 'vuex'
 	
 	export default {
 		
@@ -41,8 +43,35 @@
 			
 		},
 		
+		computed: {
+			...mapGetters({
+				'pageView':'getPageView'
+			})
+		},
+		
+		methods: {
+			
+			...mapActions([
+				'updatePageView',
+			])
+			
+		},
+
+		beforeCreate () {
+
+			this.$showLoading()
+
+			document.title = '牛化工'
+
+		},
 		created (){
 		
+			setTimeout(() => {
+				this.$hideLoading()
+
+				this.updatePageView(true)
+				
+			},700)
 			
 		}
 	}

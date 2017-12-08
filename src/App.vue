@@ -16,6 +16,7 @@
 			SliderMenu
 		},
 		
+		
 		methods: {
 
 			pageAction (url) {

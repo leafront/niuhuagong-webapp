@@ -1,13 +1,13 @@
 <template>
 	<div class="pageView">
 		<AppHeader/>
+		<div class="cart_tit">
+			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
+			<span v-show="isDelete" @click="deleteItem">删除</span>
+		</div>
 		<div class="scroll-view-wrapper cart-view" id="appView">
-			<div class="cart_tit">
-				<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
-				<span v-show="isDelete" @click="deleteItem">删除</span>
-			</div>
 			<template v-if="list && list.length">
-			<div class="cart_list">
+			<div class="cart_list" v-show="pageView">
 				<LazyLoad :options="{ele:'lazyLoad_img'}">
 					<div class="cart_list_item" v-for="(item,index) in list">
 						<div class="list_checked_circle" @click="selectItem(item)">
@@ -24,7 +24,7 @@
 							<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
 							<span>25公斤/包 （小计:25公斤）</span>
 							<div class="cart_info_txt">
-								<strong>￥{{item.priced}}</strong>
+								<strong>￥{{item.price}}</strong>
 								<div class="cart_num">
 									<div class="cart_reduce" @click.stop="changeCart(index,-1)">
 										<i></i>
@@ -77,6 +77,8 @@
 	import AppHeader from '@/components/common/header'
 
 	import defaultImg from '@/images/default.png'
+
+	import { mapActions, mapGetters } from 'vuex'
 	
 	export default {
 		
@@ -136,6 +138,10 @@
 		},
 		
 		methods: {
+
+			...mapActions([
+				'updatePageView',
+			]),
 			
 			/**
 			 * 选中购物车中的一项
@@ -241,6 +247,10 @@
 		
 		computed:{
 
+			...mapGetters({
+				'pageView':'getPageView'
+			}),
+
 			/**
 			 * 判断购物车中的商品是否全选
 			 *
@@ -342,28 +352,41 @@
 			}
 		
 		},
-		
-		created () {
-			
-			const cartList = {}
-			let  numList = []
-			
-			this.list.forEach((item) => {
 
-				cartList[item.id] = false
-				numList.push(item.number)
-			
-			})
-			
-			this.cartList = cartList
-			this.numList = numList
-			
-		},
-		
 		beforeCreate () {
+
+			this.$showLoading()
 
 			document.title = '用户购物车'
 
+		},
+		
+		created () {
+			
+			setTimeout(() => {
+				
+				const cartList = {}
+				let  numList = []
+
+				this.list.forEach((item) => {
+
+					cartList[item.id] = false
+					numList.push(item.number)
+
+				})
+
+				this.cartList = cartList
+				this.numList = numList
+
+				this.$hideLoading()
+
+				this.updatePageView(true)
+				
+				
+			},800)
+			
+		
+			
 		}
 		
 	}
@@ -395,10 +418,14 @@
 		}
 	
 	 .sett_total{
-		 
-		 padding-right: .3rem;
+		
+		 padding-left: .3rem;
 		
 		 font-size: .28rem;
+		
+		 display: flex;
+		
+		 flex:1;
 		 
 		 span{
 			 
@@ -418,6 +445,8 @@
 		
 		height: 1.02rem;
 		
+		width: 2.5rem;
+		
 		display:flex;
 		
 		align-items: center;
@@ -425,8 +454,6 @@
 		justify-content: center;
 		
 		background: #fe8900;
-		
-		padding: 0 .54rem;
 		
 		span{
 			

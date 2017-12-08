@@ -4,7 +4,9 @@ const state = {
 
 	isMenu: false,
 
-	overlayVisible: false
+	overlayVisible: false,
+
+	pageView: false
 
 }
 
@@ -12,7 +14,9 @@ const getters = {
 
 	getIsMenu: state => state.isMenu,
 
-	getOverlayVisible: state => state.overlayVisible
+	getOverlayVisible: state => state.overlayVisible,
+
+	getPageView: state => state.pageView
 
 }
 
@@ -26,6 +30,12 @@ const actions = {
 	updateOverlayVisible ({commit},info) {
 
 		commit(types.UPDATE_OVERLAY_VISIBLE, info)
+
+	},
+
+	updatePageView ({commit}, info) {
+
+		commit(types.UPDATE_PAGE_VIEW,info)
 
 	}
 }
@@ -41,6 +51,12 @@ const mutations = {
 	[types.UPDATE_OVERLAY_VISIBLE] (state, info) {
 
 		state.overlayVisible = info
+
+	},
+
+	[types.UPDATE_PAGE_VIEW] (state,info) {
+
+		state.pageView = info
 
 	}
 }
