@@ -7,7 +7,7 @@
 		</div>
 		<div class="scroll-view-wrapper cart-view" id="appView">
 			<template v-if="list && list.length">
-			<div class="cart_list" v-show="pageView">
+			<div class="cart_list" :class="{'visibility':!pageView}">
 				<LazyLoad :options="{ele:'lazyLoad_img'}">
 					<div class="cart_list_item" v-for="(item,index) in list">
 						<div class="list_checked_circle" @click="selectItem(item)">
@@ -362,6 +362,8 @@
 		},
 		
 		created () {
+
+			this.updatePageView(false)
 			
 			setTimeout(() => {
 				

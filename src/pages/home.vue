@@ -1,7 +1,7 @@
 <template>
 	<div class="pageView">
 		<AppHeader/>
-	  <div class="scroll-view-wrapper" id="appView" v-show="pageView">
+	  <div class="scroll-view-wrapper" id="appView" :class="{'visibility':!pageView}">
 		  <Banner/>
 			<Service/>
 		  <div class="service_ad">
@@ -65,6 +65,8 @@
 
 		},
 		created (){
+
+			this.updatePageView(false)
 		
 			setTimeout(() => {
 				this.$hideLoading()
