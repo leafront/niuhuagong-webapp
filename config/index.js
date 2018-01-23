@@ -6,13 +6,12 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 		proxyTable: {
 			'/api':{
-				target:"http://183.131.78.204:8037",
+				target:"http://111.231.103.97:7098/mobile",
 				secure:false
 			}
 		},
@@ -66,7 +65,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

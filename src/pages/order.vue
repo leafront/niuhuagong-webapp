@@ -1,13 +1,7 @@
 <template>
 	<div class="pageView">
-		<AppHeader/>
+		<AppHeader :title="title" :backFn="backFn"/>
 		<div class="order_menu">
-			<div class="order_tit">
-				<svg class="ico order_arrow_left" aria-hidden="true">
-					<use xlink:href="#icon-jiantou3"></use>
-				</svg>
-				<span>我的订单</span>
-			</div>
 			<ul class="order_menu_list">
 				<li v-for="(item,i) in orderTxt" :class="{'active': index == item.status}" @click="showTab(i)"><span>{{item.name}}</span></li>
 			</ul>
@@ -240,6 +234,7 @@
 				index: 0,
 				
 				refundIndex: 0,
+				title: '我的订单',
 				
 				refundList:[{
 					name: '我不想买了',
@@ -273,7 +268,11 @@
 			}
 			
 		},
-		
+		beforeCreate () {
+			
+			document.title = '我的订单'
+			
+		},
 		methods: {
 			
 			...mapActions([
@@ -281,6 +280,17 @@
 				'updateOverlayVisible'
 				
 			]),
+			
+			pageAction (url) {
+				
+				this.$router.push(url)
+				
+			},
+			backFn () {
+
+				this.pageAction('/user/center')
+
+			},
 
 			showTab (index) {
 				
@@ -611,34 +621,5 @@
 			
 		}
 		
-	}
-	
-	.order_tit{
-		
-		padding-left: .35rem;
-		
-		height: .94rem;
-		
-		display:flex;
-		
-		align-items: center;
-		
-		border-bottom: 1px solid #ededed;
-		
-		span{
-			
-			font-size: .28rem;
-			
-			color: #252525;
-			
-			
-		}
-		
-		.order_arrow_left{
-			width: .2rem;
-			height: .4rem;
-			color: #c1c1c1;
-			margin-right: .2rem;
-		}
 	}
 </style>

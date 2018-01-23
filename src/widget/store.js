@@ -1,29 +1,21 @@
+import utils from './utils'
+
 var store = {};
 
 var storage;
 
 var doc = document;
 
-function serialize(value) {
-	return JSON.stringify(value);
-}
 
-function deserialize(value) {
-
-	if (typeof value != 'string') return undefined;
-
-	return JSON.parse(value);
-}
-
-if ('localStorage' in window && window.localStorage) {
+if (utils.isLocalStorageSupported()) {
 
 	storage = window.localStorage;
 
 	store.set = function(key, val) {
-		storage[key] = serialize(val);
+		storage[key] = utils.serialize(val);
 	}
 	store.get = function(key) {
-		return deserialize(
+		return utils.deserialize(
 			storage[key]);
 	}
 	store.remove = function(key) {
@@ -35,12 +27,11 @@ if ('localStorage' in window && window.localStorage) {
 
 } else {
 
-
 	store.set = function(key, val) {
 
 		if (window.name) {
 
-			storage = deserialize(window.name);
+			storage = utils.deserialize(window.name);
 
 		} else {
 
@@ -50,21 +41,29 @@ if ('localStorage' in window && window.localStorage) {
 
 		storage[key] = val;
 
-		window.name = serialize(storage);
+		window.name = utils.serialize(storage);
 
 	}
 	store.get = function(key) {
 
-		return deserialize(window.name)[key];
+		if (window.name) {
+
+			return utils.deserialize(window.name)[key];
+
+		} else {
+
+			return null
+
+		}
 
 	}
 	store.remove = function(key) {
 
-		storage = deserialize(window.name);
+		storage = utils.deserialize(window.name);
 
 		delete storage[key];
 
-		window.name = serialize(storage);
+		window.name = utils.serialize(storage);
 
 	}
 	store.clear = function() {

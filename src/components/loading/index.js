@@ -4,8 +4,6 @@ Loading.installed = false;
 Loading.install = function(Vue, options) {
 	if(Loading.installed) return;
 	let opt = {
-		// 默认显示位置
-		defaultType: "center",
 		// 默认持续时间
 		duration: "3000"
 	}
@@ -16,10 +14,11 @@ Loading.install = function(Vue, options) {
 	Vue.prototype.$showLoading = () => {
 
 		// 如果页面有toast则不继续执行
-		if(document.querySelector('.ui-mask-cont')) return;
+		if(document.querySelector('.ui-loading-mask')) return;
 		// 1、创建构造器，定义好提示信息的模板
 		let toastTip = Vue.extend({
 			template: `
+			<div class="ui-loading-mask">
 			 <div class="ui-mask-cont">
 				 <svg class="ui-mask-loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 						<rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect>
@@ -38,6 +37,7 @@ Loading.install = function(Vue, options) {
 						<rect x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#fff" transform="rotate(300 50 50) translate(0 -30)"><animate attributeName="opacity" from="1" to="0" dur="0.8s" begin="0.6666666666666666s" repeatCount="indefinite"></animate></rect><rect x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#fff" transform="rotate(330 50 50) translate(0 -30)"><animate attributeName="opacity" from="1" to="0" dur="0.8s" begin="0.7333333333333334s" repeatCount="indefinite"></animate></rect>
 				 </svg>努力加载中...
 			 </div>   
+			 </div>
 			`
 		});
 		// 2、创建实例，挂载到文档以后的地方
@@ -45,13 +45,19 @@ Loading.install = function(Vue, options) {
 		// 3、把创建的实例添加到body中
 		document.body.appendChild(tpl);
 
+		//阻止遮罩滑动
+		tpl.addEventListener("touchmove", function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+		})
+
 		Loading.installed = true;
 
 	}
 
 	Vue.prototype.$hideLoading = () => {
 
-		const maskUi = document.querySelector('.ui-mask-cont');
+		const maskUi = document.querySelector('.ui-loading-mask');
 
 		if (maskUi) {
 			maskUi.parentNode.removeChild(maskUi);

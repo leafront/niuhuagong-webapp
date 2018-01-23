@@ -1,46 +1,123 @@
-import axios from 'axios'
+import ajax from './ajax'
 
-export const get = (url, info = {}) => {
+import store from './store'
 
-	return axios.get(url,{
+import utils from './utils'
 
-		params:info
+import { wxOauthLogin, clearStorage } from '@/widget/common'
 
-	}).then(res=>{
+export default function request (url,options){
 
-		if(res.status == 200){
+		var defaultOpt = {
+			isHeader:true,
+			type: options.type,
+			data: options.data,
+			async: true,
+			url:url,
+			timeout: 6000,
+			dataType: options.dataType || 'json',
+			headers: {
+				"Content-type":"application/x-www-form-urlencoded",
+				"Accept": 'application/json'
+			}
+		}
 
-			return res.data
+		clearStorage()
+		
+		const cache = options.cache || false
+		
+		const expires = options.expires || 30 * 60 * 1000
 
-		}else{
+		let data = options.data;
 
-			return false
+	  defaultOpt.data = utils.queryStringify(data);
+
+		if (options.type == "GET") {
+
+			defaultOpt.url =  defaultOpt.data ?  defaultOpt.url + '?' + defaultOpt.data: defaultOpt.url;
 
 		}
-	}).catch(err=>{
 
-		console.log(err)
+		var resAjax = new Promise((resolve, reject) => {
 
-	})
+			let currentTime = new Date().getTime()
 
-}
+			if (cache && store.get(defaultOpt.url)) {
 
-export const post = (url, info) => {
+				const getCacheTime = store.get(defaultOpt.url).times
 
-	return axios.post(url,info).then(res=>{
+				if (currentTime < getCacheTime) {
 
-		if(res.status==200){
+					resolve(store.get(defaultOpt.url).results)
 
-			return res.data
+				} else {
 
-		}else{
+					store.remove(defaultOpt.url)
 
-			return false
+					ajax(defaultOpt).then((results) => {
 
-		}
-	}).catch(err=>{
+						let res = {
+							times: new Date().getTime() + expires,
+							results
+						}
 
-		console.log(err)
+						if (results.status >= 1)  {
+							store.set(defaultOpt.url, res)
+						}
+						if (results.status == -3001) {
 
-	})
+							console.info(results)
+							if (utils.timer) {
+								console.info('clearTimer')
+								utils.clearTimeout()
+
+							}
+
+							wxOauthLogin()
+
+							reject(results)
+
+						}
+						resolve(results)
+
+					})
+				}
+
+			} else {
+
+				ajax(defaultOpt).then((results) => {
+
+					let res = {
+						times: new Date().getTime() + expires,
+						results
+					}
+
+					if (cache && results.status >= 1)  {
+						store.set(defaultOpt.url, res)
+					}
+
+					if (results.status == -3001) {
+
+						console.info(results)
+						if (utils.timer) {
+							console.info('clearTimer')
+							utils.clearTimeout()
+
+						}
+
+						wxOauthLogin()
+
+					  reject(results)
+
+					}
+
+					resolve(results)
+
+				})
+
+			}
+		})
+
+		return resAjax
+
 }

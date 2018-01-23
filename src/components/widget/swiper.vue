@@ -1,7 +1,7 @@
 <template>
 	<div class="slideshow-wrap">
 		<slot></slot>
-		<ul class="slideshow-dots">
+		<ul :class="{'slideshow-dots':showWay == 'banner','detail_slidershow-dots':showWay == 'detail_banner'}">
 			<li v-for="(item,$index) in list" :class="{'active':$index == index-1}">
 			</li>
 		</ul>
@@ -15,7 +15,13 @@
 		props:{
 			list:{
 				type: Array,
-				default:[]
+				default() {
+					return []
+				}
+			},
+			showWay: {
+				type: String,
+				default: 'banner'
 			},
 			step: {
 				type: Number,
@@ -127,7 +133,7 @@
 
 				lastElement.insertAdjacentElement('afterend',firstEleClone);
 
-				this.itemWidth = document.documentElement.clientWidth;
+				this.itemWidth = this.$el.offsetWidth;
 
 				this.setWrapperPos(-this.index * this.itemWidth);
 
@@ -224,19 +230,31 @@
 			}
 
 		},
-		mounted () {
+		watch: {
 
-			this.init();
-
-			this.$el.addEventListener('touchstart',(e) => {
-				this.touchstart(e);
-			})
-			this.$el.addEventListener('touchmove',(e) => {
-				this.touchmove(e);
-			})
-			this.$el.addEventListener('touchend',(e) => {
-				this.touchend(e);
-			})
+			list () {
+				
+				setTimeout(() => {
+					
+					this.init();
+					
+				},0)
+				
+				if (this.list.length == 1) {
+					return
+				}
+				
+				this.$el.addEventListener('touchstart',(e) => {
+					this.touchstart(e);
+				})
+				this.$el.addEventListener('touchmove',(e) => {
+					this.touchmove(e);
+				})
+				this.$el.addEventListener('touchend',(e) => {
+					this.touchend(e);
+				})
+			}
+			
 		}
 
 	}

@@ -1,0 +1,151 @@
+html{
+	font-size:100px;
+}
+body {
+	background-color: #fff;
+	font-family: "Microsoft Yahei";
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,textarea,p,blockquote,th,td,button {
+	margin: 0;
+	padding: 0;
+	tap-highlight-color: rgba(0,0,0,0);
+	text-size-adjust: none;
+	box-sizing: border-box;
+}
+
+button,h1,h2,h3,h4,h5,h6{
+
+	font-size: 100%;
+
+}
+fieldset,img,button {
+
+	border: 0
+}
+
+img{
+	vertical-align: top;
+}
+li{
+	list-style: none;
+}
+
+input {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+
+	font-size: 100%;
+}
+
+i{
+	font-style: normal;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type='text'],
+input[type='tel'],
+input[type='number'],
+select,
+textarea,
+button {
+	-webkit-appearance: none;
+	outline: none;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: "020";
+	clear: both;
+	height: 0;
+}
+
+.clearfix {
+	zoom: 1;
+	clear: both;
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+input:focus {
+	outline: none;
+
+}
+a {
+	text-decoration: none;
+	tap-highlight-color: transparent;
+	color:#fff;
+}
+b, strong,h1,h2,h3,h4,h5,h6 {
+	font-weight: normal;
+}
+
+.font {
+	font-size: .28rem;
+}
+.font-s {
+	font-size: .26rem;
+}
+.font-xs {
+	font-size: .24rem;
+}
+
+.weui-mask_transparent{
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.weui-toast {
+	position: fixed;
+	z-index: 5000;
+	width: 2.4rem;
+	min-height:2.4rem;
+	top: 50%;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	left: 50%;
+	margin-left: -1.2rem;
+	background: rgba(17,17,17,0.7);
+	text-align: center;
+	border-radius: .1rem;
+}
+
+.weui-icon_toast {
+	margin: .44rem 0 0;
+	display: block;
+
+}
+
+.weui-icon-success-no-circle :before {
+	color: #FFFFFF;
+	font-size: 55px;
+
+}
+
+.weui-toast__content {
+	margin: 0 0 .7rem;
+	color:#fff;
+	font-size:.32rem;
+}
+
+.weui-loading{
+	width: .76rem;
+	height: .76rem;
+	display: block;
+	margin:.5rem auto .1rem;
+}

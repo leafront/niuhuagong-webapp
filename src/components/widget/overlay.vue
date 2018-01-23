@@ -5,7 +5,6 @@
 			<slot name="content"></slot>
 		</div>
 	</div>
-	
 </template>
 
 <script>
@@ -15,7 +14,6 @@
 	export default {
 	
 		computed: {
-
 			...mapGetters({
 				'overlayVisible':'getOverlayVisible'
 			})
@@ -29,10 +27,12 @@
 			 * 阻止弹层外的元素滚动
 			 */
 
-			this.$el.addEventListener('touchmove',(e) => {
+			this.$el.addEventListener('touchmove',(event) => {
 
-				e.preventDefault();
-				
+				event.preventDefault()
+
+				event.stopPropagation()
+
 			},false)
 			
 		}
@@ -72,11 +72,13 @@
 			
 			font-size: .38rem;
 			
-			color: #008aec;
+			color: #252525;
 			
 			height: 1.3rem;
 			
 			display:flex;
+			
+			justify-content: center;
 			
 			align-items: center;
 			

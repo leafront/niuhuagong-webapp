@@ -1,0 +1,86 @@
+.dialog-mask{
+	position: fixed;
+	z-index: 1000;
+	left:0;
+	top:0;
+	width:100%;
+
+	height:100%;
+	background: rgba(0, 0, 0, .6);
+	opacity: 0;
+}
+.weui-show .dialog-mask{
+	animation: fadeIn linear .5s forwards;
+}
+
+.weui-dialog {
+	position: fixed;
+	z-index: 5000;
+	width: 70%;
+	max-width: 6rem;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	background-color: #FFFFFF;
+	text-align: center;
+	border-radius: .06rem;
+	overflow: hidden;
+}
+.weui-dialog__bd{
+	padding: .4rem .2rem;
+	min-height: 40px;
+	font-size: .32rem;
+	line-height: .44rem;
+	word-wrap: break-word;
+	word-break: break-all;
+	color: #333;
+}
+.weui-dialog__ft{
+	position: relative;
+	line-height: .88rem;
+	font-size: .28rem;
+	display: flex;
+}
+.weui-dialog__btn_primary {
+	color: #0BB20C;
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+.weui-dialog__btn{
+	display: block;
+	flex: 1;
+	color: #3CC51F;
+	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	position: relative;
+}
+.weui-dialog__btn_default {
+	color: #353535;
+}
+.weui-dialog__btn:after{
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1px;
+	bottom: 0;
+	border-left: .01rem solid #D5D5D6;
+	color: #D5D5D6;
+}
+.weui-dialog__ft:after{
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 1px;
+	border-top: .01rem solid #D5D5D6;
+	color: #D5D5D6;;
+}

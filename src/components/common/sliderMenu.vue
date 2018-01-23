@@ -9,7 +9,7 @@
 				</svg>
 			</li>
 		</ul>
-		<AppFooter/>
+		<FooterBot/>
 	</div>
 </template>
 
@@ -17,14 +17,12 @@
 
 	import { mapActions, mapGetters } from 'vuex'
  
-	import AppFooter from '@/components/common/footer'
+	import FooterBot from '@/components/common/footer_bot'
 	
 	export default {
 
 		components: {
-
-			AppFooter
-
+			FooterBot
 		},
 		computed: {
 			...mapGetters({
@@ -134,7 +132,7 @@
 		
 		background: #f2f2f2;
 		
-		transition: all .5s cubic-bezier(.4,.01,.165,.99);
+		transition: transform .2s linear;
 		
 		left:0;
 		
@@ -142,21 +140,12 @@
 		
 		width:100%;
 		
-		max-height:0;
-		
-		overflow: hidden;
-		z-index:-10;
-		
+		transform: translateY(-100%);
+		z-index: -10;
 		&.active{
-			
+
+			transform: translateY(0);
 			z-index:10;
-			
-			padding-bottom: .2rem;
-			
-			max-height: 2000px;
-			
-			height:100%;
-			
 		}
 		
 	}

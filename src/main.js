@@ -5,13 +5,15 @@ import App from './App'
 
 import router from './router'
 
-import FastClick from 'fastclick'
-
 import store from './store'
 
 import Toast from '@/components/toast'
 
 import pageLoading from '@/components/loading'
+
+import { loading } from '@/mixins/loading'
+
+Vue.mixin(loading)
 
 import filter from '@/filters'
 
@@ -45,12 +47,6 @@ router.beforeEach((to, from, next) => {
 		next()
 	}
 })
-
-if ('addEventListener' in document) {
-	document.addEventListener('DOMContentLoaded', function() {
-		FastClick.attach(document.body);
-	}, false);
-}
 
 new Vue({
   el: '#app',

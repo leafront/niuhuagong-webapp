@@ -10,7 +10,7 @@
 
 	export default {
 
-		props: ['options'],
+		props: ['options','list'],
 
 		data () {
 
@@ -21,6 +21,7 @@
 				default: {
 					scrollEle: 'appView',
 					ele:'lazyLoad_img',
+					errorImg:'/static/images/default.png',
 					time: 100, // 设置一个检测时间间隔
 					complete: true, //页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁
 					position: { // 只要其中一个位置符合条件，都会触发加载机制
@@ -29,7 +30,6 @@
 						bottom: 0, // 元素距离下面
 						left: 0 // 元素距离左边
 					},
-					errorImg:'./images/default.png',
 					successImg: 'successImg'
 				}
 			}
@@ -41,13 +41,25 @@
 			Object.assign(this.default, this.options)
 
 		},
-
+		
 		mounted () {
-
+			
 			this.appView = document.getElementById(this.default.scrollEle)
+			
+		},
+		
+		watch: {
+			
+			list () {
 
-			this.startLoad()
+				setTimeout(() => {
 
+					this.startLoad()
+
+				},0)
+				
+			}
+			
 		},
 
 		beforeDestroy () {
@@ -100,7 +112,7 @@
 			scrollLoad () {
 
 				const list = Array.prototype.slice.apply(this.appView.getElementsByClassName(this.default.ele))
-
+				
 				if (!list.length && this.default.complete) {
 
 					this.appView.removeEventListener('scroll',this.scrollImg,false)
@@ -108,7 +120,7 @@
 				} else {
 
 					list.forEach((el) => {
-
+						
 						if (!el.dataset.LazyLoadImgState && this.getClientRect(el, this.default.position)) {
 
 							this.loadImg(el);
@@ -131,11 +143,10 @@
 			startLoad (){
 
 				this.scrollLoad()
-
+				
 				this.appView.addEventListener('scroll',this.scrollImg,false)
 
 			},
-
 			/**
 			 * @param {Object} el
 			 *
@@ -151,9 +162,7 @@
 
 				img.addEventListener('load', () => {
 
-					el.src = img.src
-
-					delete el.classList.remove(this.default.ele)
+					el.style.backgroundImage = 'url('+img.src+')'
 
 					el.dataset.LazyLoadImgState = 'success'
 
@@ -168,7 +177,7 @@
 
 					el.dataset.LazyLoadImgState = 'error'
 
-					el.src = this.default.errorImg
+					el.style.backgroundImage = 'url('+this.default.errorImg+')'
 
 				}, false)
 			}

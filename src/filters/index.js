@@ -64,4 +64,11 @@ const toThousands  = function (str) {
 
 }
 
-export default { toThousands }
+const price = function (val) {
+
+	return (val / 100).toFixed(2)
+
+
+}
+
+export default { toThousands, price }

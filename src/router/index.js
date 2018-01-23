@@ -2,31 +2,33 @@ import Vue from 'vue'
 
 import Router from 'vue-router'
 
-const Home = r => require.ensure([], () => r(require('@/pages/home')), 'home')
+const Home = r => require.ensure([], () => r(require('@/pages/home')), 'Home')
 
-const Login = r => require.ensure([], () => r(require('@/pages/user/login')), 'login')
+const Detail = r => require.ensure([], () => r(require('@/pages/detail')), 'Detail')
 
-const passLogin = r => require.ensure([], () => r(require('@/pages/user/pass')), 'passLogin')
+const Login = r => require.ensure([], () => r(require('@/pages/user/login')), 'Login')
 
-const userCenter = r => require.ensure([], () => r(require('@/pages/user/center')), 'userCenter')
+const PassLogin = r => require.ensure([], () => r(require('@/pages/user/pass')), 'PassLogin')
 
-const userCart = r => require.ensure([], () => r(require('@/pages/user/cart')), 'userCart')
+const UserCenter = r => require.ensure([], () => r(require('@/pages/user/center')), 'UserCenter')
 
-const userRegister = r => require.ensure([], () => r(require('@/pages/user/register')), 'userRegister')
+const Cart = r => require.ensure([], () => r(require('@/pages/cart')), 'Cart')
 
-const userInfo = r => require.ensure([], () => r(require('@/pages/user/info')), 'userInfo')
+const UserRegister = r => require.ensure([], () => r(require('@/pages/user/register')), 'UserRegister')
 
-const userPersonal = r => require.ensure([], () => r(require('@/pages/user/personal')), 'userPersonal')
+const UserInfo = r => require.ensure([], () => r(require('@/pages/user/info')), 'UserInfo')
 
-const userCompany = r => require.ensure([], () => r(require('@/pages/user/company')), 'userCompany')
+const UserPersonal = r => require.ensure([], () => r(require('@/pages/user/personal')), 'UserPersonal')
 
-const authPersonal = r => require.ensure([], () => r(require('@/pages/auth/personal')), 'authPersonal')
+const UserCompany = r => require.ensure([], () => r(require('@/pages/user/company')), 'UserCompany')
 
-const authCompany = r => require.ensure([], () => r(require('@/pages/auth/company')), 'authCompany')
+const AuthPersonal = r => require.ensure([], () => r(require('@/pages/auth/personal')), 'AuthPersonal')
 
-const order = r => require.ensure([], () => r(require('@/pages/order')), 'order')
+const AuthCompany = r => require.ensure([], () => r(require('@/pages/auth/company')), 'AuthCompany')
 
-const search = r => require.ensure([], () => r(require('@/pages/search')), 'search')
+const Order = r => require.ensure([], () => r(require('@/pages/order')), 'Order')
+
+const Search = r => require.ensure([], () => r(require('@/pages/search')), 'Search')
 
 Vue.use(Router)
 
@@ -35,80 +37,84 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },{
+		  path: '/detail',
+			name: 'Detail',
+			component: Detail
+		},{
 			path: '/user/login',
-			name: 'login',
+			name: 'Login',
 			component: Login
 		},{
 			path: '/user/pass',
-			name: 'passLogin',
-			component: passLogin
+			name: 'PassLogin',
+			component: PassLogin
 		},{
 			path: '/user/center',
-			name: 'userCenter',
+			name: 'UserCenter',
 			meta: {
 				requireAuth: true,
 			},
-			component: userCenter
+			component: UserCenter
 		},{
-			path: '/user/cart',
-			name: 'userCart',
+			path: '/cart',
+			name: 'Cart',
 			meta: {
 				requireAuth: true,
 			},
-			component: userCart
+			component: Cart
 		},{
 			path: '/user/register',
-			name: 'userRegister',
-			component: userRegister
+			name: 'UserRegister',
+			component: UserRegister
 		},{
 			path: '/user/info',
-			name: 'userInfo',
+			name: 'UserInfo',
 			meta: {
 				requireAuth: true,
 			},
-			component: userInfo
+			component: UserInfo
 		},{
 			path: '/user/personal',
-			name: 'userPersonal',
+			name: 'UserPersonal',
 			meta: {
 				requireAuth: true,
 			},
-			component: userPersonal
+			component: UserPersonal
 		},{
 			path: '/user/company',
-			name: 'userCompany',
+			name: 'UserCompany',
 			meta: {
 				requireAuth: true,
 			},
-			component: userCompany
+			component: UserCompany
 		},{
 			path: '/auth/personal',
-			name: 'authPersonal',
+			name: 'AuthPersonal',
 			meta: {
 				requireAuth: true,
 			},
-			component: authPersonal
+			component: AuthPersonal
 		},{
 			path: '/auth/company',
-			name: 'authCompany',
+			name: 'AuthCompany',
 			meta: {
 				requireAuth: true,
 			},
-			component: authCompany
+			component: AuthCompany
 		},{
 			path: '/order',
-			name: 'order',
+			name: 'Order',
 			meta: {
 				requireAuth: true,
 			},
-			component: order
+			component: Order
 		},{
 			path: '/search',
-			name: 'search',
-			component: search
+			name: 'Search',
+			component: Search
 		}
   ]
 })

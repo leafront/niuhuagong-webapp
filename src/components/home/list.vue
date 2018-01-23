@@ -1,13 +1,13 @@
 <template>
 	<div class="shop clearfix">
 		<h3>—  热销榜单  —</h3>
-		<LazyLoad :options="{ele:'lazyLoad_img',scrollEle: 'appView',errorImg:'./images/default.png'}">
+		<LazyLoad :list="list" :options="{ele:'lazyLoad_img',scrollEle: 'appView'}">
 			<ul class="shop_list clearfix" id="lazyLoad">
-				<li v-for="item in list">
-					<img class="lazyLoad_img" data-src="http://files.niuhuagong.com/img/item/big_60f04603d7f57a5ca877a29f752b7716.jpg" :src="defaultImg"/>
-					<p>甲基羟丙基纤维素 HK4M </p>
-					<span>赫克力士天普</span>
-					<strong><b class="shop_kilo">￥36.00</b>/公斤</strong>
+				<li v-for="item in list" @click="pageAction('/detail?id='+item.item_id)">
+					<div class="lazyLoad_img" :data-src="item.item_img_url"/>
+					<p>{{item.item_name}}</p>
+					<span>{{item.item_desc}}</span>
+					<strong><b class="shop_kilo">￥{{item.price | price }}</b>/公斤</strong>
 				</li>
 			</ul>
 		</LazyLoad>
@@ -20,25 +20,30 @@
 	import defaultImg from '@/images/default.png'
 	
 	export default {
-		
-		components: {
-
-			LazyLoad
-			
+		props:{
+			list:{
+				type: Array,
+				default: function () {
+					return []
+				}
+			}
 		},
-		
 		data () {
 			
 			return {
-
-				defaultImg,
+				defaultImg
+			}
+		},
+		components: {
+			LazyLoad
+		},
+		methods: {
+			pageAction (url) {
 				
-				list: [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined]
+				this.$router.push(url)
 				
 			}
-			
 		}
-		
 	}
 	
 </script>
@@ -87,17 +92,19 @@
 				
 				color:#252525;
 				
+				padding-right: .3rem;
+				
+				&:nth-child(2n) {
+					padding-left: .3rem;
+				}
+				
 			}
 			
 			span{
 				
 				color: #a2a2a2;
-				
 				display:block;
-				
-				padding-top: .1rem;
-				
-				padding-bottom: .15rem;
+				padding: .1rem .3rem .15rem;
 			}
 			
 			strong{
@@ -118,13 +125,15 @@
 				
 			}
 			
-			img{
+			.lazyLoad_img{
 				
 				margin: 0.3rem 0;
 				
 				width: 3rem;
 				
 				height: 3rem;
+				
+				background-size: 100% auto;
 				
 			}
 			

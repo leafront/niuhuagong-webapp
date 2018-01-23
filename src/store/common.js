@@ -3,10 +3,13 @@ import * as types from './mutation-types'
 const state = {
 
 	isMenu: false,
-
 	overlayVisible: false,
-
-	pageView: false
+	pageView: false,
+	selectCityValue: {
+		address: {},
+		name:''
+	},
+	isCityPicker: false,
 
 }
 
@@ -16,7 +19,11 @@ const getters = {
 
 	getOverlayVisible: state => state.overlayVisible,
 
-	getPageView: state => state.pageView
+	getPageView: state => state.pageView,
+
+	getSelectCity: state => state.selectCityValue,
+
+	getIsCityPicker: state => state.isCityPicker
 
 }
 
@@ -36,6 +43,17 @@ const actions = {
 	updatePageView ({commit}, info) {
 
 		commit(types.UPDATE_PAGE_VIEW,info)
+
+	},
+	updateSelectCity ({commit}, info) {
+
+		commit(types.UPDATE_SELECT_CITY,info)
+
+	},
+
+	updateIsCityPicker ({commit}, info) {
+
+		commit(types.UPDATE_IS_CITY_PICKER,info)
 
 	}
 }
@@ -57,6 +75,16 @@ const mutations = {
 	[types.UPDATE_PAGE_VIEW] (state,info) {
 
 		state.pageView = info
+
+	},
+	[types.UPDATE_SELECT_CITY] (state,info) {
+
+		state.selectCityValue = info
+
+	},
+	[types.UPDATE_IS_CITY_PICKER] (state,info) {
+
+		state.isCityPicker = info
 
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<div class="pageView">
-		<AppHeader/>
+		<AppHeader :title="title"/>
 		<div class="cart_tit">
 			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
 			<span v-show="isDelete" @click="deleteItem">删除</span>
@@ -8,7 +8,7 @@
 		<div class="scroll-view-wrapper cart-view" id="appView">
 			<template v-if="list && list.length">
 			<div class="cart_list" :class="{'visibility':!pageView}">
-				<LazyLoad :options="{ele:'lazyLoad_img'}">
+				<LazyLoad :list="list" :options="{ele:'lazyLoad_img',scrollEle: 'appView'}">
 					<div class="cart_list_item" v-for="(item,index) in list">
 						<div class="list_checked_circle" @click="selectItem(item)">
 							<div class="list_item_checked" :class="{'active': cartList[item.id]}">
@@ -63,7 +63,7 @@
 					<strong>￥{{totalPrice}}</strong>
 				</div>
 			</div>
-			<div class="sett_computed">
+			<div class="sett_computed" @click="pageAction('detail')">
 				<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 				defaultImg,
 				
 				cartList:{},
-				
+				title: '我的购物车',
 				list: [{
 					price: 100,
 					id: 12,
@@ -136,12 +136,16 @@
 			}
 			
 		},
-		
 		methods: {
 
 			...mapActions([
 				'updatePageView',
 			]),
+			pageAction (url) {
+				
+				this.$router.push(url)
+				
+			},
 			
 			/**
 			 * 选中购物车中的一项
@@ -357,7 +361,7 @@
 
 			this.$showLoading()
 
-			document.title = '用户购物车'
+			document.title = '我的购物车'
 
 		},
 		
@@ -765,12 +769,11 @@
 		
 		padding-right: .3rem;
 		
-		img{
-		
+		.lazyLoad_img{
 			width: 1.6rem;
 			height: 1.6rem;
-			
-			background: #f2f2f2;
+			background-color: #f2f2f2;
+			background-size: 100% auto;
 		}
 	}
 </style>

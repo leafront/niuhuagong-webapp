@@ -4,7 +4,7 @@ function pack() {
 
 	return new Promise ( (resolve,reject) => {
 
-		exec('npm run build',(err,stdout,stderr) => {
+		exec('npm run test',(err,stdout,stderr) => {
 
 			if (err) {
 				console.log(err);
