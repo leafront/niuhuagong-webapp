@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="user_order">
-				<div class="user_order_tit" @click="pageAction('/user/order')">
+				<div class="user_order_tit" @click="orderAction('/user/order')">
 					<span>我的订单</span>
 					<div class="order_arrow">
 						<strong>查看全部订单</strong>
@@ -35,7 +35,7 @@
 							</div>
 							<span>待支付</span>
 						</li>
-						<li @click="pageAction('/user/order?channel=3')">
+						<li @click="orderAction('/user/order?channel=3')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-fahuo"></use>
@@ -138,6 +138,9 @@
 				
 				this.$router.push(url)
 				
+			},
+			orderAction (url) {
+				location.href = url
 			},
 			getUserInfo () {
 				this.updatePageView(false)

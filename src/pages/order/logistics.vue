@@ -29,7 +29,7 @@
 			<template v-else>
 				<div class="ui-empty">
 					<img src="./images/order_empty_bg.png"/>
-					<p>{{info.message}}</p>
+					<p>{{logisticsInfo.message}}</p>
 				</div>
 			</template>
 		</div>

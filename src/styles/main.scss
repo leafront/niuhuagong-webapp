@@ -164,6 +164,37 @@ body{
 	}
 }
 
+/*** empty style ****/
+
+.ui-empty{
+
+	padding-top: 40%;
+
+	display:flex;
+
+	align-items: center;
+
+	justify-content: center;
+
+	flex-direction: column;
+
+	p{
+
+		margin-top: .3rem;
+
+		font-size: .28rem;
+	}
+
+	img{
+
+		width: 1.96rem;
+
+		height: 1.3rem;
+
+	}
+
+}
+
 .pageView{
 
 	.page_bottom{
