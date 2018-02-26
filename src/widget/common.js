@@ -12,15 +12,13 @@ import utils from './utils'
 
 export const wxOauthLogin = () =>{
 
-	const isAuthLogin = store.get('LEIDI_IS_AUTH_LOGIN')
+	const isAuthLogin = store.get('NHG_IS_AUTH_LOGIN')
 
 	if (isAuthLogin) {
 		return
 	}
 
-	store.set('LEIDI_IS_AUTH_LOGIN',true)
-
-	console.info('LEIDI_IS_AUTH_LOGIN')
+	store.set('NHG_IS_AUTH_LOGIN',true)
 
 	const pathname = location.pathname + location.search
 
@@ -31,17 +29,25 @@ export const wxOauthLogin = () =>{
 		}
 	}).then((res) => {
 
-		store.remove('LEIDI_IS_AUTH_LOGIN')
+		store.remove('NHG_IS_AUTH_LOGIN')
 
 		const data = res.data
 
-		if (data && res.status >=1) {
-
-			console.info(data.url)
+		if (data && res.status == 1) {
 
 			window.location.href = data.url
 
 		}
+	})
+}
+
+export const userLoginState = function () {
+
+	return Model.userLoginState({
+		type: 'POST'
+	}).then((res) => {
+
+		return res
 	})
 }
 
@@ -58,7 +64,6 @@ export const clearStorage =  () =>{
 	if (utils.isLocalStorageSupported()) {
 
 		for (var i = 0; i < localStorage.length; i++) {
-
 
 			var key = localStorage.key(i);
 
@@ -96,11 +101,8 @@ export const clearStorage =  () =>{
 
 				}
 			}
-
 		}
-
 	}
-
 }
 
 

@@ -11,13 +11,13 @@
 				</div>
 				<div class="user_form">
 					<div class="user_sex">
-						<div class="user_sex_item">
+						<div class="user_sex_item" :class="{'active': params.sex == 1}" @click="selectSex(1)">
 							<svg class="ico user_sex_ico" aria-hidden="true">
 								<use xlink:href="#icon-boy"></use>
 							</svg>
 							<span>先生</span>
 						</div>
-						<div class="user_sex_item active">
+						<div class="user_sex_item" :class="{'active': params.sex == 2}" @click="selectSex(2)">
 							<svg class="ico user_sex_ico" aria-hidden="true">
 								<use xlink:href="#icon-girl"></use>
 							</svg>
@@ -29,23 +29,23 @@
 							<use xlink:href="#icon-shouji"></use>
 						</svg>
 						<span></span>
-						<input type="tel" class="login_input" placeholder="请输入手机号码"/>
+						<input type="tel" v-model="params.mobile" class="login_input" placeholder="请输入手机号码"/>
 					</div>
 					<div class="user_form_item">
 						<svg class="ico login_pass_ico" aria-hidden="true">
 							<use xlink:href="#icon-mima"></use>
 						</svg>
 						<span></span>
-						<input type="password" class="login_pass_input" placeholder="请输入6~20位密码"/>
+						<input type="password" v-model="params.pwd" class="login_pass_input" placeholder="请输入6~20位密码"/>
 					</div>
 					<div class="user_form_item">
 						<svg class="ico login_pass_ico" aria-hidden="true">
 							<use xlink:href="#icon-mima"></use>
 						</svg>
 						<span></span>
-						<input type="password" class="login_pass_input" placeholder="请再次输入密码"/>
+						<input type="password" v-model="params.confirm_pass" class="login_pass_input" placeholder="请再次输入密码"/>
 					</div>
-					<div class="register_login">
+					<div class="register_login" @click="registerAction">
 						<button class="form-button">注册</button>
 					</div>
 					<div class="user_tips">
@@ -63,32 +63,34 @@
 	import AppHeader from '@/components/common/header'
 	
 	import Popup from '@/components/user/popup'
+	
+	import validate from '@/widget/validate'
+	
+	import * as Model from '@/model/user'
 
 	export default {
+		data () {
+
+			return {
+				isPopup: false,
+				params: {
+					sex: 1,
+					mobile: '',
+					pwd: '',
+					confirm_pass: ''
+				}
+			}
+		},
 
 		components: {
 
 			AppHeader,
 			Popup
-
 		},
-		
-		data () {
-			
-			return {
-				
-				isPopup: false
-				
-			}
-			
-		},
-		
 		created () {
 			
-			this.isPopup = true
-			
+			//this.isPopup = true
 		},
-		
 		beforeCreate () {
 
 			document.title = '用户注册'
@@ -102,15 +104,80 @@
 				this.$router.push(url)
 
 			},
-
+			selectSex (sex) {
+				
+				this.params.sex = sex
+			
+			},
 			closeMask (val) {
 				
 				this.isPopup = val
 				
+			},
+			registerAction () {
+				
+				const {
+					mobile,
+					sex,
+					pwd,
+					confirm_pass
+				} = this.params
+				
+				if (!mobile) {
+					this.$toast('请输入手机号码')
+					return
+				}
+				if (!validate.isMobile(mobile)) {
+					this.$toast('请输入正确的手机号码')
+					return
+				}
+				if (!pwd) {
+					this.$toast('请输入密码')
+					return
+				}
+				if (!validate.isPass(pwd)) {
+					this.$toast('请输入6~20位数字和字母密码')
+					return
+				}
+				if (!confirm_pass) {
+					this.$toast('请再次输入密码')
+					return
+				}
+				if (confirm_pass !== pwd) {
+					this.$toast('两次输入密码不一致')
+					return
+				}
+				this.userRegister({mobile,sex, pwd})
+				
+			},
+			userRegister (data) {
+
+				const {
+					mobile,
+					sex,
+					pwd
+				} = this.params
+				
+				Model.userRegister({
+					type: 'POST',
+					data
+				}).then((res) => {
+					const data = res.data
+					if (data && res.status == 1) {
+						
+						this.$toast(res.msg)
+						setTimeout(() => {
+							this.pageAction('/user/login')
+						},2000)
+
+					} else {
+
+						this.$toast(res.msg)
+
+					}
+				})
 			}
-
 		}
-
 	}
 
 </script>

@@ -1,36 +1,35 @@
 <template>
 	<div class="pageView">
 		<AppHeader :title="title"/>
-		<div class="cart_tit">
+		<div class="cart_tit" v-show="pageView">
 			<h5>我的购物车<i v-show="selectNum">（{{selectNum}}）</i></h5>
-			<span v-show="isDelete" @click="deleteItem">删除</span>
+			<span v-show="isDelete" @click="delCartShop">删除</span>
 		</div>
-		<div class="scroll-view-wrapper cart-view" id="appView">
-			<template v-if="list && list.length">
-			<div class="cart_list" :class="{'visibility':!pageView}">
+		<div class="scroll-view-wrapper cart-view" id="appView" :class="{'visibility':!pageView}">
+			<div class="cart_list">
 				<LazyLoad :list="list" :options="{ele:'lazyLoad_img',scrollEle: 'appView'}">
-					<div class="cart_list_item" v-for="(item,index) in list">
+					<div class="cart_list_item" v-for="(item,index) in list" :key="index">
 						<div class="list_checked_circle" @click="selectItem(item)">
-							<div class="list_item_checked" :class="{'active': cartList[item.id]}">
+							<div class="list_item_checked" :class="{'active': cartList[item.shop_cart_id]}">
 								<svg class="ico cart_checked_ico"  aria-hidden="true">
 									<use xlink:href="#icon-gou"></use>
 								</svg>
 							</div>
 						</div>
-						<div class="cart_img">
-							<img class="lazyLoad_img" data-src="//img.alicdn.com/imgextra/i3/17413633/TB225tKecjI8KJjSsppXXXbyVXa_!!0-saturn_solar.jpg_210x210.jpg" :src="defaultImg" />
+						<div class="cart_img" @click="pageAction('/detail?id='+ item.spu_id)">
+							<div class="lazyLoad_img" :data-src="item.img_thumbnail_url"></div>
 						</div>
 						<div class="cart_info">
-							<p>阿克苏诺贝尔可再分散乳胶粉 易来泰ELOTEX 60W</p>
-							<span>25公斤/包 （小计:25公斤）</span>
+							<p>{{item.sku_specs_desc}}</p>
+							<span>{{item.unit_num}}{{item.unit_name}}/{{item.unit}} （小计:{{item.unit_num * numList[index]}}{{item.unit_name}}）</span>
 							<div class="cart_info_txt">
-								<strong>￥{{item.price}}</strong>
+								<strong>￥{{item.price | price}}</strong>
 								<div class="cart_num">
-									<div class="cart_reduce" @click.stop="changeCart(index,-1)">
+									<div class="cart_reduce" @click.stop="changeCart(item,index,-1)">
 										<i></i>
 									</div>
-									<input type="tel" class="cart_num_input" @blur="changeNum(index)" v-model.trim="numList[index]"/>
-									<div class="cart_add" @click.stop="changeCart(index,1)">
+									<input type="tel" class="cart_num_input" @blur="changeNum(item,index)" v-model.trim="numList[index]"/>
+									<div class="cart_add" @click.stop="changeCart(item,index,1)">
 										<i class="ico1"></i>
 										<i class="ico2"></i>
 									</div>
@@ -40,15 +39,14 @@
 					</div>
 				</LazyLoad>
 			</div>
-			</template>
-			<template v-else>
+			<template v-if="!list || !list.length">
 				<div class="cart_empty">
 					<img src="./images/cart_empty.png"/>
 					<p>购物车空空如也</p>
 				</div>
 			</template>
 		</div>
-		<div class="settlement">
+		<div class="settlement" :class="{'visibility':!pageView}">
 			<div class="sett_item">
 				<div class="sett_item_select" @click="selectAll">
 					<div class="list_item_checked" :class="{'active':isAllSelect}">
@@ -60,13 +58,14 @@
 				</div>
 				<div class="sett_total">
 					<span>合计：</span>
-					<strong>￥{{totalPrice}}</strong>
+					<strong>￥{{totalPrice | price}}</strong>
 				</div>
 			</div>
-			<div class="sett_computed" @click="pageAction('detail')">
+			<div class="sett_computed" @click="shopAction">
 				<span>结算<i v-show="selectNum">({{selectNum}})</i></span>
 			</div>
 		</div>
+		<AppFooter/>
 	</div>
 </template>
 
@@ -76,7 +75,11 @@
 
 	import AppHeader from '@/components/common/header'
 
-	import defaultImg from '@/images/default.png'
+	import AppFooter from '@/components/common/footer'
+
+	import utils from '@/widget/utils'
+	
+	import * as Model from '@/model/cart'
 
 	import { mapActions, mapGetters } from 'vuex'
 	
@@ -85,56 +88,18 @@
 		components: {
 
 			LazyLoad,
-			
+			AppFooter,
 			AppHeader
 
 		},
-		
+		mixin: ['loading'],
 		data () {
-			
 			return {
-
-				defaultImg,
-				
 				cartList:{},
-				title: '我的购物车',
-				list: [{
-					price: 100,
-					id: 12,
-					number: 1
-				},{
-					price: 200,
-					id: 15,
-					number: 2
-				},{
-					price: 40000,
-					id: 18,
-					number: 3
-				},{
-					price: 500,
-					id: 20,
-					number: 4
-				},{
-					price: 400,
-					id: 22,
-					number: 6
-				},{
-					price: 600,
-					id: 33,
-					number: 7
-				},{
-					price: 500,
-					id: 43,
-					number: 6
-				},{
-					price: 700,
-					id: 45,
-					number: 8
-				}],
+				title: '购物车',
+				list: [],
 				numList:[]
-				
 			}
-			
 		},
 		methods: {
 
@@ -148,14 +113,111 @@
 			},
 			
 			/**
+			 * 获取购物车商品列表
+			 */
+			getCartList () {
+				Model.getCartList({
+					type: 'GET'
+				}).then((res) => {
+
+					this.$hideLoading()
+					const data = res.data
+					if (data && res.status == 1) {
+						this.list = data
+						const cartList = {}
+						let  numList = []
+
+						this.list.forEach((item) => {
+
+							cartList[item.shop_cart_id] = false
+							numList.push(parseInt(item.number))
+
+						})
+
+						this.cartList = cartList
+						this.numList = numList
+
+						this.updatePageView(true)
+					} else {
+						this.$toast(res.msg)
+					}
+					
+				})
+			},
+			
+			/**
+			 * 添加购物车商品数量
+			 *
+			 */
+			updateShopCart (index,cartNum,data) {
+
+				Model.updateShopCart({
+					type: 'POST',
+					data
+				}).then((res) => {
+
+					const data = res.data
+					if (data && res.status == 1) {
+						this.numList.splice(index,1,cartNum)
+					} else {
+						this.$toast(res.msg)
+					}
+				})
+			},
+			/**
+			 *
+			 * return {String} cart_id
+			 */
+
+			getCartIds () {
+
+				const { list, cartList } = this
+				let cart_id = []
+				list.forEach((item) => {
+
+					if (cartList[item.shop_cart_id]) {
+						cart_id.push(item.shop_cart_id)
+					}
+				})
+
+				cart_id = cart_id.join(',')
+
+				return cart_id
+			},
+			/**
+			 * 删除购物车商品
+			 */
+
+			delCartShop () {
+
+				const cart_id =  this.getCartIds()
+			
+				Model.delCartShop({
+					type: 'POST',
+					data: {
+						shop_cart_id: cart_id
+					}
+				}).then((res) => {
+					const data = res.data
+					if (data && res.status == 1) {
+						this.$toast(res.msg)
+						this.deleteItem()
+					} else {
+						this.$toast(res.msg)
+					}
+					
+				})
+			
+			},
+			/**
 			 * 选中购物车中的一项
 			 * @param id
 			 *
 			 */
 
-			selectItem ({id}) {
+			selectItem ({shop_cart_id}) {
 				
-				this.cartList[id] = !this.cartList[id]
+				this.cartList[shop_cart_id] = !this.cartList[shop_cart_id]
 				
 			},
 
@@ -165,9 +227,9 @@
 			 * @param {Number} val
 			 */
 
-			changeCart (index,val) {
+			changeCart (item,index,val) {
 				
-				let cartNum = +this.numList[index]
+				let cartNum = parseInt(this.numList[index])
 				
 				if (cartNum == 1 && val == -1) {
 					
@@ -175,10 +237,13 @@
 					return
 					
 				}
-
 				cartNum += val
-				this.numList.splice(index,1,cartNum)
+				const data = {
+					shop_cart_id: item.shop_cart_id,
+					number: cartNum
+				}
 				
+				this.updateShopCart(index,cartNum,data)
 			
 			},
 
@@ -190,20 +255,19 @@
 			 */
 
 			selectAll () {
-				
 				const list = this.list
 				const cartList = this.cartList
 				
 				if (this.isAllSelect) {
 					
-					list.forEach(({id}) => {
-						cartList[id] = false
+					list.forEach(({shop_cart_id}) => {
+						cartList[shop_cart_id] = false
 					})
 					
 				} else {
 					
-					list.forEach(({id}) => {
-						cartList[id] = true
+					list.forEach(({shop_cart_id}) => {
+						cartList[shop_cart_id] = true
 					})
 					
 				}
@@ -222,18 +286,17 @@
 				
 				for (let len = list.length, i = len - 1; i >=0; i--) {
 					
-					if (cartList[list[i].id]) {
+					if (cartList[list[i].shop_cart_id]) {
 						
 						this.numList.splice(i,1)
 						this.list.splice(i,1)
 						
 					}
-					
 				}
-			
+				
 			},
 
-			changeNum (index) {
+			changeNum (item,index) {
 				
 				const cartNum = parseInt(this.numList[index])
 			
@@ -244,11 +307,25 @@
 					return
 				
 				}
+
+				const data = {
+					shop_cart_id: item.shop_cart_id,
+					number: cartNum
+				}
+
+				this.updateShopCart(index,cartNum,data)
 			
-			}
+			},
+			shopAction () {
+				const cart_id =  this.getCartIds()
+				if (!cart_id) {
+					this.$toast('请选择购物车中的商品')
+					return
+				}
+				location.href = `/order/submit?from=cart&cart_ids=${cart_id}`
+			},
 			
 		},
-		
 		computed:{
 
 			...mapGetters({
@@ -271,8 +348,8 @@
 
 				if (list && list.length) {
 
-					isSelect = list.every(({id}) => {
-						return carList[id]
+					isSelect = list.every(({shop_cart_id}) => {
+						return carList[shop_cart_id]
 					})
 					
 				}
@@ -295,8 +372,8 @@
 				const list = this.list
 				const cartList = this.cartList
 				
-				const isDelete = list.some(({id}) => {
-					return cartList[id]
+				const isDelete = list.some(({shop_cart_id}) => {
+					return cartList[shop_cart_id]
 				})
 
 				return isDelete
@@ -343,9 +420,9 @@
 				const numList = this.numList
 				let totalPrice = 0
 				
-				this.list.forEach(({price,id},index) => {
+				this.list.forEach(({price,shop_cart_id},index) => {
 
-					if (cartList[id]) {
+					if (cartList[shop_cart_id]) {
 						totalPrice += numList[index] * price
 					}
 					
@@ -359,39 +436,16 @@
 
 		beforeCreate () {
 
-			this.$showLoading()
-
 			document.title = '我的购物车'
 
 		},
-		
 		created () {
 
 			this.updatePageView(false)
+
+			this.showLoading()
 			
-			setTimeout(() => {
-				
-				const cartList = {}
-				let  numList = []
-
-				this.list.forEach((item) => {
-
-					cartList[item.id] = false
-					numList.push(item.number)
-
-				})
-
-				this.cartList = cartList
-				this.numList = numList
-
-				this.$hideLoading()
-
-				this.updatePageView(true)
-				
-				
-			},800)
-			
-		
+			this.getCartList()
 			
 		}
 		

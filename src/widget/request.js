@@ -61,10 +61,10 @@ export default function request (url,options){
 							results
 						}
 
-						if (results.status >= 1)  {
+						if (results.status == 1)  {
 							store.set(defaultOpt.url, res)
 						}
-						if (results.status == -3001) {
+						if (results.status == -3000) {
 
 							console.info(results)
 							if (utils.timer) {
@@ -92,11 +92,11 @@ export default function request (url,options){
 						results
 					}
 
-					if (cache && results.status >= 1)  {
+					if (cache && results.status == 1)  {
 						store.set(defaultOpt.url, res)
 					}
 
-					if (results.status == -3001) {
+					if (results.status == -3000) {
 
 						console.info(results)
 						if (utils.timer) {

@@ -1,5 +1,5 @@
 <template>
-	<div class="header">
+	<div class="home-header">
 		<div class="head_img" @click="routerAction('/')">
 			<img src="./images/logo.png"/>
 		</div>
@@ -73,7 +73,7 @@
 <style lang="scss">
 	
 
-	.header{
+	.home-header{
 		
 		background:#fff;
 		

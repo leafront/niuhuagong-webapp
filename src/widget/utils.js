@@ -95,50 +95,42 @@ const utils = {
 
 	fixedBottom () {
 
-		var overscroll = function(el) {
-			el.addEventListener('touchstart', function() {
-				var top = el.scrollTop
-					, totalScroll = el.scrollHeight
-					, currentScroll = top + el.offsetHeight;
-				//If we're at the top or the bottom of the containers
-				//scroll, push up or down one pixel.
-				//
-				//this prevents the scroll from "passing through" to
-				//the body.
-				//console.log('top', top)
-				//console.log('totalScroll', totalScroll)
-				//console.log('totalScroll',totalScroll)
-				if(top === 0) {
-					el.scrollTop = 1;
-				} else if(currentScroll === totalScroll) {
-					el.scrollTop = top - 1;
-				}
-			});
-			el.addEventListener('touchmove', function(evt) {
-				//if the content is actually scrollable, i.e. the content is long enough
-				//that scrolling can occur
-				//console.log('touchmoveoffsetheight',el.offsetHeight)
-				//console.log('touchmovescrollheight',el.scrollHeight)
+		var scrollEl = document.querySelector('.scroll-view-wrapper');
 
-				if(el.offsetHeight < el.scrollHeight)
-
-					evt._isScroller = true;
-			});
-
+		var overscroll = () => {
+			scrollEl.addEventListener('touchstart', topScroll,  this.isPassive() ? {passive: true} : false);
+			scrollEl.addEventListener('touchmove', botScroll, this.isPassive() ? {passive: true} : false);
 		}
-		overscroll(document.querySelector(".scroll-view-wrapper"));
 
-		function bodyScroll (evt) {
+		overscroll()
 
-			//In this case, the default behavior is scrolling the body, which
-			//would result in an overflow.  Since we don't want that, we preventDefault.
-			if(!evt._isScroller) {
+		function topScroll () {
 
-				evt.preventDefault();
+			var top = scrollEl.scrollTop
+				, totalScroll = scrollEl.scrollHeight
+				, currentScroll = top + scrollEl.offsetHeight;
+			//If we're at the top or the bottom of the containers
+			//scroll, push up or down one pixel.
+			//
+			//this prevents the scroll from "passing through" to
+			//the body.
+			if(top === 0) {
+				scrollEl.scrollTop = 1;
+			} else if(currentScroll === totalScroll) {
+				scrollEl.scrollTop = top - 1;
 			}
+
 		}
 
-		document.body.addEventListener('touchmove',bodyScroll);
+		function  botScroll (evt) {
+			//if the content is actually scrollable, i.e. the content is long enough
+			//that scrolling can occur
+
+			if(scrollEl.offsetHeight < scrollEl.scrollHeight)
+
+				evt._isScroller = true;
+
+		}
 
 	},
 	/**
@@ -207,6 +199,28 @@ const utils = {
 		script.appendChild(document.createTextNode(res))
 		document.head.appendChild(script)
 
+	},
+	isPassive() {
+
+		let supportsPassiveOption = false
+		try {
+			addEventListener("test", null, Object.defineProperty({}, 'passive', {
+				get: function () {
+					supportsPassiveOption = true
+				}
+			}));
+		} catch(e) {}
+		return supportsPassiveOption;   //{passive: true} 就不会调用 preventDefault 来阻止默认滑动行为
+
+	},
+	isContained (arr1,arr2){
+		if(!(arr1 instanceof Array) || !(arr2 instanceof Array)) return false;
+		if(arr1.length < arr2.length) return false;
+		var aStr = arr1.toString();
+		for(var i = 0, len = arr2.length; i < len; i++){
+			if(aStr.indexOf(b[i]) == -1) return false;
+		}
+		return true;
 	}
 
 }

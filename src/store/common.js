@@ -6,10 +6,13 @@ const state = {
 	overlayVisible: false,
 	pageView: false,
 	selectCityValue: {
-		address: {},
+		address: {
+			selectCity: [0,0,0]
+		},
 		name:''
 	},
 	isCityPicker: false,
+	isScrollPicker: false
 
 }
 
@@ -23,7 +26,9 @@ const getters = {
 
 	getSelectCity: state => state.selectCityValue,
 
-	getIsCityPicker: state => state.isCityPicker
+	getIsCityPicker: state => state.isCityPicker,
+
+	getIsScrollPicker: state => state.isScrollPicker
 
 }
 
@@ -54,6 +59,11 @@ const actions = {
 	updateIsCityPicker ({commit}, info) {
 
 		commit(types.UPDATE_IS_CITY_PICKER,info)
+
+	},
+	updateScrollPicker ({commit}, info) {
+
+		commit(types.UPDATE_SCROLL_PICKER, info)
 
 	}
 }
@@ -86,6 +96,9 @@ const mutations = {
 
 		state.isCityPicker = info
 
+	},
+	[types.UPDATE_SCROLL_PICKER] (state,info) {
+		state.isScrollPicker = info
 	}
 }
 

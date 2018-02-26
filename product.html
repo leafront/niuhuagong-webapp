@@ -14,7 +14,7 @@
 	<meta name="env" content="production">
 	<meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-	<link rel="dns-prefetch" href="http://shop.laticrete.niutu.co" />
+	<link rel="dns-prefetch" href="https://shop.niuhuagong.com" />
 	<script type="text/javascript">
 		(function (win) {
 
@@ -56,6 +56,7 @@
 
 			flex(false, 100, 1);
 		})(window);
+
 	</script>
 </head>
 <body>
@@ -83,5 +84,38 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	(function() {
+		function bodyScroll(evt) {
+
+			//In this case, the default behavior is scrolling the body, which
+			//would result in an overflow.  Since we don't want that, we preventDefault.
+			if (!evt._isScroller || evt.scale > 1) {
+				console.log('isScroller')
+				evt.preventDefault();
+
+			}
+		}
+
+		document.documentElement.addEventListener('touchstart', function (event) {
+			if (event.touches.length > 1) {
+				console.log('touches.length')
+				event.preventDefault();
+			}
+		}, false);
+
+		var lastTouchEnd = 0;
+		document.documentElement.addEventListener('touchend', function (event) {
+			var now = Date.now();
+			if (now - lastTouchEnd <= 300) {
+				event.preventDefault();
+			}
+			lastTouchEnd = now;
+		}, false);
+
+		document.body.addEventListener('touchmove', bodyScroll, false);
+		
+	}());
+</script>
 </body>
 </html>

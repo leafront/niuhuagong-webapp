@@ -1,28 +1,22 @@
 <template>
 	<div class="pageView">
-		<div class="scroll-view-wrapper center-view">
+		<div class="scroll-view-wrapper center-view" :class="{'visibility':!pageView}">
 			<div class="user_pic">
-				
 				<div class="user_pic_info" @click="pageAction('/user/info')">
-					
-					<img src="./images/user_pic.png"/>
-					
+					<img :src="userInfo.head_img"/>
 					<div class="user_info_txt">
-						<span>赫克力士天普</span>
+						<span>{{userInfo.name}}</span>
 						<button class="user_info_tips">完整度75%</button>
 					</div>
-				
 				</div>
 				<div class="user_setting">
 					<svg class="ico user_set_ico" aria-hidden="true">
 						<use xlink:href="#icon-shezhi"></use>
 					</svg>
 				</div>
-			
 			</div>
-			
 			<div class="user_order">
-				<div class="user_order_tit" @click="pageAction('/order')">
+				<div class="user_order_tit" @click="pageAction('/user/order')">
 					<span>我的订单</span>
 					<div class="order_arrow">
 						<strong>查看全部订单</strong>
@@ -33,39 +27,35 @@
 				</div>
 				<div class="user_menu">
 					<ul class="user_menu_list">
-						<li>
+						<li @click="orderAction('/user/order?channel=2')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-daifukuan"></use>
 								</svg>
-								<i class="order_status_num">22</i>
 							</div>
 							<span>待支付</span>
 						</li>
-						<li>
+						<li @click="pageAction('/user/order?channel=3')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-fahuo"></use>
 								</svg>
-								<i class="order_status_num">22</i>
 							</div>
 							<span>待发货</span>
 						</li>
-						<li>
+						<li @click="orderAction('/user/order?channel=4')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-daishouhuo"></use>
 								</svg>
-								<i class="order_status_num">22</i>
 							</div>
 							<span>待收货</span>
 						</li>
-						<li>
+						<li @click="orderAction('/user/order?channel=5')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-pingjia"></use>
 								</svg>
-								<i class="order_status_num">22</i>
 							</div>
 							<span>待评价</span>
 						</li>
@@ -73,7 +63,7 @@
 				</div>
 			</div>
 			<div class="order_link">
-				<div class="order_link_item">
+				<div class="order_link_item" @click="pageAction('/user/address')">
 					<svg class="ico order_link_ico" aria-hidden="true">
 						<use xlink:href="#icon-icon-yxj-address"></use>
 					</svg>
@@ -100,29 +90,77 @@
 				</div>
 			</div>
 		</div>
+		<AppFooter/>
 	</div>
 </template>
 
 <script>
 
 	import AppHeader from '@/components/common/header'
+
+	import AppFooter from '@/components/common/footer'
+	
+	import {userLoginState} from '@/widget/common'
+
+	import { mapActions,mapGetters } from 'vuex'
+	
+	import store from '@/widget/store'
 	
 	export default {
-
+		
+		data () {
+			return {
+				userInfo: {}
+			}
+		},
+		mixin: ['loading'],
+		computed: {
+			...mapGetters({
+				'pageView': 'getPageView'
+			}),
+		},
+		components: {
+			AppFooter
+		},
 		beforeCreate () {
 
 			document.title = '个人中心'
 
 		},
-		
+		created () {
+			this.getUserInfo()
+		},
 		methods: {
-
+			...mapActions([
+				'updatePageView'
+			]),
 			pageAction (url) {
 				
 				this.$router.push(url)
 				
+			},
+			getUserInfo () {
+				this.updatePageView(false)
+				this.showLoading()
+				const userInfo = store.get('NHG_USER')
+				if (userInfo) {
+					this.updatePageView(true)
+					this.userInfo = userInfo
+				} else {
+					userLoginState()
+					.then((res) => {
+						const data = res.data
+						this.$hideLoading()
+						if (res.status == 1) {
+							this.userInfo = data
+							this.updatePageView(true)
+						} else {
+							this.pageAction('/user/login?redirect=' + this.$route.fullPath)
+						}
+
+					})
+				}
 			}
-			
 		}
 		
 	}

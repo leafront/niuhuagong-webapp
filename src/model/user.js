@@ -1,10 +1,21 @@
 import request from '@/widget/request'
 
-export const getUserAssets = (data) => request('/api/shop/bonus/getSumBonus',data)
+export const userLogin = (data) => request('/user_api/login/login',data)
 
-export const getIncomeList = (data) => request('/api/shop/bonus/getWithDrawDetails',data)
+export const userRegister = (data) => request('/user_api/login/register',data)
 
-export const wxOauthLogin = (data) => request('/api/shop/access/wxAuth',data)
+export const userForget = (data) => request('/user_api/login/userForget',data)
+
+export const userResetPass = (data) => request('/user_api/login/userForget',data)
+
+export const getUserVerify = (data) => request('/user_api/login/send_login_pwd_sms',data)
+
+export const wxOauthLogin = (data) => request('/user_api/access/wxAuth',data)
+
+export const supplyUserInfo = (data) => request('/user_api/user/supply_user_info',data)
+
+export const getIndustryList = (data) => request('/user_api/user/get_select_info',data)
 
 export const getUserInfo = (data) => request('/api/shop/user/userinfo',data)
 
+export const userLoginState = (data) => request('/user_api/login/state',data)

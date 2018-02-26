@@ -33,19 +33,30 @@
 
 	display:flex;
 
-	align-items: center;
+	align-items:center;
+
+	flex:1;
+	padding-left: .5rem;
 
 	span{
 
 		font-size: .28rem;
 
 		text-align:right;
+		width:100%;
+
+		&.personal_input_checked {
+
+			color: #252525;
+
+		}
 
 	}
 
 	.personal_input_tx{
 
 		height: .97rem;
+		width:100%;
 
 		padding:.3rem 0;
 

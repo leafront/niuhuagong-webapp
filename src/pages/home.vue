@@ -1,9 +1,10 @@
 <template>
-	<div class="pageView">
+	<div class="pageView" :class="{'visibility':!pageView}">
 		<AppHeader/>
-	  <div class="scroll-view-wrapper" id="appView" :class="{'visibility':!pageView}">
+	  <div class="scroll-view-wrapper" id="appView">
 		  <Banner :bannerList="bannerList"/>
 			<Service/>
+		  <Brand :brandList="brandList"/>
 		  <div class="service_ad">
 				<div class="service_ad_item" v-for="item in adList" @click="locationAction(item.item_landing_url)">
 					<img :src="item.item_img_url">
@@ -11,6 +12,7 @@
 		  </div>
 		  <List :list="hotList"/>
 	  </div>
+		<AppFooter/>
 </div>
 </template>
 
@@ -19,6 +21,10 @@
 	import Banner from '@/components/home/banner'
 
 	import AppHeader from '@/components/home/header'
+
+	import AppFooter from '@/components/common/footer'
+	
+	import Brand from '@/components/home/brand'
 	
 	import Service from '@/components/home/service'
 	
@@ -33,12 +39,15 @@
 		  return {
 				bannerList: [],
 			  adList:[],
-			  hotList: []
+			  hotList: [],
+			  brandList: []
 		  }
 		},
 		components: {
 			AppHeader,
+			AppFooter,
 			Banner,
+			Brand,
 			Service,
 			List
 		},
@@ -49,7 +58,6 @@
 				'pageView':'getPageView'
 			})
 		},
-		
 		methods: {
 			
 			...mapActions([
@@ -67,6 +75,23 @@
 				
 				location.href = url
 				
+			},
+			/**
+			 * 获取品牌列表信息
+			 */
+			getBrandList () {
+				return Model.getBrandList({
+					type: 'GET',
+					cache: true,
+				}).then((res) => {
+					const data = res.data
+					if (data && res.status >= 1) {
+						this.brandList = data.splice(0,12)
+					} else {
+						this.$toast(res.msg)
+					}
+					return res
+				})
 			},
 			/**
 			 * 获取首页banner列表
@@ -97,14 +122,14 @@
 
 				return Model.getProductList({
 					type: 'GET',
-					cache: false,
+					cache: true,
 				}).then((res) => {
 					
 					const data = res.data
 					if (data && res.status >= 1) {
 						
-						this.adList = data.rqxp.item
-						this.hotList = data.rxsp.item
+						//this.adList = data.rqxp.item
+						this.hotList = data
 						
 					} else {
 						
@@ -130,11 +155,12 @@
 
 			Promise.all([
 				this.getBannerList(),
+				this.getBrandList(),
 				this.getProductList()
 			]).then((res) => {
 				if (res) {
 					let isSendSuccess = res.every((item) => {
-						return item.status >= 1
+						return item.status == 1
 					})
 					if (isSendSuccess) {
 						this.updatePageView(true)

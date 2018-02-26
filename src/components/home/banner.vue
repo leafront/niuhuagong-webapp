@@ -1,5 +1,5 @@
 <template>
-	<swiper :list="bannerList" :showWay="showWay">
+	<swiper :list="bannerList">
 		<ul class="slideshow-item">
 			<li v-for="item in bannerList" :style="{'width':itemWidth}" @click="pageAction(item.landing_url)">
 				<img :src="item.img_url" :style="{'height':imgHeight}">
@@ -26,7 +26,6 @@
 		},
 		data () {
 			return {
-				showWay: 'banner',
 				itemWidth: document.documentElement.clientWidth + 'px',
 				imgHeight: document.documentElement.clientWidth * 0.5 + 'px',
 			}

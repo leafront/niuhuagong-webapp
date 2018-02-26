@@ -4,15 +4,28 @@
 
 const path = require('path')
 
+
 module.exports = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 		proxyTable: {
+			'/user_api':{
+				target:"http://111.231.103.97:8027",
+				secure:false
+			},
 			'/api':{
 				target:"http://111.231.103.97:7098/mobile",
 				secure:false
+			},
+			'/item_api': {
+				target:"http://111.231.103.97:8027",
+				secure:false
+			},
+			'/order_api': {
+				target: "http://111.231.103.97:8027",
+				secure: false
 			}
 		},
 

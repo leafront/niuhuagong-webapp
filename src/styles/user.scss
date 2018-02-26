@@ -1,5 +1,15 @@
 @import './user_tit.scss';
 
+.user_form{
+
+	padding-top: 1.06rem;
+}
+
+.user_login {
+
+	padding-top: 1.1rem;
+}
+
 .login{
 	padding: 0 .4rem;
 }
@@ -75,7 +85,7 @@
 
 	.login_code{
 
-		width: 1.8rem;
+		width: 2rem;
 		height: .6rem;
 
 		border-radius: .44rem;
@@ -87,6 +97,15 @@
 		background: #fff;
 
 		font-size: .26rem;
+		&:disabled{
+
+			background: #c3c3c4;
+
+			border: .01rem solid #c3c3c4;
+
+			color: #fff;
+
+		}
 	}
 
 	span {

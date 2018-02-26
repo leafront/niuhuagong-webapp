@@ -1,0 +1,47 @@
+
+.address_title_wrapper{
+	background: #f6f6f6;
+
+	padding-bottom: .24rem;
+
+}
+
+.address_title{
+
+	background: #fff;
+
+	height: .92rem;
+
+	display:flex;
+
+	align-items: center;
+
+	justify-content: space-between;
+
+	padding-left: .3rem;
+
+	font-size: .28rem;
+
+	color:#252525;
+
+	span{
+
+		height: .92rem;
+
+		line-height: .92rem;
+
+		padding-right: .3rem;
+
+		padding-left: 1rem;
+
+		color: #1ba0e5;
+
+	}
+
+	h5{
+		font-weight: 500;
+		font-size: .28rem;
+
+	}
+
+}

@@ -145,7 +145,7 @@
 		&.active{
 
 			transform: translateY(0);
-			z-index:10;
+			z-index:99;
 		}
 		
 	}
@@ -168,7 +168,7 @@
 			
 			display:flex;
 			
-			height: 1.1rem;
+			height: 1rem;
 			
 			color: #252525;
 			
@@ -184,8 +184,5 @@
 			}
 			
 		}
-		
 	}
-
-
 </style>

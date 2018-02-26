@@ -10,6 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+
 const PreloadWebpackPlugin = require('preload-webpack-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
@@ -43,8 +45,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
 				warnings: false,
-				drop_debugger: true,
-				drop_console: true
+				drop_debugger: false,
+				drop_console: false
       },
       sourceMap: config.build.productionSourceMap,
       parallel: true

@@ -1,5 +1,5 @@
 <template>
-	<div class="footer">
+	<div class="footer_bot">
 		<div class="foot_tel">
 			<div class="foot_tel_tit">
 				<h5>客服热线:</h5>

@@ -1,0 +1,70 @@
+
+.form_address_default{
+
+	height: .8rem;
+
+	display: flex;
+
+	align-items: center;
+
+	span{
+
+		font-size: .28rem;
+
+		padding-left: .2rem;
+
+	}
+
+}
+
+.form_address_checked{
+
+	width: .4rem;
+
+	height: .4rem;
+
+	border-radius: 50%;
+
+	border: .02rem solid #252525;
+
+	background:#fff;
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: center;
+
+	&.active{
+
+		background: #252525;
+
+	}
+
+	.ico-gou{
+		width: .26rem;
+		height: .2rem;
+		color: #fff;
+
+	}
+}
+
+.form_address{
+
+	padding: 0 .2rem;
+
+}
+
+.ui-form-item{
+	.ui-form-text{
+		line-height: 1.02rem;
+		font-size: .28rem;
+		padding-left: .2rem;
+		display: block;
+		color: #a2a2a2;
+	}
+	.input-place-text{
+		color:#252525;
+	}
+}
+

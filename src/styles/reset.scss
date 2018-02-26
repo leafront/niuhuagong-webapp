@@ -3,7 +3,7 @@ html{
 }
 body {
 	background-color: #fff;
-	font-family: "Microsoft Yahei";
+	font-family: "PingFang SC", Helvetica, Arial, "Lucida Grande", Verdana, "Microsoft Yahei", STXihei, Sans-serif;
 }
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
 	display: block;
@@ -12,7 +12,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,textarea,p,blockquote,th,td,button {
 	margin: 0;
 	padding: 0;
-	tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	text-size-adjust: none;
 	box-sizing: border-box;
 }

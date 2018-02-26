@@ -349,7 +349,7 @@ ImageUpload.prototype = {
 				break;
 		}
 
-		var base64 = canvas.toDataURL('image/jpeg', this.options.quality);
+		var base64;
 
 		// 修复IOS
 		if (isIOS) {

@@ -1,27 +1,22 @@
 <template>
 	<div class="slideshow-wrap">
 		<slot></slot>
-		<ul :class="{'slideshow-dots':showWay == 'banner','detail_slidershow-dots':showWay == 'detail_banner'}">
+		<ul class="slideshow-dots">
 			<li v-for="(item,$index) in list" :class="{'active':$index == index-1}">
 			</li>
 		</ul>
+	
 	</div>
 </template>
 <script>
 
+	import utils from '@/widget/utils'
 
 	export default {
-
 		props:{
 			list:{
 				type: Array,
-				default() {
-					return []
-				}
-			},
-			showWay: {
-				type: String,
-				default: 'banner'
+				default:[]
 			},
 			step: {
 				type: Number,
@@ -103,6 +98,7 @@
 				}
 
 				this._move(e, differX);
+				
 				e.preventDefault();
 			},
 			touchend (e) {
@@ -233,28 +229,33 @@
 		watch: {
 
 			list () {
-				
-				setTimeout(() => {
-					
-					this.init();
-					
-				},0)
-				
+
 				if (this.list.length == 1) {
 					return
 				}
-				
+
+				setTimeout(() => {
+
+					this.init();
+
+				},0)
+
 				this.$el.addEventListener('touchstart',(e) => {
 					this.touchstart(e);
-				})
+				}, false)
 				this.$el.addEventListener('touchmove',(e) => {
 					this.touchmove(e);
-				})
+				},false)
 				this.$el.addEventListener('touchend',(e) => {
 					this.touchend(e);
-				})
+				},false)
 			}
-			
+
+		},
+		beforeDestroy () {
+
+			clearInterval(this.autoPlayTimer);
+
 		}
 
 	}

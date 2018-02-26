@@ -3,10 +3,10 @@
 		<h3>—  热销榜单  —</h3>
 		<LazyLoad :list="list" :options="{ele:'lazyLoad_img',scrollEle: 'appView'}">
 			<ul class="shop_list clearfix" id="lazyLoad">
-				<li v-for="item in list" @click="pageAction('/detail?id='+item.item_id)">
-					<div class="lazyLoad_img" :data-src="item.item_img_url"/>
-					<p>{{item.item_name}}</p>
-					<span>{{item.item_desc}}</span>
+				<li v-for="item in list" @click="pageAction('/detail?id='+item.id)">
+					<div class="lazyLoad_img" :data-src="item.img_url"/>
+					<p>{{item.name}}</p>
+					<span>{{item.title }}</span>
 					<strong><b class="shop_kilo">￥{{item.price | price }}</b>/公斤</strong>
 				</li>
 			</ul>

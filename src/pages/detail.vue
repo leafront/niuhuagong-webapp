@@ -5,10 +5,10 @@
 			<Banner :bannerList="bannerList"/>
 			<div class="detail">
 				<div class="detail_size">
-					<p class="detail_shop_name">苏州秧浦 水性色浆 YP系列</p>
+					<p class="detail_shop_name">{{spu_info.name}}</p>
 					<div class="detail_shop_info">
-						<p><i>￥</i>60</p>
-						<div class="detail_shop_address">
+						<p><i>￥</i>{{price | price}}</p>
+						<div class="detail_shop_address" v-show="false">
 							<span class="detail_shop_express font-s">配送至:</span>
 							<strong class="detail_shop_area" @click="updateIsCityPicker(true)">{{selectCityValue.name || '上海 黄浦区'}}</strong>
 							<span class="detail_is_shop font-s">有货</span>
@@ -20,40 +20,26 @@
 						</svg>
 						<p>一次性购物满100kg，可享受<strong>￥10.00/kg</strong></p>
 					</div>
-					<div class="detail_tag">
-						<span class="font-s">颜色：</span>
+					<div class="detail_tag" v-if="specs_info[0]">
+						<span class="font-s">{{specs_info[0].spec_name}}：</span>
 						<ul class="detail_tag_list">
-							<li class="active">YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
+							<li :class="{'active':typeIndex == index}" v-for="(item,index) in specs_info[0].option" @click="selectType(item,index)">{{item.spec_option_name}}</li>
 						</ul>
 					</div>
-					<div class="detail_tag">
-						<span class="font-s">规格：</span>
+					<div class="detail_tag" v-if="specs_info[1]">
+						<span class="font-s">{{specs_info[1].spec_name}}：</span>
 						<ul class="detail_tag_list">
-							<li class="active">YPT908 中黄</li>
-							<li>YPT908 中黄</li>
-							<li>YPT908 中黄</li>
+							<li :class="{'disabled':selectedList[item.spec_option_id],'active':modelIndex == index}" v-for="(item,index) in specs_info[1].option" @click="selectModel(item,index)">{{item.spec_option_name}}</li>
 						</ul>
 					</div>
 					<div class="detail_cart_num">
 						<span class="font-s">数量：</span>
 						<div class="cart_num">
-							<div class="cart_reduce" @click.stop="changeCart(-1)">
+							<div class="cart_reduce" @click.stop="changeNum(-1)">
 								<i></i>
 							</div>
 							<input type="tel" class="cart_num_input" @blur="inputProductNum" v-model.trim="proNumber"/>
-							<div class="cart_add" @click.stop="changeCart(1)">
+							<div class="cart_add" @click.stop="changeNum(1)">
 								<i class="ico1"></i>
 								<i class="ico2"></i>
 							</div>
@@ -79,8 +65,7 @@
 						<h5>商品详情</h5>
 						<span></span>
 					</div>
-					<div class="shop_des">
-						<img src="http://111.231.103.97:9999/leidi/product/161749748016483638.jpg"/>
+					<div class="shop_des" v-html="spu_info.desc">
 					</div>
 				</div>
 			</div>
@@ -101,7 +86,7 @@
 				</div>
 			</Overlay>
 		</div>
-		<div class="detail_cart">
+		<div class="detail_cart" :class="{'page_bottom':isWeixinIphoneX}">
 			<div class="detail_icon">
 				<div class="detail_icon_item">
 					<svg class="ico icon-shoucang" aria-hidden="true">
@@ -109,7 +94,7 @@
 					</svg>
 					<span>收藏夹</span>
 				</div>
-				<div class="detail_icon_item">
+				<div class="detail_icon_item" @click="pageAction('/cart')">
 					<svg class="ico icon-gouwuche" aria-hidden="true">
 						<use xlink:href="#icon-gouwuche"></use>
 					</svg>
@@ -117,8 +102,8 @@
 				</div>
 			</div>
 			<div class="detail_join">
-				<span class="join_cart">加入购物车</span>
-				<span class="join_buy">立即购买</span>
+				<span class="join_cart" @click="addShopCart">加入购物车</span>
+				<span class="join_buy" @click="orderAction">立即购买</span>
 			</div>
 		</div>
 		<CityPicker @hideCityPicker="hideCityPicker" @showCityPicker="showCityPicker"/>
@@ -134,6 +119,8 @@
 	import CityPicker from '@/components/widget/CityPicker'
 
 	import Overlay from '@/components/widget/overlay'
+	
+	import utils from '@/widget/utils'
 
 	import * as Model from '@/model/detail'
 
@@ -144,9 +131,20 @@
 			return {
 				bannerList: [],
 				proNumber: 1,
+				shop_price: '',
 				info: null,
 				isSoldOut: false,
-				title: '详情'
+				title: '详情',
+				specs_info: [],
+				modelList: [],
+				typeIndex: -1,
+				modelIndex: -1,
+				modelId: '',
+				typeId: '',
+				skuId: '',
+				selectedList: {},
+				spu_info: {},
+				isWeixinIphoneX: utils.isWeixinIphoneX()
 			}
 		},
 		components: {
@@ -160,15 +158,166 @@
 			...mapGetters({
 				'pageView':'getPageView',
 				'selectCityValue': 'getSelectCity'
-			})
+			}),
+			price () {
+				return this.shop_price * this.proNumber
+			}
 		},
 		methods: {
 			...mapActions([
 				'updatePageView',
 				'updateIsCityPicker',
 				'updateSelectCity',
-				'updateOverlayVisible'
+				'updateOverlayVisible',
+				'updateScrollPicker'
 			]),
+			/**
+			 * 添加购物车到商品
+			 */
+			addShopCart () {
+				const sku_id =  this.skuId
+				const number =  this.proNumber
+				
+				if (!sku_id) {
+					this.$toast('请选择商品类型或型号')
+					return
+				}
+				
+				Model.addShopCart({
+					type: 'POST',
+					data: {
+						sku_id,
+						number
+					}
+				}).then((res) => {
+					
+					const data = res.data
+					if (data && res.status == 1) {
+						this.$toast(res.msg)
+					} else {
+						this.$toast(res.msg)
+					}
+				})
+				
+			},
+			/**
+			 * 选择商品类型
+			 */
+			selectType (item,optIndex) {
+				const typeId = item.spec_option_id
+				const selectedModel = []
+				const modelList = this.modelList
+				const selectedList = this.selectedList
+				this.typeIndex = optIndex
+				this.modelIndex = -1
+				this.typeId = typeId
+				this.specs_info[1].option.forEach((item) => {
+					let obj = {
+						typeId,
+						modelId: item.spec_option_id
+					}
+					selectedModel.push(obj)
+				})
+		
+				selectedModel.forEach((item,index) => {
+					
+					if (item.typeId == modelList[index].typeId && item.modelId == modelList[index].modelId) {
+						selectedList[item.modelId] = false
+					} else {
+						selectedList[item.modelId] = true
+					}
+				})
+				
+				this.selectedList = selectedList
+			},
+			/**
+			 * 选择商品型号
+			 */
+			selectModel (item,index) {
+				
+				const { spec_option_id } = item
+				const { selectedList, modelList, typeId } = this
+				this.modelId = spec_option_id
+				if (selectedList[spec_option_id]) {
+					this.$toast('商品型号不可选')
+					return
+				} else {
+					modelList.forEach((item) => {
+						if (typeId == item.typeId && spec_option_id == item.modelId) {
+							this.shop_price = item.price
+							this.skuId = item.id
+						}
+					})
+					this.modelIndex = index
+				}
+			},
+			/**
+			 * 获取商品详情页信息
+			 */
+			getProductDetail () {
+				
+				Model.getProductDetail({
+					type: 'GET',
+					data: {
+						item_id: this.$route.query.id
+					}
+				}).then((res) => {
+					
+					const data = res.data
+					this.$hideLoading()
+					
+					if (data && res.status == 1) {
+						
+						this.updatePageView(true)
+						this.specs_info = data.specs_info
+						this.bannerList = data.spu_info.img
+						this.spu_info = data.spu_info
+						this.shop_price = data.spu_info.price
+						this.setSelectedList(data.specs_info[1].option)
+						this.setModelInfo(data.sku_info)
+						
+					} else {
+						
+						this.$toast(res.msg)
+						
+					}
+					
+				})
+			},
+			
+			/**
+			 *
+			 * 设置默认商品类型和型号选中项
+			 */
+			
+			setSelectedList (data) {
+				let selectedList = {}
+				data.forEach((item) => {
+					selectedList[item.spec_option_id] = false
+				})
+				this.selectedList = selectedList
+			},
+			/**
+			 * 综合合并商品型号和类型列表
+			 */
+			
+			setModelInfo (data) {
+				
+				let result = []
+				
+				data.forEach((item,index) => {
+					var obj = {
+						typeId: item.specs_option[0].spec_option_id,
+						modelId: item.specs_option[1].spec_option_id,
+						price: item.price,
+						id: item.id
+					}
+					result.push(obj)
+				})
+				
+				this.modelList = result
+				
+			},
 			pageAction (url) {
 
 				if (url) {
@@ -262,6 +411,21 @@
 
 					})
 				}
+			},
+			/**
+			 * 商品立即购买
+			 *
+			 */
+			orderAction () {
+				const sku_id =  this.skuId
+				const number =  this.proNumber
+
+				if (!sku_id) {
+					this.$toast('请选择商品类型或型号')
+					return
+				}
+
+				location.href = `/order/submit?from=detail&sku_id=${sku_id}&number=${number}`
 			}
 
 		},
@@ -282,21 +446,15 @@
 		},
 		created (){
 
-			this.updatePageView(true)
-
-			this.updateOverlayVisible(true)
-
 			setTimeout(() => {
-				this.bannerList = [{
-					"id": "1",
-					"img_url": "http://111.231.103.97:7098/images/DM_B.jpg",
-					"landing_url": "http://www.niuhuagong.com/product?cat_id=178&brand_id=323",
-					"sort": "1"
-				}]
+				this.updateScrollPicker(true)
+			},300)
 
-			},0)
+			this.updatePageView(false)
 
-			//this.showLoading()
+			this.getProductDetail()
+
+			this.showLoading()
 		}
 	}
 
@@ -626,6 +784,7 @@
 		margin-top: .5rem;
 		
 		span{
+		
 			padding-right: .18rem;
 			line-height: .53rem;
 		}
@@ -634,7 +793,7 @@
 			flex:1;
 			li{
 				float: left;
-				width: 1.85rem;
+				padding: 0 .2rem;
 				height: .53rem;
 				line-height: .53rem;
 				text-align: center;
@@ -642,11 +801,12 @@
 				border: .01rem solid #d4d4d4;
 				margin-right: .18rem;
 				margin-bottom: .3rem;
+				&.disabled {
+					background: #ccc;
+					border: .02rem solid #ccc;
+				}
 				&.active {
 					border: .02rem solid #008aec;
-				}
-				&:nth-child(3n) {
-					margin-right: 0;
 				}
 			}
 		}
