@@ -89,7 +89,6 @@ const wx_pay = {
 					} else if (res.err_msg == "get_brand_wcpay_request:fail") {
 
 						this.$toast('支付失败')
-
 					}
 			})
 		}

@@ -36,7 +36,7 @@ const AuthPersonal = r => require.ensure([], () => r(require('@/pages/auth/perso
 
 const AuthCompany = r => require.ensure([], () => r(require('@/pages/auth/company')), 'AuthCompany')
 
-const UserOrder = r => require.ensure([], () => r(require('@/pages/user/order')), 'UserOrder')
+const OrderList = r => require.ensure([], () => r(require('@/pages/order/list')), 'OrderList')
 
 const OrderSubmit = r => require.ensure([], () => r(require('@/pages/order/submit')), 'OrderSubmit')
 
@@ -141,9 +141,9 @@ export default new Router({
 			},
 			component: AuthCompany
 		},{
-			path: '/user/order',
-			name: 'UserOrder',
-			component: UserOrder
+			path: '/order/list',
+			name: 'OrderList',
+			component: OrderList
 		},{
 			path: '/order/submit',
 			name: 'OrderSubmit',

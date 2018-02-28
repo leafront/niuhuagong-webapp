@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="user_order">
-				<div class="user_order_tit" @click="orderAction('/user/order')">
+				<div class="user_order_tit" @click="orderAction('/order/list')">
 					<span>我的订单</span>
 					<div class="order_arrow">
 						<strong>查看全部订单</strong>
@@ -27,7 +27,7 @@
 				</div>
 				<div class="user_menu">
 					<ul class="user_menu_list">
-						<li @click="orderAction('/user/order?channel=2')">
+						<li @click="orderAction('/order/list?channel=2')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-daifukuan"></use>
@@ -35,7 +35,7 @@
 							</div>
 							<span>待支付</span>
 						</li>
-						<li @click="orderAction('/user/order?channel=3')">
+						<li @click="orderAction('/order/list?channel=3')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-fahuo"></use>
@@ -43,7 +43,7 @@
 							</div>
 							<span>待发货</span>
 						</li>
-						<li @click="orderAction('/user/order?channel=4')">
+						<li @click="orderAction('/order/list?channel=4')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-daishouhuo"></use>
@@ -51,7 +51,7 @@
 							</div>
 							<span>待收货</span>
 						</li>
-						<li @click="orderAction('/user/order?channel=5')">
+						<li @click="orderAction('/order/list?channel=5')">
 							<div class="order_status">
 								<svg class="ico order_status_ico" aria-hidden="true">
 									<use xlink:href="#icon-pingjia"></use>

@@ -10,22 +10,14 @@
 			<svg class="ico head_ico" @click="dropMenu" aria-hidden="true" v-show="isMenu">
 				<use xlink:href="#icon-close"></use>
 			</svg>
-			<svg class="ico head_user_ico" @click="routerAction('/user/center')" aria-hidden="true">
-				<use xlink:href="#icon-yonghu"></use>
-			</svg>
 		</div>
-		<div class="head_nav_link">
-			<div class="head_nav_search" @click="pageAction('/search')">
-				<svg class="ico head_search_ico" aria-hidden="true">
-					<use xlink:href="#icon-sousuo2"></use>
-				</svg>
-			</div>
-			<div class="head_nav_cart" @click="routerAction('/cart')">
-				<svg class="ico head_cart_ico" aria-hidden="true">
-					<use xlink:href="#icon-gouwuche"></use>
-				</svg>
-			</div>
-		</div>
+		<!--<div class="head_nav_link">-->
+			<!--<div class="head_nav_search" @click="pageAction('/search')">-->
+				<!--<svg class="ico head_search_ico" aria-hidden="true">-->
+					<!--<use xlink:href="#icon-sousuo2"></use>-->
+				<!--</svg>-->
+			<!--</div>-->
+		<!--</div>-->
 	</div>
 </template>
 
@@ -129,7 +121,7 @@
 		
 		align-items: center;
 		
-		padding-right:.15rem;
+		padding-right:.3rem;
 		
 		padding-left: .5rem;
 		

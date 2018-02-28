@@ -290,10 +290,8 @@
 						
 						this.numList.splice(i,1)
 						this.list.splice(i,1)
-						
 					}
 				}
-				
 			},
 
 			changeNum (item,index) {
@@ -301,13 +299,11 @@
 				const cartNum = parseInt(this.numList[index])
 			
 				if (cartNum == 0 || !cartNum) {
-					
 					this.$toast('单件商品数量不能少于1件')
 					this.numList.splice(index,1,1)
 					return
-				
 				}
-
+				
 				const data = {
 					shop_cart_id: item.shop_cart_id,
 					number: cartNum
@@ -327,11 +323,9 @@
 			
 		},
 		computed:{
-
 			...mapGetters({
 				'pageView':'getPageView'
 			}),
-
 			/**
 			 * 判断购物车中的商品是否全选
 			 *
@@ -347,7 +341,6 @@
 				let isSelect = false
 
 				if (list && list.length) {
-
 					isSelect = list.every(({shop_cart_id}) => {
 						return carList[shop_cart_id]
 					})
@@ -431,7 +424,6 @@
 				return totalPrice
 			
 			}
-		
 		},
 
 		beforeCreate () {
@@ -822,7 +814,6 @@
 	.cart_img{
 		
 		padding-right: .3rem;
-		
 		.lazyLoad_img{
 			width: 1.6rem;
 			height: 1.6rem;
