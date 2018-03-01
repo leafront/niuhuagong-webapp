@@ -4,7 +4,7 @@
 		<div class="scroll-view-wrapper" :class="{'visibility':!pageView}">
 			<div class="order_submit">
 				<template v-if="userAddress.address_id">
-					<div class="submit_address" @click="pageAction('/user/address?from=order')">
+					<div class="submit_address" @click="addressAction">
 						<svg aria-hidden="true" class="ico icon_address">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dizhi1">
 							</use>
@@ -22,7 +22,7 @@
 					</div>
 				</template>
 				<template v-else>
-					<div class="submit_order_item" @click="pageAction('/user/address?from=order')">
+					<div class="submit_order_item" @click="addressAction">
 						<span>收货地址</span>
 						<div class="submit_order_menu">
 							<strong>请添加收货地址</strong>
@@ -114,6 +114,10 @@
 			...mapActions([
 				'updatePageView'
 			]),
+			addressAction () {
+				
+				this.pageAction('/user/address?order='+window.encodeURIComponent(this.$route.fullPath))
+			},
 			pageAction (url) {
 				this.$router.push(url)
 			},

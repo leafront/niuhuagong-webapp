@@ -5,32 +5,32 @@
 			  <div class="address_title_wrapper">
 				  <div class="address_title">
 					  <h5>地址管理</h5>
-					  <span @click="deleteUserAddress" v-show="isDelete && !isFromInvoice">删除</span>
+					  <span @click="deleteUserAddress" v-show="isDelete && !isFromOrder">删除</span>
 				  </div>
 			  </div>
 				<div class="select_address_item" v-for="(item,index) in list">
-					<div class="ui-checked"  @click="selectItem(item.id)">
+					<div class="ui-checked"  @click="selectItem(item.id,index)">
 						<div class="ui-checked-radio" :class="{'active':selectAddress[item.id]}">
 							<svg class="ico ui-checked-ico"  aria-hidden="true">
 								<use xlink:href="#icon-gou"></use>
 							</svg>
 						</div>
 					</div>
-					<div class="select_address_info" @click="checkedAddress(index)">
+					<div class="select_address_info">
 						<div class="select_address_txt">
 							<span>{{item.name}}</span>
 							<span>{{item.mobile}}</span>
 						</div>
 						<p>{{item.privince_name + ' ' + item.city_name + ' ' + item.district_name + ' ' +item.address_detail}}</p>
 					</div>
-					<div class="select_address_edit" @click="pageAction('/user/address/edit/?id='+item.id)">
+					<div class="select_address_edit" @click="editAction(item.id)">
 						<svg aria-hidden="true" class="ico icon-bianji">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bianji">
 							</use>
 						</svg>
 					</div>
 				</div>
-			  <div class="select_address_add" @click="pageAction('/user/address/add')">
+			  <div class="select_address_add" @click="addAction">
 				  <svg aria-hidden="true" class="ico icon-jia">
 					  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-jia"></use>
 				  </svg>
@@ -57,11 +57,12 @@
 		},
 
 		data () {
+			const fromOrder = window.encodeURIComponent(this.$route.query.order)
+			const isFromOrder = this.$route.query.order ? true : false
 			
-			const isFromInvoice = this.$route.query.from == '/invoice/order' ? true : false
-
 			return {
-				isFromInvoice,
+				isFromOrder,
+				fromOrder,
 				list: [],
 				title: '地址管理',
 				selectNum: 1,
@@ -96,17 +97,24 @@
 			...mapActions([
 				'updatePageView',
 			]),
-			backFn () {
-				
-				if (this.isFromInvoice) {
-					
-					this.$router.back()
-					
+			addAction () {
+				if (this.fromOrder) {
+					this.pageAction('/user/address/add?order='+this.fromOrder)
 				} else {
-
-					this.pageAction('/user/center')
-					
+					this.pageAction('/user/address/add')
 				}
+			},
+			editAction (id) {
+				if (this.fromOrder) {
+					this.pageAction(`/user/address/edit?id=${id}&?order='+this.fromOrder`)
+				} else {
+					this.pageAction(`/user/address/edit?id=${id}`)
+				}
+				
+			},
+			backFn () {
+
+				this.pageAction('/user/center')
 			},
 			/**
 			 * 删除用户地址
@@ -181,10 +189,13 @@
 						this.list = data
 
 						let selectAddress = {}
-
+						const fromOrder = this.$route.query.order
 						data.forEach((item) => {
-
-							selectAddress[item.id] = false
+							if (fromOrder && item.is_default == 1) {
+								selectAddress[item.id] = true
+							} else {
+								selectAddress[item.id] = false
+							}
 
 						})
 
@@ -198,15 +209,18 @@
 				
 				})
 			},
-			/**
-			 * 点击当前用户地址跳转
-			 */
-			checkedAddress (index) {
-				
-				if (this.$route.query.from  == 'order') {
 
+			pageAction(url) {
+
+				this.$router.push(url)
+
+			},
+			selectItem (id,index) {
+				const {list, selectAddress} = this
+				this.selectAddress[id] = !this.selectAddress[id]
+				const fromOrder = this.$route.query.order
+				if (fromOrder) {
 					const results = this.list[index]
-
 					results.is_default = 1
 					results.address_id = results.id
 					const {
@@ -222,7 +236,7 @@
 					} = results
 					Model.editUserAddress({
 						type: 'POST',
-						data:{
+						data: {
 							address_id,
 							province_id,
 							city_id,
@@ -236,48 +250,22 @@
 					}).then((res) => {
 
 						const data = res.data
-
 						if (data && res.status >= 1) {
-
-							this.$router.back()
-
+							this.pageAction(fromOrder)
 						} else {
-
 							this.$toast(res.msg)
-
 						}
-
 					})
-					
 				}
-				
-			},
-
-			pageAction(url) {
-
-				this.$router.push(url)
-
-			},
-			selectItem (id) {
-				
-				const { list, selectAddress } = this
-				this.selectAddress[id] = !this.selectAddress[id]
-				
 			}
 		},
-		
 		beforeCreate () {
-
 			document.title = '地址管理'
-			
 		},
-
 		created (){
 
 			this.updatePageView(false)
-			
 			this.getUserAddress()
-
 			this.showLoading()
 
 		}

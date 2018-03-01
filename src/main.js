@@ -26,7 +26,7 @@ Object.keys(filter).forEach(key => {
 })
 
 Vue.use(Toast,{    //支持全局配置
-	duration: "2000"
+	duration: "1500"
 })
 
 Vue.use(pageLoading)

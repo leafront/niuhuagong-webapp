@@ -69,22 +69,17 @@
 		data () {
 
 			return {
-
+				fromOrder: this.$route.query.order,
 				title: '修改地址',
-				addressInfo: {
-				
-				},
+				addressInfo: {},
 				areaAddress:''
 
 			}
-			
 		},
-
 		mixin: ['loading'],
 		beforeCreate () {
 
 			document.title = '修改地址'
-
 		},
 		methods: {
 
@@ -94,11 +89,16 @@
 				'updatePageView',
 				'updateScrollPicker'
 			]),
+			pageAction (url) {
+				this.$router.push(url)
+			},
 			/**
 			 * 编辑当前用户地址
 			 */
 			editUserAddress () {
-				
+				if (this.fromOrder) {
+					this.addressInfo.is_default = 1
+				}
 				const {
 					province_id,
 					city_id,
@@ -172,15 +172,11 @@
 					const data = res.data
 
 					if (data && res.status == 1) {
-
-						this.$toast('修改成功')
-						
-						setTimeout(() => {
-
+						if (this.fromOrder) {
+							this.pageAction(this.fromOrder)
+						} else {
 							this.$router.back()
-							
-						},2000)
-
+						}
 					} else {
 
 						this.$toast(res.msg)
@@ -191,8 +187,10 @@
 			},
 
 			setDefaultAddress () {
-			
-				this.addressInfo.is_default = this.addressInfo.is_default ? 0 : 1
+
+				if (!this.fromOrder) {
+					this.addressInfo.is_default = this.addressInfo.is_default ? 0 : 1
+				}
 			
 			},
 
@@ -278,16 +276,11 @@
 		},
 
 		created (){
-
-			this.updatePageView(false)
-
-			this.getUserAddress()
 			
+			this.updatePageView(false)
+			this.getUserAddress()
 			this.showLoading()
-		
 		}
-		
-
 	}
 
 </script>

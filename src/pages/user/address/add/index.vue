@@ -65,9 +65,8 @@
 		},
 
 		data () {
-
 			return {
-
+				fromOrder: this.$route.query.order,
 				title: '新建地址',
 				addressInfo: {
 					city_id: '',
@@ -86,6 +85,9 @@
 			setTimeout(() => {
 				this.updateScrollPicker(true)
 			},0)
+			if (this.fromOrder) {
+				this.addressInfo.is_default = 1
+			}
 		},
 		methods: {
 
@@ -94,17 +96,19 @@
 				'updateSelectCity',
 				'updateScrollPicker'
 			]),
+			pageAction (url) {
+				this.$router.push(url)
+			},
 
 			setDefaultAddress () {
-
-				this.addressInfo.is_default = this.addressInfo.is_default ? 0 : 1
-
+				if (!this.fromOrder) {
+					this.addressInfo.is_default = this.addressInfo.is_default ? 0 : 1
+				}
 			},
 			/**
 			 * 新建当前用户地址
 			 */
 			addUserAddress () {
-				
 				const {
 					province_id,
 					city_id,
@@ -153,7 +157,6 @@
 					return
 
 				}
-				
 				Model.addUserAddress({
 					type: 'POST',
 					data: {
@@ -169,23 +172,15 @@
 				}).then((res) => {
 
 					const data = res.data
-
 					if (data && res.status == 1) {
-
-						this.$toast('添加成功')
-
-						setTimeout(() => {
-
+						if (this.fromOrder) {
+							this.pageAction(this.fromOrder)
+						} else {
 							this.$router.back()
-
-						},2000)
-
+						}
 					} else {
-
 						this.$toast(res.msg)
-
 					}
-
 				})
 			},
 			/**
@@ -218,11 +213,8 @@
 		},
 		
 		beforeCreate () {
-
 			document.title = '新建地址'
-			
 		}
-
 	}
 
 </script>

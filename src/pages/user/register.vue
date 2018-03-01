@@ -234,9 +234,7 @@
 					if (data && res.status == 1) {
 						
 						this.$toast(res.msg)
-						setTimeout(() => {
-							this.pageAction('/user/login')
-						},2000)
+						this.pageAction('/user/login')
 
 					} else {
 

@@ -204,6 +204,7 @@
 			 * 选择商品类型
 			 */
 			selectType (item,optIndex) {
+				this.skuId = ''
 				const typeId = item.spec_option_id
 				const selectedModel = []
 				const modelList = this.modelList

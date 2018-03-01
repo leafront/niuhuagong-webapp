@@ -207,12 +207,7 @@
 					
 					const data = res.data
 					if (data && res.status == 1) {
-						this.$toast(res.msg)
-						setTimeout(() => {
-							
-							this.pageAction('/user/center')
-							
-						},2000)
+						this.pageAction('/user/center')
 					} else {
 					
 						this.$toast(res.msg)

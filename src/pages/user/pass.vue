@@ -119,15 +119,11 @@
 					this.$hideLoading()
 					if (data && res.status ==1) {
 						const redirect = this.redirect
-						this.$toast(res.msg)
-						setTimeout(() => {
-							if (redirect) {
-								this.pageAction(redirect)
-							} else {
-								this.pageAction('/user/center')
-							}
-						},3000)
-
+						if (redirect) {
+							this.pageAction(redirect)
+						} else {
+							this.pageAction('/user/center')
+						}
 					} else {
 
 						this.$toast(res.msg)

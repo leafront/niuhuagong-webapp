@@ -167,15 +167,12 @@
 					const data = res.data
 					this.$hideLoading()
 					if (data && res.status ==1) {
-						this.$toast(res.msg)
 						const redirect = this.redirect
-						setTimeout(() => {
-							if (redirect) {
-								this.pageAction(redirect)
-							} else {
-								this.pageAction('/user/center')
-							}
-						},3000)
+						if (redirect) {
+							this.pageAction(redirect)
+						} else {
+							this.pageAction('/user/center')
+						}
 					} else if (data && res.status == 3130){
 						this.pageAction('/user/center')
 					} else {
