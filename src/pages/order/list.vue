@@ -65,7 +65,7 @@
 			<template v-else>
 				<div class="order_empty">
 					<img src="./images/order_empty_bg.png"/>
-					<p>还没有购买商品</p>
+					<p>没有订单</p>
 				</div>
 			</template>
 			<Overlay>
@@ -266,15 +266,12 @@
 					const data = res.data
 					this.$hideLoading()
 					if (data && res.status == 1) {
-
 						this.$toast(res.msg)
-						const channel = this.channel
-						return channel
-
 					} else {
-
 						this.$toast(res.msg)
 					}
+					const channel = this.channel
+					return channel
 				}).then((channel) => {
 					this.getOrderList(channel)
 				})
@@ -291,6 +288,9 @@
 					if (data && res.status == 1) {
 						this.updatePageView(true)
 						this.orderList = data
+					} else {
+						this.updatePageView(true)
+						this.orderList = data
 					}
 				})
 			}
@@ -300,9 +300,7 @@
 			this.showLoading()
 			const channel = this.channel
 			this.getOrderList(channel)
-
 		}
-
 	}
 
 </script>

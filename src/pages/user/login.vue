@@ -16,7 +16,7 @@
 						</svg>
 						<span></span>
 						<input type="tel" v-model="params.mobile" class="login_input" placeholder="请输入手机号码"/>
-						<div class="user_form_code" @click="countTime">
+						<div class="user_form_code" @click="getUserVerify">
 							<button class="login_code" :disabled="clickCode">{{codeTxt}}</button>
 						</div>
 					</div>
@@ -83,7 +83,7 @@
 				const redirect = this.redirect
 				
 				if (redirect) {
-					this.$router.push('/user/pass?return='+redirect)
+					this.$router.push('/user/pass?redirect='+window.encodeURIComponent(redirect))
 				} else {
 					this.$router.push('/user/pass')
 				}
@@ -114,14 +114,11 @@
 					if(time == 0) {
 
 						this.clickCode = false
-
 						this.codeTxt = '获取验证码'
-
 						clearInterval(timer)
 
 					}
 				},1000)
-				this.getUserVerify()
 			},
 			loginAction () {
 				const {
@@ -168,11 +165,9 @@
 					}
 				}).then((res) => {
 					const data = res.data
-					
+					this.$hideLoading()
 					if (data && res.status ==1) {
-						
 						this.$toast(res.msg)
-						this.$hideLoading()
 						const redirect = this.redirect
 						setTimeout(() => {
 							if (redirect) {
@@ -180,13 +175,11 @@
 							} else {
 								this.pageAction('/user/center')
 							}
-						
 						},3000)
-						
+					} else if (data && res.status == 3130){
+						this.pageAction('/user/center')
 					} else {
-						
 						this.$toast(res.msg)
-						
 					}
 				})
 			},
@@ -214,6 +207,8 @@
 					if (data && res.status == 1) {
 						
 						this.$toast(res.msg)
+
+						this.countTime()
 					
 					} else {
 

@@ -56,14 +56,11 @@
 		
 		h3{
 			
-			padding:.55rem 0;
-			
-			font-size: .42rem;
-			
+			line-height: 1.05rem;
+			height: 1.05rem;
+			font-size: .32rem;
 			color: #252525;
-			
 			text-align:center;
-			
 		}
 		
 	}

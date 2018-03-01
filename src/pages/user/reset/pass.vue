@@ -15,14 +15,14 @@
 							<use xlink:href="#icon-mima"></use>
 						</svg>
 						<span></span>
-						<input type="tel" v-model.trim="params.mobile" class="login_input" placeholder="请输入新密码"/>
+						<input type="password" v-model.trim="params.pwd" class="login_input" placeholder="请输入6~20位新密码"/>
 					</div>
 					<div class="user_form_item">
 						<svg class="ico login_pass_ico" aria-hidden="true">
 							<use xlink:href="#icon-mima"></use>
 						</svg>
 						<span></span>
-						<input type="password" v-model.trim="params.pwd" class="login_pass_input" placeholder="请再次输入新密码"/>
+						<input type="password" v-model.trim="params.confirm_pwd" class="login_pass_input" placeholder="请再次输入6~20位新密码"/>
 					</div>
 					<div class="user_login" @click="resetAction">
 						<button class="form-button">完成</button>
@@ -38,6 +38,8 @@
 	import AppHeader from '@/components/common/header'
 
 	import validate from '@/widget/validate'
+	
+	import store from '@/widget/store'
 
 	import * as Model from '@/model/user'
 
@@ -46,8 +48,8 @@
 			return {
 				title: '重置密码',
 				params: {
-					mobile: '',
-					pwd: ''
+					pwd: '',
+					confirm_pwd: ''
 				}
 			}
 		},
@@ -68,52 +70,61 @@
 
 			},
 			resetAction () {
-				const {
-					mobile,
-					pwd
-				} = this.params
-
-				if (!mobile) {
-					this.$toast('请输入手机号码')
+				const params = store.get('NHG_FORGET_PASS')
+				const { confirm_pwd, pwd } = this.params
+				if (!params) {
+					this.$toast('手机号码和验证码错误')
+					this.pageAction('/user/reset/forget')
 					return
 				}
-				if (!validate.isMobile(mobile)) {
 
-					this.$toast('请输入正确的手机号码')
-					return
-				}
 				if (!pwd) {
-					this.$toast('请输入密码')
+					this.$toast('请输入重置密码')
+					return
+				}
+				if (!validate.isPass(pwd)) {
+					this.$toast('请输入6~20位数字和字母密码')
+					return
+				}
+				if (!confirm_pwd) {
+					this.$toast('请再次输入重置密码')
+					return
+				}
+				if (confirm_pwd !== pwd) {
+					this.$toast('两次输入密码不一致')
 					return
 				}
 
-				this.userLogin()
+				this.userResetPass()
 
 			},
-			userLogin () {
+			userResetPass () {
+				const params = store.get('NHG_FORGET_PASS')
 				const {
 					mobile,
-					pwd
-				} = this.params
+					verify_code
+				} = params
+				
+				const pwd = this.params.pwd
 
 				this.$showLoading()
 				Model.userResetPass({
 					type: 'POST',
 					data: {
-						channel: 1,
+						channel: 3,
 						mobile,
-						pwd
+						pwd,
+						verify_code
 					}
 				}).then((res) => {
+					this.$hideLoading()
 					const data = res.data
-
 					if (data && res.status ==1) {
-						this.$hideLoading()
+						store.remove('NHG_FORGET_PASS')
 						this.$toast(res.msg)
 						setTimeout(() => {
-							this.pageAction('/user/center')
+							this.pageAction('/user/login')
 						},3000)
-
 					} else {
 
 						this.$toast(res.msg)

@@ -2,11 +2,13 @@ import request from '@/widget/request'
 
 export const userLogin = (data) => request('/user_api/login/login',data)
 
+export const userLogout = (data) => request('/user_api/login/logout',data)
+
 export const userRegister = (data) => request('/user_api/login/register',data)
 
-export const userForget = (data) => request('/user_api/login/userForget',data)
+export const userForget = (data) => request('/user_api/login/retrieve_pwd_verify',data)
 
-export const userResetPass = (data) => request('/user_api/login/userForget',data)
+export const userResetPass = (data) => request('/user_api/login/retrieve_pwd',data)
 
 export const getUserVerify = (data) => request('/user_api/login/send_login_pwd_sms',data)
 

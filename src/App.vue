@@ -82,9 +82,7 @@
 		},
 		watch: {
 			'$route'() {
-
 				this.$nextTick(() => {
-
 					utils.fixedBottom()
 				})
 			}

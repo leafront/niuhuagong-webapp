@@ -16,7 +16,7 @@
 						</svg>
 						<span></span>
 						<input type="tel" v-model="params.mobile" class="login_input" placeholder="请输入手机号码"/>
-						<div class="user_form_code" @click="countTime">
+						<div class="user_form_code" @click="getUserVerify">
 							<button class="login_code" :disabled="clickCode">{{codeTxt}}</button>
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 							<use xlink:href="#icon-yanzhengma"></use>
 						</svg>
 						<span></span>
-						<input type="tel" v-model="params.pwd" class="login_input" placeholder="请输入验证码"/>
+						<input type="tel" v-model="params.verify_code" class="login_input" placeholder="请输入验证码"/>
 					</div>
 					<div class="user_login" @click="forgetAction">
 						<button class="form-button">下一步</button>
@@ -41,6 +41,8 @@
 	import * as Model  from '@/model/user'
 
 	import validate from '@/widget/validate'
+	
+	import store from '@/widget/store'
 
 	import AppHeader from '@/components/common/header'
 
@@ -53,7 +55,7 @@
 				clickCode: false,
 				params: {
 					mobile: '',
-					pwd: ''
+					verify_code: ''
 				}
 			}
 
@@ -103,12 +105,11 @@
 
 					}
 				},1000)
-				this.getUserVerify()
 			},
 			forgetAction () {
 				const {
 					mobile,
-					pwd
+					verify_code
 				} = this.params
 
 				if (!mobile) {
@@ -121,12 +122,12 @@
 					this.$toast('请输入正确的手机号码')
 					return
 				}
-				if (!pwd) {
+				if (!verify_code) {
 					this.$toast('请输入手机验证码')
 					return
 
 				}
-				if (!validate.isMessageCode(pwd)) {
+				if (!validate.isMessageCode(verify_code)) {
 					this.$toast('请输入正确的手机验证码')
 					return
 
@@ -137,26 +138,26 @@
 			userForget () {
 				const {
 					mobile,
-					pwd
+					verify_code
 				} = this.params
 
 				this.$showLoading()
 				Model.userForget({
 					type: 'POST',
 					data: {
-						channel: 2,
+						channel: 3,
 						mobile,
-						pwd
+						verify_code
 					}
 				}).then((res) => {
 					const data = res.data
-
+					this.$hideLoading()
 					if (data && res.status ==1) {
 
 						this.$toast(res.msg)
-						this.$hideLoading()
+						store.set('NHG_FORGET_PASS',{mobile,verify_code})
 						setTimeout(() => {
-							this.pageAction('/user/center')
+							this.pageAction('/user/reset/pass')
 
 						},3000)
 
@@ -184,13 +185,13 @@
 					type: 'POST',
 					data: {
 						mobile,
-						channel: 1,
+						channel: 3,
 					}
 				}).then((res) => {
 					const data = res.data
 					if (data && res.status == 1) {
-
 						this.$toast(res.msg)
+						this.countTime()
 
 					} else {
 

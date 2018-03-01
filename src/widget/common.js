@@ -25,7 +25,8 @@ export const wxOauthLogin = () =>{
 	Model.wxOauthLogin({
 		type: 'GET',
 		data: {
-			refer_url: pathname
+			refer_url: pathname,
+			type: 1
 		}
 	}).then((res) => {
 

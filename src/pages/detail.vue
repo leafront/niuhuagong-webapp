@@ -134,7 +134,7 @@
 				shop_price: '',
 				info: null,
 				isSoldOut: false,
-				title: '详情',
+				title: '商品详情',
 				specs_info: [],
 				modelList: [],
 				typeIndex: -1,
@@ -432,7 +432,7 @@
 
 		beforeCreate () {
 
-			document.title = '详情'
+			document.title = '商品详情'
 
 		},
 		watch: {
@@ -450,11 +450,12 @@
 				this.updateScrollPicker(true)
 			},300)
 
+			this.showLoading()
+
 			this.updatePageView(false)
 
 			this.getProductDetail()
-
-			this.showLoading()
+			
 		}
 	}
 

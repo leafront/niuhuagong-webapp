@@ -3,7 +3,7 @@
 		<AppHeader :title="title"></AppHeader>
 		<div class="scroll-view-wrapper" :class="{'visibility':!pageView}">
 			<div class="order_submit">
-				<template v-if="userAddress.address">
+				<template v-if="userAddress.address_id">
 					<div class="submit_address" @click="pageAction('/user/address?from=order')">
 						<svg aria-hidden="true" class="ico icon_address">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dizhi1">

@@ -26,10 +26,10 @@
 				</div>
 				<div class="user_form_pass">
 					<span @click="pageAction('/user/login')">使用验证码登录</span>
-					<span>忘了密码</span>
+					<span @click="pageAction('/user/reset/forget')">忘了密码</span>
 				</div>
-				<div class="user_login" @click="loginAction">
-					<button class="form-button">登录</button>
+				<div class="user_login">
+					<button class="form-button" @click="loginAction">登录</button>
 				</div>
 				<div class="user_tips">
 					<span @click="pageAction('/user/register')">还没有账户，马上去<strong>注册</strong></span>
@@ -63,7 +63,6 @@
 			AppHeader
 		},
 		beforeCreate () {
-
 			document.title = '登录'
 
 		},
@@ -94,7 +93,10 @@
 					this.$toast('请输入密码')
 					return
 				}
-				
+				if (!validate.isPass(pwd)) {
+					this.$toast('请输入6~20位数字和字母密码')
+					return
+				}
 				this.userLogin()
 			
 			},
@@ -114,10 +116,9 @@
 					}
 				}).then((res) => {
 					const data = res.data
-
+					this.$hideLoading()
 					if (data && res.status ==1) {
 						const redirect = this.redirect
-						this.$hideLoading()
 						this.$toast(res.msg)
 						setTimeout(() => {
 							if (redirect) {

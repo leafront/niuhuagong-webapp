@@ -30,6 +30,16 @@
 						</svg>
 						<span></span>
 						<input type="tel" v-model="params.mobile" class="login_input" placeholder="请输入手机号码"/>
+						<div class="user_form_code" @click="getUserVerify">
+							<button class="login_code" :disabled="clickCode">{{codeTxt}}</button>
+						</div>
+					</div>
+					<div class="user_form_item">
+						<svg class="ico login_msg_ico" aria-hidden="true">
+							<use xlink:href="#icon-yanzhengma"></use>
+						</svg>
+						<span></span>
+						<input type="tel" v-model="params.verify_code" class="login_input" placeholder="请输入验证码"/>
 					</div>
 					<div class="user_form_item">
 						<svg class="ico login_pass_ico" aria-hidden="true">
@@ -43,7 +53,7 @@
 							<use xlink:href="#icon-mima"></use>
 						</svg>
 						<span></span>
-						<input type="password" v-model="params.confirm_pass" class="login_pass_input" placeholder="请再次输入密码"/>
+						<input type="password" v-model="params.confirm_pass" class="login_pass_input" placeholder="请再次输入6~20位密码"/>
 					</div>
 					<div class="register_login" @click="registerAction">
 						<button class="form-button">注册</button>
@@ -73,7 +83,10 @@
 
 			return {
 				isPopup: false,
+				codeTxt: '获取验证码',
+				clickCode: false,
 				params: {
+					verify_code: '',
 					sex: 1,
 					mobile: '',
 					pwd: '',
@@ -83,13 +96,8 @@
 		},
 
 		components: {
-
 			AppHeader,
 			Popup
-		},
-		created () {
-			
-			//this.isPopup = true
 		},
 		beforeCreate () {
 
@@ -114,12 +122,69 @@
 				this.isPopup = val
 				
 			},
+			/**
+			 * 用户点击获取验证码
+			 *
+			 */
+			countTime (){
+
+				let time = 60
+				this.codeTxt = time + '秒后获取'
+				this.clickCode = true
+
+				let timer = setInterval(() => {
+
+					time--
+					this.codeTxt = time+'秒后获取'
+					if(time == 0) {
+
+						this.clickCode = false
+						this.codeTxt = '获取验证码'
+						clearInterval(timer)
+
+					}
+				},1000)
+			},
+			getUserVerify () {
+				const {
+					mobile
+				} = this.params
+
+				if (!mobile) {
+					this.$toast('请输入手机号码')
+					return
+				}
+				if (!validate.isMobile(mobile)) {
+					this.$toast('请输入正确的手机号码')
+					return
+				}
+				Model.getUserVerify({
+					type: 'POST',
+					data: {
+						mobile,
+						channel: 4,
+					}
+				}).then((res) => {
+					const data = res.data
+					if (data && res.status == 1) {
+
+						this.$toast(res.msg)
+						this.countTime()
+
+					} else {
+
+						this.$toast(res.msg)
+
+					}
+				})
+			},
 			registerAction () {
 				
 				const {
 					mobile,
 					sex,
 					pwd,
+					verify_code,
 					confirm_pass
 				} = this.params
 				
@@ -129,6 +194,15 @@
 				}
 				if (!validate.isMobile(mobile)) {
 					this.$toast('请输入正确的手机号码')
+					return
+				}
+				if (!verify_code) {
+					this.$toast('请输入手机验证码')
+					return
+
+				}
+				if (!validate.isMessageCode(verify_code)) {
+					this.$toast('请输入正确的手机验证码')
 					return
 				}
 				if (!pwd) {
@@ -147,16 +221,10 @@
 					this.$toast('两次输入密码不一致')
 					return
 				}
-				this.userRegister({mobile,sex, pwd})
+				this.userRegister({mobile,sex, pwd,verify_code})
 				
 			},
 			userRegister (data) {
-
-				const {
-					mobile,
-					sex,
-					pwd
-				} = this.params
 				
 				Model.userRegister({
 					type: 'POST',

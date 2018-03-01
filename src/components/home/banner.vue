@@ -1,7 +1,7 @@
 <template>
 	<swiper :list="bannerList">
 		<ul class="slideshow-item">
-			<li v-for="item in bannerList" :style="{'width':itemWidth}" @click="pageAction(item.landing_url)">
+			<li v-for="item in bannerList" :style="{'width':itemWidth}" @click="pageAction(item.target_url)">
 				<img :src="item.img_url" :style="{'height':imgHeight}">
 			</li>
 		</ul>

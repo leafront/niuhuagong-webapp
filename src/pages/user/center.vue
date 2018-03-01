@@ -6,7 +6,7 @@
 					<img :src="userInfo.head_img"/>
 					<div class="user_info_txt">
 						<span>{{userInfo.name}}</span>
-						<button class="user_info_tips">完整度75%</button>
+						<button class="user_info_tips">完整度50%</button>
 					</div>
 				</div>
 				<div class="user_setting">
@@ -88,6 +88,12 @@
 					<span>消息中心</span>
 					<i class="order_notice_num"></i>
 				</div>
+				<div class="order_link_item" @click="logoutAction">
+					<svg class="ico order_link_ico" aria-hidden="true">
+						<use xlink:href="#icon-tuichu"></use>
+					</svg>
+					<span>退出</span>
+				</div>
 			</div>
 		</div>
 		<AppFooter/>
@@ -99,6 +105,8 @@
 	import AppHeader from '@/components/common/header'
 
 	import AppFooter from '@/components/common/footer'
+	
+	import * as Model from '@/model/user'
 	
 	import {userLoginState} from '@/widget/common'
 
@@ -138,6 +146,21 @@
 				
 				this.$router.push(url)
 				
+			},
+			logoutAction () {
+				Model.userLogout({
+					type: 'POST'
+				}).then((res) => {
+					const data = res.data
+					if (data && res.status == 1) {
+						this.$toast(res.msg)
+						setTimeout(() => {
+							this.pageAction('/user/login')
+						},3000)
+					} else {
+						this.$toast(res.msg)
+					}
+				})
 			},
 			orderAction (url) {
 				location.href = url

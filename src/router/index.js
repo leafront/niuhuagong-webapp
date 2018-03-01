@@ -68,7 +68,7 @@ export default new Router({
 			name: 'UserAddressAdd',
 			component: UserAddressAdd,
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 		},{
 			path: '/user/address/edit',
@@ -87,12 +87,15 @@ export default new Router({
 			name: 'UserCenter',
 			component: UserCenter,
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			}
 		},{
 			path: '/cart',
 			name: 'Cart',
-			component: Cart
+			component: Cart,
+			meta: {
+				requireLogin: true,
+			}
 		},{
 			path: '/user/register',
 			name: 'UserRegister',
@@ -101,7 +104,7 @@ export default new Router({
 			path: '/user/info',
 			name: 'UserInfo',
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 			component: UserInfo
 		},{
@@ -116,28 +119,28 @@ export default new Router({
 			path: '/user/personal',
 			name: 'UserPersonal',
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 			component: UserPersonal
 		},{
 			path: '/user/company',
 			name: 'UserCompany',
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 			component: UserCompany
 		},{
 			path: '/auth/personal',
 			name: 'AuthPersonal',
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 			component: AuthPersonal
 		},{
 			path: '/auth/company',
 			name: 'AuthCompany',
 			meta: {
-				requireAuth: true,
+				requireLogin: true,
 			},
 			component: AuthCompany
 		},{
@@ -147,7 +150,10 @@ export default new Router({
 		},{
 			path: '/order/submit',
 			name: 'OrderSubmit',
-			component: OrderSubmit
+			component: OrderSubmit,
+			meta: {
+				requireLogin: true,
+			}
 		},{
 			path: '/order/detail',
 			name: 'OrderDetail',
