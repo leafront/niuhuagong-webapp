@@ -39,10 +39,10 @@ router.beforeEach((to, from, next) => {
 		} else if (res.status == -3000 || res.status == -3001) {
 			wxOauthLogin()
 		} else if (to.matched.some(record => record.meta.requireLogin)) { // 判断该路由是否需要登录权限
-				next({
-					path: '/user/login',
-					query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-				})
+			next({
+				path: '/user/login',
+				query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+			})
 		} else {
 			next ()
 		}
