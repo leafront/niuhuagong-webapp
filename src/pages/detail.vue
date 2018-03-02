@@ -343,13 +343,9 @@
 			showCityPicker (addressInfoVal) {
 
 				this.updateSelectCity(addressInfoVal);
-
 				this.updateIsCityPicker(false)
-
 				let addressInfo = Object.assign({},this.addressInfo)
-
 				addressInfo = Object.assign(addressInfo,addressInfoVal.address)
-
 				this.addressInfo = addressInfo
 
 			},
@@ -382,7 +378,6 @@
 				let proNumber = parseInt(this.proNumber)
 
 				if (proNumber == 1 && val == -1) {
-
 					this.$toast('单件商品数量不能少于1件')
 					return
 
@@ -399,17 +394,13 @@
 			setImgWidth () {
 
 				const shopCont = document.querySelector('.shop_des');
-
 				const isChildElement = shopCont.childNodes.length
 
 				if (isChildElement) {
-
+					
 					const img = shopCont.getElementsByTagName('img')
-
 					Array.from(img).forEach((item) => {
-
 						item.style.width = '100%'
-
 					})
 				}
 			},
@@ -438,11 +429,9 @@
 		},
 		watch: {
 			info () {
-
 				setTimeout(() => {
 					this.setImgWidth()
 				},0)
-
 			}
 		},
 		created (){
@@ -452,9 +441,7 @@
 			},300)
 
 			this.showLoading()
-
 			this.updatePageView(false)
-
 			this.getProductDetail()
 			
 		}

@@ -34,7 +34,11 @@ Vue.use(pageLoading)
 router.beforeEach((to, from, next) => {
 	userLoginState().then((res) => { // 判断当前的是否登录
 		if (res.status == 1) {
-			storage.set('NHG_USER',res.data)
+			const data = res.data
+			if (!data.head_img) {
+				data.head_img = '/static/images/default_img.png'
+			}
+			storage.set('NHG_USER',data)
 			next()
 		} else if (res.status == -3000 || res.status == -3001) {
 			wxOauthLogin()

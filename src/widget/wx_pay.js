@@ -29,7 +29,7 @@ const wx_pay = {
 
 			if (data && res.status ==1 ) {
 
-				wx_pay.wxBridgePay.call(this,JSON.parse(data.jsApiParameters),order_code,data.order_id)
+				wx_pay.wxBridgePay.call(this,JSON.parse(data.jsApiParameters),order_code)
 
 			} else {
 
@@ -48,18 +48,24 @@ const wx_pay = {
 
 	/**
 	 * 检查支付API是否成功支付
-	 *  @param {String} orderCode
+	 *  @param {String} order_id
 	 */
 
-	checkPayInfo ({order_code,channel}) {
-
+	checkPayInfo (order_code) {
 		Model.checkPayInfo({
 			type: 'POST',
 			data: {
-				order_code,
-				channel
+				order_id: order_code,
 			}
+		}).then(() => {
+
+			window.location.href = `/order/detail?order_code=${order_code}`
+
 		})
+
+		setTimeout(() => {
+			window.location.href = `/order/detail?order_code=${order_code}`
+		},3000)
 	},
 
 	/**
@@ -68,7 +74,7 @@ const wx_pay = {
 	 * @param {String} order_id
 	 * @param {String} order_code
 	 */
-	wxBridgePay (jsApiParameters,order_code,order_id) {
+	wxBridgePay (jsApiParameters,order_code) {
 
 		const onBridgeReady = () =>{
 			WeixinJSBridge.invoke('getBrandWCPayRequest',
@@ -77,10 +83,7 @@ const wx_pay = {
 					if (res.err_msg == "get_brand_wcpay_request:ok") {
 
 						this.$toast('支付成功')
-
 						wx_pay.checkPayInfo(order_code)
-
-						window.location.href = `/order/detail?id=${order_id}`
 
 					} else if (res.err_msg == "get_brand_wcpay_request:cancel") {
 

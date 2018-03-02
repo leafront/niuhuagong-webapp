@@ -64,20 +64,6 @@ export default function request (url,options){
 						if (results.status == 1)  {
 							store.set(defaultOpt.url, res)
 						}
-						if (results.status == -3000) {
-
-							console.info(results)
-							if (utils.timer) {
-								console.info('clearTimer')
-								utils.clearTimeout()
-
-							}
-
-							wxOauthLogin()
-
-							reject(results)
-
-						}
 						resolve(results)
 
 					})
@@ -94,21 +80,6 @@ export default function request (url,options){
 
 					if (cache && results.status == 1)  {
 						store.set(defaultOpt.url, res)
-					}
-
-					if (results.status == -3000) {
-
-						console.info(results)
-						if (utils.timer) {
-							console.info('clearTimer')
-							utils.clearTimeout()
-
-						}
-
-						wxOauthLogin()
-
-					  reject(results)
-
 					}
 
 					resolve(results)

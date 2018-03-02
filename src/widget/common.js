@@ -12,14 +12,6 @@ import utils from './utils'
 
 export const wxOauthLogin = () =>{
 
-	const isAuthLogin = store.get('NHG_IS_AUTH_LOGIN')
-
-	if (isAuthLogin) {
-		return
-	}
-
-	store.set('NHG_IS_AUTH_LOGIN',true)
-
 	const pathname = location.pathname + location.search
 
 	Model.wxOauthLogin({
@@ -29,8 +21,6 @@ export const wxOauthLogin = () =>{
 			type: 1
 		}
 	}).then((res) => {
-
-		store.remove('NHG_IS_AUTH_LOGIN')
 
 		const data = res.data
 

@@ -8,15 +8,10 @@
 <script>
 	
 	import SliderMenu from '@/components/common/sliderMenu'
-
 	import store from '@/widget/store'
-
 	import utils from '@/widget/utils'
-	
 	import * as Model from '@/model/common'
-
 	import { wxOauthLogin } from '@/widget/common'
-
 	import { mapGetters, mapActions } from 'vuex'
 	
 	export default {
@@ -24,34 +19,10 @@
 			SliderMenu
 		},
 		beforeCreate () {
-			/**
-			 * 获取iconfont 字体文件缓存
-			 */
-			Model.getIconFont({
-				type: 'GET',
-				dataType: 'text',
-				cache: true
-			}).then((res) => {
-				
-				utils.appendScript(res)
-				const expires = 30 * 60 * 1000
-				
-				let result = {
-					times: new Date().getTime() + expires,
-					results: res
-				}
-
-				if (!store.get('/static/fonts/iconfont.js')) {
-
-					store.set('/static/fonts/iconfont.js', result)
-
-				}
-			})
 
 			/**
 			 * 获取 fastclick 文件缓存
 			 */
-
 			Model.getFastClick({
 				type: 'GET',
 				dataType: 'text',
@@ -90,7 +61,6 @@
 	}
 	
 </script>
-
 <style lang="scss">
 	@import './styles/reset.scss';
 	@import './styles/main.scss';

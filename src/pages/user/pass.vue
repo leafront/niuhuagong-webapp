@@ -64,9 +64,7 @@
 		},
 		beforeCreate () {
 			document.title = '登录'
-
 		},
-
 		methods: {
 
 			pageAction (url) {
@@ -124,10 +122,12 @@
 						} else {
 							this.pageAction('/user/center')
 						}
+					} else if (data && res.status == 3130){
+
+						this.pageAction('/user/center')
+
 					} else {
-
 						this.$toast(res.msg)
-
 					}
 				})
 			}
@@ -139,6 +139,5 @@
 <style lang="scss">
 	
 	@import '../../styles/user.scss';
-
 	
 </style>

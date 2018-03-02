@@ -155,9 +155,9 @@
 					type: 'POST',
 					data
 				}).then((res) => {
-
 					const data = res.data
 					if (data && res.status == 1) {
+						this.$toast(res.msg)
 						this.numList.splice(index,1,cartNum)
 					} else {
 						this.$toast(res.msg)

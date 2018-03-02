@@ -121,7 +121,10 @@
 				this.isMenu.splice(index,1,false)
 				
 			},
-
+			pageAction (url) {
+				this.$router.push(url)
+				
+			},
 			selectMenu (val,attr) {
 				
 				this.params[attr] = val

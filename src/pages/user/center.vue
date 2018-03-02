@@ -118,7 +118,8 @@
 		
 		data () {
 			return {
-				userInfo: {}
+				userInfo: {},
+				defaultImg: './images/default_img.png'
 			}
 		},
 		mixin: ['loading'],
@@ -175,6 +176,9 @@
 						const data = res.data
 						this.$hideLoading()
 						if (res.status == 1) {
+							if (!data.head_img) {
+								data.head_img = '/static/images/default_img.png'
+							}
 							this.userInfo = data
 							this.updatePageView(true)
 						} else {

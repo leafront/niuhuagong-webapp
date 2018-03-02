@@ -71,9 +71,6 @@
 						<label>开户银行</label>
 						<div class="personal_input">
 							<input type="text" v-model="params.company_bank_name" class="personal_input_tx" placeholder="请选择开户银行"/>
-							<svg class="ico arrow_right_ico" aria-hidden="true">
-								<use xlink:href="#icon-jiantou"></use>
-							</svg>
 						</div>
 					</div>
 					<div class="personal_form_item">
@@ -156,6 +153,11 @@
 			hideMenu (index) {
 
 				this.isMenu.splice(index,1,false)
+
+			},
+
+			pageAction (url) {
+				this.$router.push(url)
 
 			},
 

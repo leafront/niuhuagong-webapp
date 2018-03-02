@@ -4,7 +4,6 @@
 	  <div class="scroll-view-wrapper" id="appView">
 		  <Banner :bannerList="bannerList"/>
 			<Service/>
-		  <Brand :brandList="brandList"/>
 		  <div class="service_ad">
 				<div class="service_ad_item" v-for="item in adList" @click="locationAction(item.item_landing_url)">
 					<img :src="item.item_img_url">
@@ -23,8 +22,6 @@
 	import AppHeader from '@/components/home/header'
 
 	import AppFooter from '@/components/common/footer'
-	
-	import Brand from '@/components/home/brand'
 	
 	import Service from '@/components/home/service'
 	
@@ -47,7 +44,6 @@
 			AppHeader,
 			AppFooter,
 			Banner,
-			Brand,
 			Service,
 			List
 		},
@@ -128,31 +124,23 @@
 					const data = res.data
 					if (data && res.status >= 1) {
 						
-						//this.adList = data.rqxp.item
 						this.hotList = data
-						
 					} else {
 						
 						this.$toast(res.msg)
-						
 					}
 					return res
 
 				})
-
 			}
-			
 		},
 
 		beforeCreate () {
-
 			document.title = '牛化工'
-
 		},
 		created (){
 
 			this.updatePageView(false)
-
 			Promise.all([
 				this.getBannerList(),
 				this.getBrandList(),
@@ -168,9 +156,7 @@
 					}
 				}
 			})
-
 			this.showLoading()
-			
 		}
 	}
 	
@@ -196,5 +182,4 @@
 			height: 2.12rem;
 		}
 	}
-	
 </style>
