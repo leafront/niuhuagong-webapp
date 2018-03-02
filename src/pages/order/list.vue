@@ -9,7 +9,7 @@
 		<div class="scroll-view-wrapper order-view" :class="{'visibility':!pageView}">
 			<!--全部-->
 			<template v-if="orderList && orderList.length">
-				<div class="order_tab">
+				<div class="order_tab" :class="{'page_bottom':isWeixinIphoneX}">
 					<div class="order_item" v-for="(item,index) in orderList" :key="index">
 						<div class="order_item_tit">
 							<span>订单号：{{item.order_code}}</span>
@@ -102,6 +102,7 @@
 	import wx_pay from '@/widget/wx_pay'
 	import { mapActions,mapGetters } from 'vuex'
 	import * as Model from '@/model/order'
+	import utils from '@/widget/utils'
 	export default {
 		components: {
 			Overlay,
@@ -154,7 +155,8 @@
 				},{
 					name:'待评价',
 					channel: 5
-				}]
+				}],
+				isWeixinIphoneX: utils.isWeixinIphoneX()
 			}
 		},
 		mixin: ['loading'],

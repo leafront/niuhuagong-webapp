@@ -98,14 +98,14 @@
 				'updatePageView',
 			]),
 			addAction () {
-				if (this.fromOrder) {
+				if (this.isFromOrder) {
 					this.pageAction('/user/address/add?order='+this.fromOrder)
 				} else {
 					this.pageAction('/user/address/add')
 				}
 			},
 			editAction (id) {
-				if (this.fromOrder) {
+				if (this.isFromOrder) {
 					this.pageAction(`/user/address/edit?id=${id}&?order='+this.fromOrder`)
 				} else {
 					this.pageAction(`/user/address/edit?id=${id}`)
