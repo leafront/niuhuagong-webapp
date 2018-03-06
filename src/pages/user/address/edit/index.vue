@@ -232,10 +232,9 @@
 						const areaAddress = privince_name + ' ' + city_name + ' ' + district_name
 						
 						this.updateSelectCity({name:areaAddress,address: {selectCity}})
-
-						this.updateScrollPicker(true)
-
-
+						setTimeout(() => {
+							this.updateScrollPicker(true)
+						},0)
 					} else {
 
 						this.$toast(res.msg)

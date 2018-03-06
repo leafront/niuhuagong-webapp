@@ -51,12 +51,19 @@ export default function ajax (optionsAjax){
 
 				} else {
 					console.error(xhr.statusText)
-					resolve({
-						data:[],
-						status: -500,
-						msg: '网络服务错误'
-					})
-
+					if (window.navigator.onLine) {
+						resolve({
+							data:[],
+							status: -500,
+							msg: '网络服务错误'
+						})
+					} else {
+						resolve({
+							data:[],
+							status: -500,
+							msg: '网络不稳定，请重试'
+						})
+					}
 				}
 			}
 

@@ -132,7 +132,7 @@
 		
 		background: #f2f2f2;
 		
-		transition: transform .2s linear;
+		transition: transform .3s linear;
 		
 		left:0;
 		
